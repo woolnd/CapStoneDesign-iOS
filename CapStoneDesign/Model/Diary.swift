@@ -30,7 +30,6 @@ func getSampleDate(offset: Int) -> Date{
 }
 
 var diarys: [DiaryMetaDate] = [
-    
     DiaryMetaDate(diary: [
         Diary(title: "Talk to wodnd")
     ], diaryDate: getSampleDate(offset: 1), emotion: "sun.max.circle"),
