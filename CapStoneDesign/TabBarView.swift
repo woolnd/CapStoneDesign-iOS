@@ -11,6 +11,27 @@ struct TabBarView: View {
     @State private var selection = 1
 
     var body: some View {
+        
+        HStack{
+            Spacer()
+                .frame(width: 10)
+            Button(action: {
+                
+            }, label: {
+                Image(systemName: "questionmark.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30)
+                    .foregroundColor(.black)
+            })
+            Spacer()
+            Text("App Name")
+                .font(.system(size: 20, weight: .bold, design: .serif))
+                .foregroundColor(.black)
+            Spacer()
+                .frame(width: 145)
+        }
+        
         TabView(selection: $selection){
             Text("Emotion Graph")
                 .tabItem {
@@ -33,6 +54,7 @@ struct TabBarView: View {
             selection = 1 // 앱 실행시 가운데 탭이 보이도록 선택값을 1로 초기화
         }
     }
+    
 }
 
 #Preview {

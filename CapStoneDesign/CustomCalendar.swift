@@ -14,11 +14,21 @@ struct CustomCalendar: View {
     @State var currentMonth: Int = 0
     
     var body: some View {
-        VStack(spacing: 35){
+        VStack(spacing:20){
             
             //Days
             let days: [String] = ["일", "월", "화", "수", "목", "금", "토"]
             HStack(spacing:20){
+
+                Button(action: {
+                    currentMonth -= 1
+                }, label: {
+                   Image(systemName: "chevron.left")
+                        .font(.title2)
+                })
+                
+                Spacer()
+                
                 VStack(alignment: .leading, spacing: 10){
                     Text(extraDate()[0])
                         .font(.system(size: 20, weight: .semibold))
@@ -28,12 +38,6 @@ struct CustomCalendar: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    currentMonth -= 1
-                }, label: {
-                   Image(systemName: "chevron.left")
-                        .font(.title2)
-                })
                 
                 Button(action: {
                     currentMonth += 1
@@ -45,7 +49,7 @@ struct CustomCalendar: View {
             .padding(.horizontal)
             
             //Day View
-            HStack(spacing: 0){
+            HStack{
                 ForEach(days, id: \.self){ day in
                     Text(day)
                         .font(.callout)
@@ -66,6 +70,7 @@ struct CustomCalendar: View {
                                 .padding(0)
                                 .cornerRadius(10)
                         )
+                        .frame(width: 40, height: 40)
                         .onTapGesture {
                             currentDate = value.date
                         }
@@ -77,6 +82,7 @@ struct CustomCalendar: View {
             currentDate = getCurrentMonth()
         }
     }
+        
     
     @ViewBuilder
     func CardView(value: DateValue) -> some View{
@@ -94,11 +100,10 @@ struct CustomCalendar: View {
                     Image(systemName: "\(diary.emotion)")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 30, height: 30)
                         .background(
                             Rectangle()
                                 .fill(Color.pink.opacity(isSameDay(date1: value.date, date2: currentDate) ? 1 : 0))
-                                .frame(width: 50, height: 50)
                                 .padding(0)
                                 .cornerRadius(10)
                         )
@@ -115,11 +120,10 @@ struct CustomCalendar: View {
                 
                     Spacer()
                     Image("")
-                        .frame(width: 40, height: 40)
+                        .frame(width: 30, height: 30)
                         .background(
                             Rectangle()
                                 .fill(Color.pink.opacity(isSameDay(date1: value.date, date2: currentDate) ? 1 : 0))
-                                .frame(width: 50, height: 50)
                                 .padding(0)
                                 .cornerRadius(10)
                         )
@@ -130,7 +134,6 @@ struct CustomCalendar: View {
             }
         }
         .padding(.vertical, 9)
-        .frame(height: 60, alignment: .top)
     }
     
     //checking date
