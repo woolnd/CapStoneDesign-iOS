@@ -14,72 +14,77 @@ struct CustomCalendar: View {
     @State var currentMonth: Int = 0
     
     var body: some View {
-        VStack(spacing:20){
-            
-            //Days
-            let days: [String] = ["일", "월", "화", "수", "목", "금", "토"]
-            HStack(spacing:20){
+        NavigationView{
+            VStack(spacing:20){
+                //Days
+                let days: [String] = ["일", "월", "화", "수", "목", "금", "토"]
+                HStack(spacing:20){
 
-                Button(action: {
-                    currentMonth -= 1
-                }, label: {
-                   Image(systemName: "chevron.left")
-                        .font(.title2)
-                })
+                    Button(action: {
+                        currentMonth -= 1
+                    }, label: {
+                       Image(systemName: "chevron.left")
+                            .font(.title2)
+                    })
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading, spacing: 10){
+                        Text(extraDate()[0])
+                            .font(.system(size: 20, weight: .semibold))
+                        Text(extraDate()[1])
+                            .font(.system(size: 30, weight: .bold))
+                    }
+                    
+                    Spacer()
+                    
+                    
+                    Button(action: {
+                        currentMonth += 1
+                    }, label: {
+                       Image(systemName: "chevron.right")
+                            .font(.title2)
+                    })
+                }
+                .padding(.horizontal)
                 
-                Spacer()
-                
-                VStack(alignment: .leading, spacing: 10){
-                    Text(extraDate()[0])
-                        .font(.system(size: 20, weight: .semibold))
-                    Text(extraDate()[1])
-                        .font(.system(size: 30, weight: .bold))
+                //Day View
+                HStack{
+                    ForEach(days, id: \.self){ day in
+                        Text(day)
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                    }
                 }
                 
-                Spacer()
+                //Dates
+                let columns = Array(repeating: GridItem(.flexible()), count: 7)
                 
-                
-                Button(action: {
-                    currentMonth += 1
-                }, label: {
-                   Image(systemName: "chevron.right")
-                        .font(.title2)
-                })
-            }
-            .padding(.horizontal)
-            
-            //Day View
-            HStack{
-                ForEach(days, id: \.self){ day in
-                    Text(day)
-                        .font(.callout)
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                }
-            }
-            
-            //Dates
-            let columns = Array(repeating: GridItem(.flexible()), count: 7)
-            
-            LazyVGrid(columns: columns, spacing: 40){
-                ForEach(extraDate()){ value in
-                    CardView(value: value)
-                        .background(
-                            Rectangle()
-                                .fill(Color.pink.opacity(isSameDay(date1: value.date, date2: currentDate) ? 1 : 0))
-                                .padding(0)
-                                .cornerRadius(10)
-                        )
-                        .frame(width: 40, height: 40)
-                        .onTapGesture {
-                            currentDate = value.date
+                LazyVGrid(columns: columns, spacing: 40){
+                    ForEach(extraDate()){ value in
+                        NavigationLink {
+                            EmotionInputVIew()
+                        } label: {
+                            CardView(value: value)
+                                .background(
+                                    Rectangle()
+                                        .fill(Color.pink.opacity(isSameDay(date1: value.date, date2: currentDate) ? 1 : 0))
+                                        .padding(0)
+                                        .cornerRadius(10)
+                                )
+                                .frame(width: 40, height: 40)
+                                .onTapGesture {
+                                    currentDate = value.date
+                                }
                         }
+                    }
                 }
             }
-        }
-        .onChange(of: currentMonth) { newValue in
-            //updating Month
-            currentDate = getCurrentMonth()
+            .onChange(of: currentMonth) { newValue in
+                //updating Month
+                currentDate = getCurrentMonth()
+            }
         }
     }
         

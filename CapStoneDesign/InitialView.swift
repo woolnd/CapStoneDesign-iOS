@@ -9,7 +9,6 @@ import SwiftUI
 
 struct InitialView: View {
     var body: some View {
-        
         Spacer()
         
         Text("App Name")
