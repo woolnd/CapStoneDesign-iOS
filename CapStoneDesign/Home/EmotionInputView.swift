@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct EmotionInputVIew: View {
+struct EmotionInputView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("This is Emotion View")
     }
 }
 
 #Preview {
-    EmotionInputVIew()
+    EmotionInputView()
 }

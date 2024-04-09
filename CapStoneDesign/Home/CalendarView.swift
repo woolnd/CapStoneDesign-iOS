@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct CalendarView: View {
+    
+    @State var isPresented: Bool = false
+    @StateObject var viewModel = CalendarViewModel(diary: CalendarViewModel.mock)
     @State var currentDate: Date = Date()
 
     let week: [String] = ["일", "월", "화", "수", "목", "금", "토"]
@@ -23,13 +26,22 @@ struct CalendarView: View {
     ]
     var body: some View {
         NavigationView{
-            VStack(spacing:20){
+            VStack(spacing:15){
                 HStack{
-                    Image(systemName: "questionmark.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 20)
+                    Button(action: {
+                        isPresented = true
+                    }, label: {
+                        Image(systemName: "questionmark.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 20)
+                    })
                     Spacer()
+
+                    Text("Logo")
+                        .font(.system(size: 20, weight: .light))
+                    Spacer()
+                        .frame(width: 160)
                 }
                 
                 HStack{
@@ -58,18 +70,12 @@ struct CalendarView: View {
                         ForEach(week, id: \.self){ week in
                             Text("\(week)")
                         }
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                         
                         ForEach(daysInMonth(date: currentDate), id: \.self) { day in
-                            NavigationLink {
-                                CalendarDateView()
-                            } label: {
-                                if(day == 0){
-                                    Text("")
-                                }else{
-                                    Text("\(day)")
-                                }
+                            NavigationLink(destination: isMatchingDate(day) ? AnyView(CalendarDetailView()) : AnyView(EmotionInputView())) {
+                                CalendarDateView(date: day, currentDate: $currentDate)
                             }
-
                         }
                         
                     } header: {}
@@ -80,6 +86,9 @@ struct CalendarView: View {
                 Spacer()
             }
         }
+        .sheet(isPresented: $isPresented, content: {
+            CalendarIntroView()
+        })
     }
 }
 
@@ -89,6 +98,30 @@ extension CalendarView{
         formatter.dateFormat = "MMMM yyyy"
         return formatter.string(from: date)
     }
+    
+    private func formattedDate(date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter.string(from: date)
+    }
+    
+    private func isMatchingDate(_ date: Int) -> Bool {
+        let dateString = "\(formattedyear(date: currentDate))-\(formattedMonth(date: currentDate))-\(String(format: "%02d", date))"
+        return viewModel.diary.contains { $0.day == dateString }
+    }
+    
+    private func formattedyear(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter.string(from: date)
+    }
+    
+    private func formattedMonth(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM"
+        return formatter.string(from: date)
+    }
+    
     
     private func daysInMonth(date: Date) -> [Int] {
             let calendar = Calendar.current
@@ -106,6 +139,7 @@ extension CalendarView{
         }
     
 }
+
 #Preview {
     CalendarView()
 }

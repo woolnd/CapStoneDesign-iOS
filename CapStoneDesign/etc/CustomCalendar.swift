@@ -64,7 +64,7 @@ struct CustomCalendar: View {
                 LazyVGrid(columns: columns, spacing: 40){
                     ForEach(extraDate()){ value in
                         NavigationLink {
-                            EmotionInputVIew()
+                            EmotionInputView()
                         } label: {
                             CardView(value: value)
                                 .background(
