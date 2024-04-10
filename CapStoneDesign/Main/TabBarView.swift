@@ -31,7 +31,7 @@ struct TabBarView: View {
         }
         .font(.headline)
         .onAppear {
-            selection = 1 // 앱 실행시 가운데 탭이 보이도록 선택값을 1로 초기화
+            selection = 1 
         }
     }
     
