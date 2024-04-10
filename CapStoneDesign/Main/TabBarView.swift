@@ -12,7 +12,7 @@ struct TabBarView: View {
 
     var body: some View {
         TabView(selection: $selection){
-            Text("Emotion Graph")
+            EmotionalStatusView()
                 .tabItem {
                     Image(systemName: "heart.circle")
                     Text("Emotion")
@@ -23,7 +23,7 @@ struct TabBarView: View {
                     Image(systemName: "house.circle")
                     Text("Main")
                 }.tag(1)
-            Text("MyPage")
+            MyPageView()
                 .tabItem {
                     Image(systemName: "person.circle")
                     Text("My")

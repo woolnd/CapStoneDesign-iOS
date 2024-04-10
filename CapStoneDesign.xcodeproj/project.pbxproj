@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6D3D96762BC1D19700A8A0E6 /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D96752BC1D19700A8A0E6 /* InitialView.swift */; };
-		6D3D96782BC1D27B00A8A0E6 /* SplashTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D3D96772BC1D27B00A8A0E6 /* SplashTestView.swift */; };
+		6D54DD232BC5BF9F008F839E /* EmotionalStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */; };
 		6D705A262BBD7B740038A9E9 /* CapStoneDesignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A252BBD7B740038A9E9 /* CapStoneDesignApp.swift */; };
 		6D705A282BBD7B740038A9E9 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A272BBD7B740038A9E9 /* TabBarView.swift */; };
 		6D705A2A2BBD7B740038A9E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D705A292BBD7B740038A9E9 /* Assets.xcassets */; };
@@ -17,6 +17,7 @@
 		6D705A362BBDC8910038A9E9 /* CustomCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A352BBDC8910038A9E9 /* CustomCalendar.swift */; };
 		6D705A3A2BBDCDEE0038A9E9 /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A392BBDCDEE0038A9E9 /* DateValue.swift */; };
 		6D705A3C2BBDE00A0038A9E9 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A3B2BBDE00A0038A9E9 /* Diary.swift */; };
+		6DC5531A2BC67A5D005C358B /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DC553192BC67A5D005C358B /* MyPageView.swift */; };
 		6DE331E32BC51E1E00227A51 /* CalendarIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE331E22BC51E1E00227A51 /* CalendarIntroView.swift */; };
 		6DFF28E92BC3BB05003FE84A /* EmotionInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF28E82BC3BB05003FE84A /* EmotionInputView.swift */; };
 		6DFF28EC2BC3C020003FE84A /* CalendarDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF28EB2BC3C020003FE84A /* CalendarDetailView.swift */; };
@@ -26,7 +27,7 @@
 
 /* Begin PBXFileReference section */
 		6D3D96752BC1D19700A8A0E6 /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
-		6D3D96772BC1D27B00A8A0E6 /* SplashTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashTestView.swift; sourceTree = "<group>"; };
+		6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionalStatusView.swift; sourceTree = "<group>"; };
 		6D705A222BBD7B740038A9E9 /* CapStoneDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CapStoneDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D705A252BBD7B740038A9E9 /* CapStoneDesignApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapStoneDesignApp.swift; sourceTree = "<group>"; };
 		6D705A272BBD7B740038A9E9 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
@@ -36,6 +37,7 @@
 		6D705A352BBDC8910038A9E9 /* CustomCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendar.swift; sourceTree = "<group>"; };
 		6D705A392BBDCDEE0038A9E9 /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
 		6D705A3B2BBDE00A0038A9E9 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
+		6DC553192BC67A5D005C358B /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		6DE331E22BC51E1E00227A51 /* CalendarIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarIntroView.swift; sourceTree = "<group>"; };
 		6DFF28E82BC3BB05003FE84A /* EmotionInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionInputView.swift; sourceTree = "<group>"; };
 		6DFF28EB2BC3C020003FE84A /* CalendarDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailView.swift; sourceTree = "<group>"; };
@@ -54,18 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6D3D96792BC1D2B800A8A0E6 /* Home */ = {
+		6D3D96792BC1D2B800A8A0E6 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				6D705A252BBD7B740038A9E9 /* CapStoneDesignApp.swift */,
+				6D3D96752BC1D19700A8A0E6 /* InitialView.swift */,
 				6D705A272BBD7B740038A9E9 /* TabBarView.swift */,
-				6D705A332BBD7FDF0038A9E9 /* CalendarView.swift */,
-				6DFF28EB2BC3C020003FE84A /* CalendarDetailView.swift */,
-				6DFF28ED2BC429DD003FE84A /* CalendarDateView.swift */,
-				6DFF28F02BC42CD1003FE84A /* CalendarViewModel.swift */,
-				6DFF28E82BC3BB05003FE84A /* EmotionInputView.swift */,
-				6DE331E22BC51E1E00227A51 /* CalendarIntroView.swift */,
 			);
-			path = Home;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		6D705A192BBD7B730038A9E9 = {
@@ -87,11 +85,11 @@
 		6D705A242BBD7B740038A9E9 /* CapStoneDesign */ = {
 			isa = PBXGroup;
 			children = (
-				6D705A372BBDCD770038A9E9 /* Model */,
-				6D3D96792BC1D2B800A8A0E6 /* Home */,
-				6D705A252BBD7B740038A9E9 /* CapStoneDesignApp.swift */,
-				6D3D96752BC1D19700A8A0E6 /* InitialView.swift */,
-				6D3D96772BC1D27B00A8A0E6 /* SplashTestView.swift */,
+				6D3D96792BC1D2B800A8A0E6 /* Main */,
+				6DE331E72BC54BEF00227A51 /* Calendar */,
+				6DE331E82BC54C4400227A51 /* Diary */,
+				6DE331EB2BC54CC800227A51 /* Graph */,
+				6DE331EE2BC54CE300227A51 /* MyPage */,
 				6DFF28EA2BC3BE6E003FE84A /* etc */,
 				6D705A292BBD7B740038A9E9 /* Assets.xcassets */,
 				6D705A2B2BBD7B740038A9E9 /* Preview Content */,
@@ -107,11 +105,40 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		6D705A372BBDCD770038A9E9 /* Model */ = {
+		6DE331E72BC54BEF00227A51 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				6DE331E22BC51E1E00227A51 /* CalendarIntroView.swift */,
+				6D705A332BBD7FDF0038A9E9 /* CalendarView.swift */,
+				6DFF28EB2BC3C020003FE84A /* CalendarDetailView.swift */,
+				6DFF28ED2BC429DD003FE84A /* CalendarDateView.swift */,
+				6DFF28F02BC42CD1003FE84A /* CalendarViewModel.swift */,
 			);
-			path = Model;
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		6DE331E82BC54C4400227A51 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				6DFF28E82BC3BB05003FE84A /* EmotionInputView.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		6DE331EB2BC54CC800227A51 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
+		6DE331EE2BC54CE300227A51 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				6DC553192BC67A5D005C358B /* MyPageView.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 		6DFF28EA2BC3BE6E003FE84A /* etc */ = {
@@ -201,10 +228,11 @@
 				6DFF28F12BC42CD1003FE84A /* CalendarViewModel.swift in Sources */,
 				6DFF28EE2BC429DD003FE84A /* CalendarDateView.swift in Sources */,
 				6D705A362BBDC8910038A9E9 /* CustomCalendar.swift in Sources */,
-				6D3D96782BC1D27B00A8A0E6 /* SplashTestView.swift in Sources */,
 				6DFF28EC2BC3C020003FE84A /* CalendarDetailView.swift in Sources */,
 				6D705A282BBD7B740038A9E9 /* TabBarView.swift in Sources */,
 				6D705A342BBD7FDF0038A9E9 /* CalendarView.swift in Sources */,
+				6D54DD232BC5BF9F008F839E /* EmotionalStatusView.swift in Sources */,
+				6DC5531A2BC67A5D005C358B /* MyPageView.swift in Sources */,
 				6D705A262BBD7B740038A9E9 /* CapStoneDesignApp.swift in Sources */,
 				6DE331E32BC51E1E00227A51 /* CalendarIntroView.swift in Sources */,
 				6DFF28E92BC3BB05003FE84A /* EmotionInputView.swift in Sources */,
