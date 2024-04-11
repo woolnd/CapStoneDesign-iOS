@@ -6,25 +6,38 @@ struct CalendarDateView: View {
     @State var date: Int
     @Binding var currentDate: Date
     
+    
     var body: some View {
-        VStack(spacing:10){
+        VStack{
             if(date == 0){
                 Text("")
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: -3, trailing: 20))
             }
             else{
-                Text("\(date)")
-                    .font(.system(size: 20))
-                if isMatchingDate(date) {
-                    Image(systemName: "\(emotionForDate(date)!)")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 40)
-                }else{
-                    Image("")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 40)
+                ZStack{
+                    Text("\(date)")
+                        .font(.custom("777Balsamtint", size: 15))
+                        .foregroundColor(isToday(date) ? Color("Orange"): Color("LightGray"))
+                        .frame(width: 20)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 25))
+                    if(isToday(date)){
+                        Image("today")
+                            .padding(EdgeInsets(top: -15, leading: -8, bottom: -11, trailing: 20))
+                    }
                 }
+            
+                if isMatchingDate(date) {
+                    Image("\(emotionForDate(date)!)")
+                        .frame(width: 45, height: 30)
+                        .padding(EdgeInsets(top: -1, leading: 0, bottom: 0, trailing: 0))
+                    
+                }else{
+                    Rectangle()
+                        .frame(width: 45, height: 30)
+                        .foregroundColor(.clear)
+                        .padding(EdgeInsets(top: -1, leading: 0, bottom: 0, trailing: 0))
+                }
+                
             }
         }
     }
@@ -59,6 +72,11 @@ struct CalendarDateView: View {
         formatter.dateFormat = "MM"
         return formatter.string(from: date)
     }
+    
+    private func isToday(_ date: Int) -> Bool {
+            let today = Calendar.current.component(.day, from: Date())
+            return today == date
+        }
 }
 
 #Preview {
