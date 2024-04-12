@@ -12,6 +12,7 @@ struct CalendarView: View {
     @State var isPresented: Bool = false
     @StateObject var viewModel = CalendarViewModel(diary: CalendarViewModel.mock)
     @State var currentDate: Date = Date()
+    @State var selectionDate = 0
     
     let week: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     
@@ -34,12 +35,15 @@ struct CalendarView: View {
                             isPresented = true
                         }, label: {
                             Image("introduce")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 70, height: 70)
                         })
                         Spacer()
                         
                         Text("MoodMingle")
                             .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 60))
+                            .padding(EdgeInsets(top: 0, leading: -70, bottom: 0, trailing: 0))
                         Spacer()
                     }
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
@@ -69,7 +73,7 @@ struct CalendarView: View {
                         Image("calendar_background")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .padding(EdgeInsets(top: -160, leading: 0, bottom: 0, trailing: 0))
+                            .padding(EdgeInsets(top: -110, leading: 0, bottom: 0, trailing: 0))
                         
                         VStack{
                             LazyVGrid(columns: layout){
@@ -81,23 +85,45 @@ struct CalendarView: View {
                                     
                                 }
                             }
-                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                            .padding(EdgeInsets(top: -5, leading: 10, bottom: 0, trailing: 10))
                             
                             LazyVGrid(columns: layout){
                                 ForEach(daysInMonth(date: currentDate), id: \.self) { day in
-                                    NavigationLink(destination: isMatchingDate(day) ? AnyView(CalendarDetailView()) : AnyView(EmotionInputView())) {
+                                    NavigationLink(destination: isMatchingDate(day) ? AnyView(CalendarDetailView()) : AnyView(EmotionInputView(date: day, currentDate: $currentDate))) {
                                         CalendarDateView(date: day, currentDate: $currentDate)
                                     }
+//                                    NavigationLink(destination: isMatchingDate(day) ? AnyView(CalendarDetailView()) : AnyView(EmotionInputView(date: day, currentDate: $currentDate))) {
+//                                        CalendarDateView(date: day, currentDate: $currentDate)
+//                                    }
                                 }
                             }
-                            .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
-                            
+                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                             Spacer()
                         }
                     }
                     
                     Spacer()
+                    
+//                    HStack{
+//                        Spacer()
+//
+//                        Button(action: {
+//
+//                        }, label: {
+//                            Image("diary_btn")
+//                                .shadow(radius: 1)
+//                        })
+//                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 30))
+//                    }
+//
+//                    Spacer()
                 }
+                .background(
+                    Image("initial_background")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .ignoresSafeArea()
+                )
             }
             .frame(width: geometry.size.width * 1)
             .sheet(isPresented: $isPresented, content: {

@@ -26,7 +26,7 @@ final class CalendarViewModel: ObservableObject{
 
 extension CalendarViewModel{
     static let mock: [CalendarModel] = [
-        CalendarModel(day: "2024-03-08", content: "hello", emotion: "pleasure"),
+        CalendarModel(day: "2024-03-04", content: "hello", emotion: "pleasure"),
         CalendarModel(day: "2024-04-04", content: "bye", emotion: "pleasure"),
         CalendarModel(day: "2024-04-01", content: "hellobye", emotion: "pleasure")
     ]

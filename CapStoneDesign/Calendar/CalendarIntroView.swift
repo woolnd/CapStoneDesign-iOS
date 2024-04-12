@@ -9,7 +9,17 @@ import SwiftUI
 
 struct CalendarIntroView: View {
     var body: some View {
-        Text("How to use Calendar")
+        VStack{
+            Text("hello")
+            Spacer()
+            Text("hello")
+        }
+        .background(
+            Image("initial_background")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .ignoresSafeArea()
+        )
     }
 }
 
