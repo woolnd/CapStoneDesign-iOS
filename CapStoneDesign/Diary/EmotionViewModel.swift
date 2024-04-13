@@ -14,6 +14,7 @@ final class EmotionViewModel: Observable{
         var id: UUID = UUID()
         var name: String
         var imageName: String
+        var isSelected: Bool
     }
     
     init(emotions: [emotion]) {
@@ -24,16 +25,16 @@ final class EmotionViewModel: Observable{
 extension EmotionViewModel{
     static var list : [emotion] = [
     
-        emotion(name: "기쁨", imageName: "pleasure"),
-        emotion(name: "평온", imageName: "peace"),
-        emotion(name: "설렘", imageName: "flutter"),
-        emotion(name: "감동", imageName: "moved"),
-        emotion(name: "자신감", imageName: "confidence"),
-        emotion(name: "공포", imageName: "fear"),
-        emotion(name: "분노", imageName: "angry"),
-        emotion(name: "슬픔", imageName: "sadness"),
-        emotion(name: "걱정", imageName: "worry"),
-        emotion(name: "무기력", imageName: "lethargy")
+        emotion(name: "기쁨", imageName: "pleasure", isSelected: false),
+        emotion(name: "평온", imageName: "peace", isSelected: false),
+        emotion(name: "설렘", imageName: "flutter", isSelected: false),
+        emotion(name: "감동", imageName: "moved", isSelected: false),
+        emotion(name: "자신감", imageName: "confidence", isSelected: false),
+        emotion(name: "공포", imageName: "fear", isSelected: false),
+        emotion(name: "분노", imageName: "angry", isSelected: false),
+        emotion(name: "슬픔", imageName: "sadness", isSelected: false),
+        emotion(name: "걱정", imageName: "worry", isSelected: false),
+        emotion(name: "무기력", imageName: "lethargy", isSelected: false)
         
     ]
 }

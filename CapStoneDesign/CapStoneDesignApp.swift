@@ -12,10 +12,9 @@ struct CapStoneDesignApp: App {
 
     var body: some Scene {
         WindowGroup {
-            
             ZStack{
-                SplashView(text: "MoodMingle").transition(.opacity).zIndex(1)
                 
+                SplashView(text: "MoodMingle").transition(.opacity).zIndex(1)
             }
         }
     }

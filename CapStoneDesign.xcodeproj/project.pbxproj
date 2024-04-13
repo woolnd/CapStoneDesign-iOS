@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6D00E83B2BC98BA5006E2FB2 /* DiaryInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D00E83A2BC98BA5006E2FB2 /* DiaryInputView.swift */; };
 		6D0304012BC77165008114A0 /* InitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0304002BC77165008114A0 /* InitialView.swift */; };
 		6D0304052BC7861F008114A0 /* InitialViewModle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0304042BC7861F008114A0 /* InitialViewModle.swift */; };
 		6D03040B2BC78EA8008114A0 /* 777Balsamtint.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6D03040A2BC78EA8008114A0 /* 777Balsamtint.otf */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6D00E83A2BC98BA5006E2FB2 /* DiaryInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryInputView.swift; sourceTree = "<group>"; };
 		6D0304002BC77165008114A0 /* InitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialView.swift; sourceTree = "<group>"; };
 		6D0304042BC7861F008114A0 /* InitialViewModle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewModle.swift; sourceTree = "<group>"; };
 		6D03040A2BC78EA8008114A0 /* 777Balsamtint.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 777Balsamtint.otf; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				6DFF28E82BC3BB05003FE84A /* EmotionInputView.swift */,
 				6DA6CED52BC8F74A003B30E0 /* EmotionDetailView.swift */,
 				6DA6CED72BC90E38003B30E0 /* EmotionViewModel.swift */,
+				6D00E83A2BC98BA5006E2FB2 /* DiaryInputView.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				6DA6CED62BC8F74A003B30E0 /* EmotionDetailView.swift in Sources */,
 				6DFF28E92BC3BB05003FE84A /* EmotionInputView.swift in Sources */,
 				6D705A3A2BBDCDEE0038A9E9 /* DateValue.swift in Sources */,
+				6D00E83B2BC98BA5006E2FB2 /* DiaryInputView.swift in Sources */,
 				6DC553292BC6E11A005C358B /* SplashView.swift in Sources */,
 				6D705A3C2BBDE00A0038A9E9 /* Diary.swift in Sources */,
 			);
