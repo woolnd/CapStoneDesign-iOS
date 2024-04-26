@@ -49,6 +49,10 @@ struct DiaryInputView: View {
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     })
                     
+                    Image("diary_top")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
                     Text(currentDate)
                     
                     Spacer()

@@ -41,21 +41,27 @@ struct EmotionalStatusView: View {
     let case2 = Case2.dummy
     
     var body: some View {
-        Chart(case2, id: \.name) { element in
-            ForEach(element.data, id: \.date) {
-                LineMark(
-                    x: .value("date", $0.date),
-                    y: .value("value", $0.value)
-                )
-            }
-            .foregroundStyle(by: .value("name", element.name))
-        }
-        .background(
+        ZStack {
             Image("initial_background")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .ignoresSafeArea()
-        )
+            Chart(case2, id: \.name) { element in
+                ForEach(element.data, id: \.date) {
+                    LineMark(
+                        x: .value("date", $0.date),
+                        y: .value("value", $0.value)
+                    )
+                }
+                .foregroundStyle(by: .value("name", element.name))
+            }
+            .background(
+                Image("initial_background")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .ignoresSafeArea()
+            )
+        }
     }
 }
 

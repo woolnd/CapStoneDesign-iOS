@@ -21,8 +21,8 @@ struct EmotionInputView: View {
     ]
     
     var body: some View {
-        GeometryReader { geometry in
-            NavigationView{
+        NavigationView{
+            GeometryReader { geometry in
                 ZStack{
                     VStack {
                         Button(action: {
@@ -54,7 +54,7 @@ struct EmotionInputView: View {
                         ScrollView{
                             LazyVGrid(columns: layout){
                                 ForEach(vm.emotions.indices, id: \.self) { index in
-                                    var emotion = vm.emotions[index]
+                                    let emotion = vm.emotions[index]
                                     EmotionDetailView(emotion: emotion)
                                         .opacity(selectedEmotionIndex != nil && selectedEmotionIndex != index ? 0.5 : 1.0)
                                         .onTapGesture {
@@ -68,9 +68,6 @@ struct EmotionInputView: View {
                             }
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 50, trailing: 0))
-                        //                    Text("\(date)")
-                        //                    Text("\(currentDate)")
-                        //                    Text("\(formattedDate)")
                         
                         Spacer()
                     }
@@ -101,13 +98,10 @@ struct EmotionInputView: View {
                     }
                     
                 }
-                
-                
+                .frame(width: geometry.size.width * 1)
             }
-            .frame(width: geometry.size.width * 1)
-            .navigationBarBackButtonHidden()
-            .toolbar(.hidden, for: .tabBar)
         }
+        .navigationBarBackButtonHidden()
     }
     
     private var formattedDate: String {
