@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EmotionDetailView: View {
     
-//    @State var emotion: EmotionViewModel.emotion
     var emotion: EmotionViewModel.emotion
     
     var body: some View {

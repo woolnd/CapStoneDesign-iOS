@@ -39,7 +39,8 @@ struct TabBarView: View {
             }
             .accentColor(Color.black)
         }
-        .navigationBarBackButtonHidden()
+        .toolbar(.hidden)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

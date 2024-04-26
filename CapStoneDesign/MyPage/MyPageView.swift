@@ -9,13 +9,18 @@ import SwiftUI
 
 struct MyPageView: View {
     var body: some View {
-        ZStack{
-            Image("initial_background")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .ignoresSafeArea()
-            Text("This is my Page")
+        NavigationView{
+            ZStack{
+                Image("initial_background")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .ignoresSafeArea()
+                Text("This is my Page")
+            }
         }
+        .toolbar(.hidden)
+        .navigationBarBackButtonHidden(true)
+        
     }
 }
 

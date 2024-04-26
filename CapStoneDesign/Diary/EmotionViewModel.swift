@@ -9,6 +9,7 @@ import Foundation
 
 final class EmotionViewModel: Observable{
     @Published var emotions: [emotion]
+    @Published var weathers: [weather]
     
     struct emotion: Hashable, Identifiable{
         var id: UUID = UUID()
@@ -17,8 +18,15 @@ final class EmotionViewModel: Observable{
         var isSelected: Bool
     }
     
-    init(emotions: [emotion]) {
+    struct weather: Hashable, Identifiable{
+        var id: UUID = UUID()
+        var imageName: String
+        var isSelected: Bool
+    }
+    
+    init(emotions: [emotion], weathers: [weather]) {
         self.emotions = emotions
+        self.weathers = weathers
     }
 }
 
@@ -35,6 +43,11 @@ extension EmotionViewModel{
         emotion(name: "슬픔", imageName: "sadness", isSelected: false),
         emotion(name: "걱정", imageName: "worry", isSelected: false),
         emotion(name: "무기력", imageName: "lethargy", isSelected: false)
-        
+    ]
+    
+    static var weatherList: [weather] = [
+        weather(imageName: "cloud", isSelected: false),
+        weather(imageName: "sunny", isSelected: false),
+        weather(imageName: "rain", isSelected: false)
     ]
 }
