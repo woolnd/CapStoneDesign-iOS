@@ -21,13 +21,17 @@ struct DiaryInputView: View {
     @State var showImagePicker = false
     @State var selectedUIImage: UIImage?
     @State var image: Image?
+    @State var title: String = ""
+    @State var content: String = ""
+    @State var characterCount: Int = 0
+    let maxContentLength = 300
     
     func loadImage() {
         guard let selectedImage = selectedUIImage else { return }
         image = Image(uiImage: selectedImage)
     }
     
-
+    
     var layout: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -140,7 +144,7 @@ struct DiaryInputView: View {
                                     loadImage()
                                 }) {
                                     ImagePicker(image: $selectedUIImage)
-                            }
+                                }
                                 
                                 Spacer()
                             }
@@ -148,19 +152,36 @@ struct DiaryInputView: View {
                             
                             
                         }
-                        Image("diary_content")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
+                        ZStack {
+                            Image("diary_content")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
+                            TextField("제목을 입력하세요", text: $title)
+                                .padding(EdgeInsets(top: 0, leading: 110, bottom: 440, trailing: 0))
+                                .font(.custom("777Balsamtint", size: 25))
+                            TextField("일기를 작성하세요", text: $content, axis: .vertical)
+                                .padding(EdgeInsets(top: -150, leading: 0, bottom: -300, trailing: 0))
+                                .frame(width: 300)
+                                .font(.custom("777Balsamtint", size: 20))
+                            
+                            Text("\(characterCount)/\(maxContentLength)")
+                                .font(.custom("777Balsamtint", size: 20))
+                                .padding(EdgeInsets(top: 480, leading: 250, bottom: 0, trailing: 0))
+                                .foregroundColor(characterCount > maxContentLength ? .red : .gray)
+                        }
                     }
-                    
-                    
-                    
                     Spacer()
                 }
             }
             .accentColor(Color.black)
             
+        }
+        .onChange(of: content) { newValue in
+            characterCount = newValue.count
+            if characterCount > maxContentLength {
+                content = String(newValue.prefix(maxContentLength))
+            }
         }
         .toolbar(.hidden)
         .navigationBarBackButtonHidden(true)
