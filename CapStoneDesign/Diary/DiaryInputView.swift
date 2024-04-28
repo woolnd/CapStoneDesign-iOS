@@ -49,36 +49,38 @@ struct DiaryInputView: View {
                     .ignoresSafeArea()
                 
                 VStack{
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        
-                        HStack{
+                    HStack{
+                        Button(action: {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }, label: {
+                            
                             Image(systemName: "chevron.left")
                                 .resizable()// 화살표 Image
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 20, height: 20)
                                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                            Spacer()
                             
-                            Text("MoodMingle")
-                                .font(.custom("KyoboHandwriting2021sjy", size: 25))
+                        })
+                        
+                        Spacer()
+                        
+                        Text("MoodMingle")
+                            .font(.custom("KyoboHandwriting2021sjy", size: 25))
+                        
+                        Spacer()
+                        
+                        Button(action: {
                             
-                            Spacer()
-                            
-                            Button(action: {
-                                
-                            }, label: {
-                                Image("introduce")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 70,height: 70)
-                                    .padding(EdgeInsets(top: 0, leading: -45, bottom: 0, trailing: 0))
-                            })
-                            
-                        }
-                        .padding(EdgeInsets(top: -5, leading: 20, bottom: 0, trailing: 20))
-                    })
+                        }, label: {
+                            Image("introduce")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 70,height: 70)
+                                .padding(EdgeInsets(top: 0, leading: -45, bottom: 0, trailing: 0))
+                        })
+                    }
+                    .padding(EdgeInsets(top: -5, leading: 20, bottom: 0, trailing: 20))
+                    
                     
                     ScrollView{
                         ZStack {
@@ -219,7 +221,7 @@ struct DiaryInputView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 350)
                     }
-
+                    
                 }
             }
             .accentColor(Color.black)

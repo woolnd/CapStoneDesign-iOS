@@ -26,7 +26,7 @@ struct DiarySendView: View {
                         Text("MoodMingle")
                             .font(.custom("KyoboHandwriting2021sjy", size: 25))
                     }
-                    .padding(EdgeInsets(top: 15, leading: 0, bottom: 30, trailing: 0))
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 30, trailing: 0))
                     
                     Text("등록완료!")
                         .font(.custom("777Balsamtint", size: 35))
