@@ -27,7 +27,7 @@ struct CalendarView: View {
     ]
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             ZStack{
                 Image("initial_background")
                     .resizable()

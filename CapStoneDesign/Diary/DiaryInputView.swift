@@ -26,6 +26,8 @@ struct DiaryInputView: View {
     @State var characterCount: Int = 0
     let maxContentLength = 300
     
+    @FocusState var isInputActive: Bool
+    
     func loadImage() {
         guard let selectedImage = selectedUIImage else { return }
         image = Image(uiImage: selectedImage)
@@ -39,7 +41,7 @@ struct DiaryInputView: View {
     ]
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             ZStack {
                 Image("initial_background")
                     .resizable()
@@ -52,7 +54,6 @@ struct DiaryInputView: View {
                     }, label: {
                         
                         HStack{
-                            
                             Image(systemName: "chevron.left")
                                 .resizable()// 화살표 Image
                                 .aspectRatio(contentMode: .fit)
@@ -86,37 +87,40 @@ struct DiaryInputView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 20))
                             
-                            Text(formatDate(dateString: currentDate))
-                                .font(.custom("777Balsamtint", size: 18))
-                                .padding(EdgeInsets(top: -110, leading: 200, bottom: 0, trailing: 0))
-                            
-                            HStack {
-                                Text("\(vm.emotions[currentEmotion].name)")
+                            VStack{
+                                Text(formatDate(dateString: currentDate))
                                     .font(.custom("777Balsamtint", size: 18))
-                                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                                Image("\(vm.emotions[currentEmotion].imageName)")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 60)
-                            }
-                            .padding(EdgeInsets(top: -50, leading: 220, bottom: 0, trailing: 0))
-                            
-                            LazyVGrid(columns: layout){
-                                ForEach(vm.weathers.indices, id: \.self){ index in
-                                    let weaher = vm.weathers[index]
-                                    
-                                    DiaryWeatherView(weather: weaher)
-                                        .opacity(selectedWeatherIndex != nil && selectedWeatherIndex != index ? 0.5 : 1.0)
-                                        .onTapGesture {
-                                            if let prevSelectedIndex = selectedWeatherIndex {
-                                                vm.weathers[prevSelectedIndex].isSelected = false
-                                            }
-                                            vm.weathers[index].isSelected.toggle()
-                                            selectedWeatherIndex = index
-                                        }
+                                HStack {
+                                    Text("\(vm.emotions[currentEmotion].name)")
+                                        .font(.custom("777Balsamtint", size: 18))
+                                        .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0))
+                                    Image("\(vm.emotions[currentEmotion].imageName)")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 60)
                                 }
+                                .padding(EdgeInsets(top: 17, leading: 0, bottom: 0, trailing: 0))
+                                Spacer()
+                                
+                                LazyVGrid(columns: layout){
+                                    ForEach(vm.weathers.indices, id: \.self){ index in
+                                        let weaher = vm.weathers[index]
+                                        
+                                        DiaryWeatherView(weather: weaher)
+                                            .opacity(selectedWeatherIndex != nil && selectedWeatherIndex != index ? 0.5 : 1.0)
+                                            .onTapGesture {
+                                                if let prevSelectedIndex = selectedWeatherIndex {
+                                                    vm.weathers[prevSelectedIndex].isSelected = false
+                                                }
+                                                vm.weathers[index].isSelected.toggle()
+                                                selectedWeatherIndex = index
+                                            }
+                                    }
+                                }
+                                .frame(width: 150)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 20))
                             }
-                            .padding(EdgeInsets(top: 150, leading: 220, bottom: 0, trailing: 30))
+                            .padding(EdgeInsets(top: 6, leading: 200, bottom: 0, trailing: 0))
                             HStack {
                                 if let image = image {
                                     GeometryReader { geometry in
@@ -152,39 +156,84 @@ struct DiaryInputView: View {
                             
                             
                         }
+                        .frame(width: 400)
+                        
                         ZStack {
                             Image("diary_content")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
-                            TextField("제목을 입력하세요", text: $title)
-                                .padding(EdgeInsets(top: 0, leading: 110, bottom: 440, trailing: 0))
-                                .font(.custom("777Balsamtint", size: 25))
-                            TextField("일기를 작성하세요", text: $content, axis: .vertical)
-                                .padding(EdgeInsets(top: -150, leading: 0, bottom: -300, trailing: 0))
-                                .frame(width: 300)
-                                .font(.custom("777Balsamtint", size: 20))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 50, trailing: 0))
                             
-                            Text("\(characterCount)/\(maxContentLength)")
-                                .font(.custom("777Balsamtint", size: 20))
-                                .padding(EdgeInsets(top: 480, leading: 250, bottom: 0, trailing: 0))
-                                .foregroundColor(characterCount > maxContentLength ? .red : .gray)
+                            VStack{
+                                TextField("제목을 입력하세요", text: $title)
+                                    .focused($isInputActive)
+                                    .frame(width: 255)
+                                    .font(.custom("777Balsamtint", size: 20))
+                                    .padding(EdgeInsets(top: 35, leading: 60, bottom: 0, trailing: 0))
+                                
+                                TextField("일기를 작성하세요", text: $content, axis: .vertical)
+                                    .focused($isInputActive)
+                                    .frame(width: 300)
+                                    .font(.custom("777Balsamtint", size: 20))
+                                    .padding(EdgeInsets(top: 50, leading: 0, bottom: 0, trailing: 0))
+                                
+                                Spacer()
+                                Text("\(characterCount)/\(maxContentLength)")
+                                    .font(.custom("777Balsamtint", size: 20))
+                                    .foregroundColor(characterCount > maxContentLength ? .red : .gray)
+                                    .padding(EdgeInsets(top: 0, leading: 250, bottom: 70, trailing: 0))
+                            }
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    
+                                    Button("Done") {
+                                        isInputActive = false
+                                    }
+                                }
+                            }
                         }
+                        .frame(width: 350)
                     }
                     Spacer()
+                }
+                
+                Spacer()
+                
+                VStack{
+                    Spacer()
+                    
+                    if title != "" && content != "" {
+                        NavigationLink {
+                            DiarySendView(title: $title, content: $content)
+                        } label: {
+                            Image(title != "" && content != "" ? "diary_btn_on" : "diary_btn_off" )
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 350)
+                        }
+                    }
+                    else{
+                        Image(title != "" && content != "" ? "diary_btn_on" : "diary_btn_off" )
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 350)
+                    }
+
                 }
             }
             .accentColor(Color.black)
             
         }
+        .toolbar(.hidden)
+        .navigationBarBackButtonHidden(true)
         .onChange(of: content) { newValue in
             characterCount = newValue.count
             if characterCount > maxContentLength {
                 content = String(newValue.prefix(maxContentLength))
             }
         }
-        .toolbar(.hidden)
-        .navigationBarBackButtonHidden(true)
+        
     }
     
     func formatDate(dateString: String) -> String {

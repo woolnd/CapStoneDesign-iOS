@@ -21,7 +21,7 @@ struct EmotionInputView: View {
     ]
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             ZStack{
                 VStack {
                     Button(action: {

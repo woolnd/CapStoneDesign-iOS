@@ -41,7 +41,7 @@ struct EmotionalStatusView: View {
     let case2 = Case2.dummy
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             ZStack {
                 Image("initial_background")
                     .resizable()

@@ -15,11 +15,9 @@ struct DiaryWeatherView: View {
             Image("\(weather.imageName)")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 50)
             Image("diary_check")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 50)
                 .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                 .opacity(weather.isSelected == true ? 1 : 0)
         }
