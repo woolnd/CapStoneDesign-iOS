@@ -7,5 +7,11 @@
 		<string>KyoboHandwriting2021sjy.otf</string>
 		<string>777Balsamtint.otf</string>
 	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

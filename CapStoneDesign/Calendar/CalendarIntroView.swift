@@ -9,17 +9,12 @@ import SwiftUI
 
 struct CalendarIntroView: View {
     var body: some View {
-        VStack{
-            Text("hello")
-            Spacer()
-            Text("hello")
-        }
-        .background(
+        ZStack{
             Image("initial_background")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .ignoresSafeArea()
-        )
+        }
     }
 }
 

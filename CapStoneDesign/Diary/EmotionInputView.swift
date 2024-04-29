@@ -45,7 +45,7 @@ struct EmotionInputView: View {
                         
                         Spacer()
                     }
-                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
+                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
                     
                     
                     Text("감성을 선택해주세요!")
