@@ -11,6 +11,7 @@ import UserNotifications
 struct MyPageView: View {
     
     @State private var isLowPowerMode = false
+    let manager = NotificationManager.instance
     
     var body: some View {
         NavigationStack{
@@ -60,7 +61,7 @@ struct MyPageView: View {
                         Spacer()
                         
                         Button(action: {
-                        
+                            manager.requestAuthorization()
                         }, label: {
                             Image("mypage_btn")
                                 .resizable()
@@ -75,7 +76,7 @@ struct MyPageView: View {
                             .tint(.orange)
                         
                     }
-                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 10))
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
                     
                     HStack{
                         Spacer()
@@ -136,6 +137,19 @@ struct MyPageView: View {
                         .opacity(0)
                 }
                 .offset(x: -40)
+                //푸시알림 테스트 코드
+//                HStack{
+//                    Spacer()
+//                    
+//                    Button(action: {
+//                        manager.scheduleNotification(trigger: .time)
+//                    }, label: {
+//                        Image("mypage_btn")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 100)
+//                    })
+//                }
             }
         }
         .toolbar(.hidden)

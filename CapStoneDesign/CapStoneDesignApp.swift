@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct CapStoneDesignApp: App {
+    
     var body: some Scene {
         WindowGroup {
             ZStack{

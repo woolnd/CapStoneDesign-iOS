@@ -55,6 +55,7 @@ struct AnnouncementView: View {
                                 HStack{
                                     Text("\(announce.content)")
                                         .font(.custom("777Balsamtint", size: 20))
+                                        .padding()
                                     Spacer()
                                 }
                             }
@@ -65,6 +66,7 @@ struct AnnouncementView: View {
                             .padding()
                         }
                     }
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                     Spacer()
                 }
                 

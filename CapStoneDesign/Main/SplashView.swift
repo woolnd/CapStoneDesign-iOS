@@ -99,3 +99,5 @@ extension Font{
 #Preview {
     SplashView(text: "MoodMingle")
 }
+
+
