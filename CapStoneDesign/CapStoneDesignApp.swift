@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct CapStoneDesignApp: App {
-    
+    @StateObject var stateManager = StateManager()
     var body: some Scene {
         WindowGroup {
             ZStack{
                 
-                SplashView(text: "MoodMingle").transition(.opacity).zIndex(1)
+                SplashView(text: "MoodMingle").transition(.opacity).zIndex(1).environmentObject(stateManager)
             }
         }
     }

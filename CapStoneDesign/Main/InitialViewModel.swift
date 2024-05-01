@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class InitialViewModle: ObservableObject{
+final class InitialViewModel: ObservableObject{
     @Published var contents: [initialContent]
     
     
@@ -22,7 +22,7 @@ final class InitialViewModle: ObservableObject{
     }
 }
 
-extension InitialViewModle{
+extension InitialViewModel{
     static let mock: [initialContent] = [
         initialContent(title: "감정일기란?", content: "감정일기 내용"),
         initialContent(title: "캘린더 사용법!", content: "캘린더 사용법 내용"),
