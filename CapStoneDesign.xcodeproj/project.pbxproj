@@ -18,6 +18,7 @@
 		6D03040B2BC78EA8008114A0 /* 777Balsamtint.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6D03040A2BC78EA8008114A0 /* 777Balsamtint.otf */; };
 		6D04BB392BDE6A47005A2065 /* DiarySendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D04BB382BDE6A47005A2065 /* DiarySendView.swift */; };
 		6D54DD232BC5BF9F008F839E /* EmotionalStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */; };
+		6D6132482BE3517000B879AB /* EmotionGraphIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6132472BE3517000B879AB /* EmotionGraphIntroView.swift */; };
 		6D705A262BBD7B740038A9E9 /* CapStoneDesignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A252BBD7B740038A9E9 /* CapStoneDesignApp.swift */; };
 		6D705A282BBD7B740038A9E9 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A272BBD7B740038A9E9 /* TabBarView.swift */; };
 		6D705A2A2BBD7B740038A9E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D705A292BBD7B740038A9E9 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		6D03040A2BC78EA8008114A0 /* 777Balsamtint.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 777Balsamtint.otf; sourceTree = "<group>"; };
 		6D04BB382BDE6A47005A2065 /* DiarySendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySendView.swift; sourceTree = "<group>"; };
 		6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionalStatusView.swift; sourceTree = "<group>"; };
+		6D6132472BE3517000B879AB /* EmotionGraphIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionGraphIntroView.swift; sourceTree = "<group>"; };
 		6D705A222BBD7B740038A9E9 /* CapStoneDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CapStoneDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D705A252BBD7B740038A9E9 /* CapStoneDesignApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapStoneDesignApp.swift; sourceTree = "<group>"; };
 		6D705A272BBD7B740038A9E9 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */,
+				6D6132472BE3517000B879AB /* EmotionGraphIntroView.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D6132482BE3517000B879AB /* EmotionGraphIntroView.swift in Sources */,
 				6DFF28F12BC42CD1003FE84A /* CalendarViewModel.swift in Sources */,
 				6DA67AA42BC7BC0800209864 /* CalendarView.swift in Sources */,
 				6DFF28EE2BC429DD003FE84A /* CalendarDateView.swift in Sources */,

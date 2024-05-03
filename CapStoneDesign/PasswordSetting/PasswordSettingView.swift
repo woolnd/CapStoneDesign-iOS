@@ -43,8 +43,6 @@ struct PasswordSettingView: View {
                 }
                 
                 
-                Spacer()
-                
                 
                 HStack(spacing: 10){
                     Group {
@@ -75,8 +73,6 @@ struct PasswordSettingView: View {
                                 }
                             } label: {
                                 Text("\(numberpadNumber)")
-                                    .padding(.bottom, 32)
-                                    .contentShape(Rectangle())
                                     .foregroundColor(Color.black)
                             }
                             
@@ -90,7 +86,6 @@ struct PasswordSettingView: View {
                             } label: {
                                 Image(systemName: "arrow.clockwise")
                                     .foregroundColor(Color.gray)
-                                    .contentShape(Rectangle())
                             }
                             
                         } else if numberpadNumber == 11 {
@@ -98,8 +93,7 @@ struct PasswordSettingView: View {
                                 passwordSettingViewModel.passwordFieldArray.append(0)
                             } label: {
                                 Text("0")
-                                    .contentShape(Rectangle())
-                                    .foregroundColor(Color.gray)
+                                    .foregroundColor(Color.black)
                             }
                             
                             
@@ -110,11 +104,11 @@ struct PasswordSettingView: View {
                                 }
                             } label: {
                                 Image(systemName: "delete.left.fill")
-                                    .contentShape(Rectangle())
                                     .foregroundColor(Color.gray)
                             }
                         }
                     }
+                    .padding()
                 }
                 .font(.largeTitle)
                 

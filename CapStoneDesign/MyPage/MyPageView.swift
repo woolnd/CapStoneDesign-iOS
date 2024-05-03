@@ -12,7 +12,11 @@ struct MyPageView: View {
     
     @EnvironmentObject var stateManager : StateManager
     @State private var isPasswordSettingViewActive = false
+    fileprivate var APP_SCREEN_LOCK_PASSWORD = "AppScreenLockPassWord"
+    
     let manager = NotificationManager.instance
+    
+    
     
     var body: some View {
         NavigationStack{
@@ -77,7 +81,17 @@ struct MyPageView: View {
                             .tint(.orange)
                             .onChange(of: stateManager.isPasswordSetting) { newValue in
                                 if newValue {
-                                    stateManager.isPasswordSettingView.toggle()
+                                    
+                                    let AppScreenLockPassword = getUD(key: APP_SCREEN_LOCK_PASSWORD)
+                                    if AppScreenLockPassword as! [Int] == [] {
+                                        stateManager.isPasswordSettingView = true
+                                    } else {
+                                        // User Set Password
+                                        stateManager.isPasswordSettingView = false
+                                    }
+                                    
+                                } else {
+                                    removeUD(key: APP_SCREEN_LOCK_PASSWORD)
                                 }
                             }
                             .sheet(isPresented: $stateManager.isPasswordSettingView, content: {
@@ -163,6 +177,9 @@ struct MyPageView: View {
         }
         .toolbar(.hidden)
         .navigationBarBackButtonHidden(true)
+        .onAppear(){
+            stateManager.checkIsUserSetPassword()
+        }
         
     }
 }

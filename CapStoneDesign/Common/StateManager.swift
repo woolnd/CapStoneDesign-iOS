@@ -18,4 +18,17 @@ class StateManager: ObservableObject {
     // PasswordSettingView
     @Published var isPasswordSettingView : Bool = false
     @Published var isPasswordSetting : Bool = false
+    
+    fileprivate var APP_SCREEN_LOCK_PASSWORD = "AppScreenLockPassWord"
+    
+    func checkIsUserSetPassword() {
+        let AppScreenLockPassword = getUD(key: APP_SCREEN_LOCK_PASSWORD)
+        if AppScreenLockPassword as! [Int] == [] {
+            
+            isPasswordSetting = false
+        } else {
+            // User Set Password
+            isPasswordSetting = true
+        }
+    }
 }

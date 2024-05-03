@@ -15,7 +15,6 @@ class PasswordSettingViewModel : ObservableObject {
     var subscription = Set<AnyCancellable>()
     
     
-    
     func resetPasswordArray() {
         passwordFieldArray = []
     }
@@ -52,4 +51,3 @@ class PasswordSettingViewModel : ObservableObject {
             .store(in: &subscription)
     }
 }
-

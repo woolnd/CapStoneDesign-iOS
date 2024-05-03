@@ -48,10 +48,7 @@ struct AppScreenLockView: View {
                     Spacer()
                 }
                 
-                
-                Spacer()
-                
-                
+            
                 HStack(spacing: 10){
                     Group {
                         Image(appScreenLockModel.passwordFieldArray.count >= 1 ? "flutter" : "peace")
@@ -73,10 +70,10 @@ struct AppScreenLockView: View {
                 .offset(x: appScreenLockModel.isWrongPassword ? -10 : 0)
                 .animation(appScreenLockModel.isWrongPassword ?  Animation.default.repeatCount(3).speed(6) : .none)
                 
+                
                 Text("비밀번호를 잊어버렸어요")
                     .font(.system(size: 14, weight: .regular, design: .serif))
                     .underline()
-                    .padding(.bottom, 79)
                     .foregroundColor(Color.gray)
                     .contentShape(Rectangle())
                     .onTapGesture(perform: {
@@ -99,8 +96,6 @@ struct AppScreenLockView: View {
                                 }
                             } label: {
                                 Text("\(numberpadNumber)")
-                                    .padding(.bottom, 32)
-                                    .contentShape(Rectangle())
                                     .foregroundColor(Color.black)
                             }
                             
@@ -114,7 +109,6 @@ struct AppScreenLockView: View {
                             } label: {
                                 Image(systemName: "arrow.clockwise")
                                     .foregroundColor(Color.gray)
-                                    .contentShape(Rectangle())
                             }
                             
                         } else if numberpadNumber == 11 {
@@ -122,8 +116,7 @@ struct AppScreenLockView: View {
                                 appScreenLockModel.passwordFieldArray.append(0)
                             } label: {
                                 Text("0")
-                                    .contentShape(Rectangle())
-                                    .foregroundColor(Color.gray)
+                                    .foregroundColor(Color.black)
                             }
                             
                             
@@ -134,11 +127,11 @@ struct AppScreenLockView: View {
                                 }
                             } label: {
                                 Image(systemName: "delete.left.fill")
-                                    .contentShape(Rectangle())
                                     .foregroundColor(Color.gray)
                             }
                         }
                     }
+                    .padding()
                 }
                 .font(.largeTitle)
                 
