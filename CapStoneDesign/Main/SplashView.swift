@@ -11,10 +11,11 @@ struct SplashView: View {
     
     @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
     @State var accessTokenCheck: Bool = false
+    @State var isActive = false
     let text: String
     @State private var splashChar = ""
     @State private var logoOpacity = 0.0
-    @State private var logoOffsetY = +50.0
+    @State private var logoOffsetY = -10.0
     @State private var buttonOpacity = 0.0
     let timer = Timer.publish(every: 0.15, on: .main, in: .common).autoconnect()
     let logotimer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
@@ -30,9 +31,7 @@ struct SplashView: View {
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
                 
-                VStack {
-                    Spacer()
-                    
+                if(accessTokenCheck){
                     ZStack{
                         Image("logo")
                             .resizable()
@@ -51,23 +50,42 @@ struct SplashView: View {
                                 }
                             }
                     }
-                    .offset(y: logoOffsetY)
-                    .onReceive(logotimer){_ in
-                        withAnimation{
-                            logoOffsetY = -30
+                    .fullScreenCover(isPresented: $isActive, content: {
+                        TabBarView(selection: 1)
+                    })
+                    
+                }else{
+                    VStack{
+                        ZStack{
+                            Image("logo")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 120, height: 48)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 80, trailing: 130))
+                                .opacity(logoOpacity)
+                            Text(splashChar)
+                                .font(.Kyobo)
+                                .bold()
+                                .onReceive(timer){_ in
+                                    if splashChar.count < text.count{
+                                        let index = text.index(text.startIndex, offsetBy: splashChar.count)
+                                        splashChar.append(text[index])
+                                        withAnimation(.easeInOut(duration: 1.0)) {logoOpacity = 1.0}
+                                    }
+                                }
+                        }
+                        .offset(y: logoOffsetY)
+                        .onReceive(logotimer){_ in
+                            withAnimation{
+                                logoOffsetY = -50
+                            }
                         }
                     }
                     
-                    Spacer()
-                    
-                    if(accessTokenCheck){
-                        NavigationLink {
-                            TabBarView(selection: 1)
-                        } label: {
-                            Text("hello")
-                        }
-
-                    }else{
+                    VStack {
+                        
+                        Spacer()
+                        
                         Button {
                             kakaoAuthVM.handleKakaoLogin()
                         } label: {
@@ -91,30 +109,38 @@ struct SplashView: View {
                                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
                                 .opacity(buttonOpacity)
                         }
-                    }
-                    
-                }
-                .onReceive(aftertimer){_ in
-                    withAnimation{
-                        logoOffsetY = -30
-                        buttonOpacity = 1
                         
                     }
+                    .onReceive(aftertimer){_ in
+                        withAnimation{
+                            logoOffsetY = -50
+                            buttonOpacity = 1
+                            
+                        }
+                    }
                 }
+                
             }
             .onAppear(){
                 kakaoAuthVM.handleTokenCheck { success in
-                        if success {
-                            // 토큰 체크 성공 시 수행할 동작
-                            accessTokenCheck = true
-                        } else {
-                            // 토큰 체크 실패 시 수행할 동작
-                            accessTokenCheck = false
+                    if success {
+                        // 토큰 체크 성공 시 수행할 동작
+                        accessTokenCheck = true
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            changedView()
                         }
+                    } else {
+                        // 토큰 체크 실패 시 수행할 동작
+                        accessTokenCheck = false
                     }
+                }
             }
             .accentColor(.black)
         }
+    }
+    func changedView(){
+        self.isActive.toggle()
     }
 }
 
