@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SplashView: View {
     
+    @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
+    @State var accessTokenCheck: Bool = false
     let text: String
     @State private var splashChar = ""
     @State private var logoOpacity = 0.0
@@ -58,26 +60,37 @@ struct SplashView: View {
                     
                     Spacer()
                     
-                    NavigationLink {
-                        InitialView()
-                    } label: {
-                        Image("kakao_login")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: .infinity)
-                            .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                            .opacity(buttonOpacity)
-                    }
-                    
-                    NavigationLink {
-                        InitialView()
-                    } label: {
-                        Image("naver_login")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: .infinity)
-                            .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
-                            .opacity(buttonOpacity)
+                    if(accessTokenCheck){
+                        NavigationLink {
+                            TabBarView(selection: 1)
+                        } label: {
+                            Text("hello")
+                        }
+
+                    }else{
+                        Button {
+                            kakaoAuthVM.handleKakaoLogin()
+                        } label: {
+                            Image("kakao_login")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                                .opacity(buttonOpacity)
+                        }
+                        
+                        
+                        
+                        NavigationLink {
+                            InitialView()
+                        } label: {
+                            Image("naver_login")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                                .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
+                                .opacity(buttonOpacity)
+                        }
                     }
                     
                 }
@@ -89,7 +102,18 @@ struct SplashView: View {
                     }
                 }
             }
-            
+            .onAppear(){
+                kakaoAuthVM.handleTokenCheck { success in
+                        if success {
+                            // 토큰 체크 성공 시 수행할 동작
+                            accessTokenCheck = true
+                        } else {
+                            // 토큰 체크 실패 시 수행할 동작
+                            accessTokenCheck = false
+                        }
+                    }
+            }
+            .accentColor(.black)
         }
     }
 }
