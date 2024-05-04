@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 struct SplashView: View {
     
     @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
-    @State var accessTokenCheck: Bool = false
+    @State var appleTokenCheck: Bool = false
+    @State var kakaoTokenCheck: Bool = false
+
     @State var isActive = false
     let text: String
     @State private var splashChar = ""
@@ -31,7 +34,7 @@ struct SplashView: View {
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
                 
-                if(accessTokenCheck){
+                if(appleTokenCheck || kakaoTokenCheck){
                     ZStack{
                         Image("logo")
                             .resizable()
@@ -86,30 +89,29 @@ struct SplashView: View {
                         
                         Spacer()
                         
+                        
+                        AppleSigninButton()
+                            .opacity(buttonOpacity)
+                        //                        Button {
+                        //
+                        //                        } label: {
+                        //                            Image("apple_login")
+                        //                                .resizable()
+                        //                                .aspectRatio(contentMode: .fit)
+                        //                                .frame(maxWidth: .infinity)
+                        //                                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
+                        //                                .opacity(buttonOpacity)
+                        //                        }
+                        
                         Button {
                             kakaoAuthVM.handleKakaoLogin()
                         } label: {
                             Image("kakao_login")
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                                .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
-                                .opacity(buttonOpacity)
-                        }
-                        
-                        
-                        
-                        NavigationLink {
-                            InitialView()
-                        } label: {
-                            Image("naver_login")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
+                                .frame(width : UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.06)
                                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
                                 .opacity(buttonOpacity)
                         }
-                        
                     }
                     .onReceive(aftertimer){_ in
                         withAnimation{
@@ -122,17 +124,31 @@ struct SplashView: View {
                 
             }
             .onAppear(){
+                
+                if UserDefaults.standard.string(forKey: "AppleToken") != nil {
+                    // IdentityToken이 UserDefaults에 저장되어 있음
+                    appleTokenCheck = true
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        changedView()
+                    }
+                } else {
+                    // IdentityToken이 UserDefaults에 저장되어 있지 않음
+                    appleTokenCheck = false
+                }
+                
+                
                 kakaoAuthVM.handleTokenCheck { success in
                     if success {
                         // 토큰 체크 성공 시 수행할 동작
-                        accessTokenCheck = true
+                        kakaoTokenCheck = true
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             changedView()
                         }
                     } else {
                         // 토큰 체크 실패 시 수행할 동작
-                        accessTokenCheck = false
+                        kakaoTokenCheck = false
                     }
                 }
             }
@@ -148,6 +164,41 @@ extension Font{
     
     static let Kyobo: Font = custom("KyoboHandwriting2021sjy", size: 58)
 }
+
+struct AppleSigninButton : View{
+    var body: some View{
+        SignInWithAppleButton(
+            onRequest: { request in
+                request.requestedScopes = [.fullName, .email]
+            },
+            onCompletion: { result in
+                switch result {
+                case .success(let authResults):
+                    print("Apple Login Successful")
+                    switch authResults.credential{
+                    case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                        // 계정 정보 가져오기
+                        let UserIdentifier = appleIDCredential.user
+                        let fullName = appleIDCredential.fullName
+                        let name =  (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
+                        let email = appleIDCredential.email
+                        let IdentityToken = String(data: appleIDCredential.identityToken!, encoding: .utf8)
+                        UserDefaults.standard.set(IdentityToken, forKey: "AppleToken")
+                        let AuthorizationCode = String(data: appleIDCredential.authorizationCode!, encoding: .utf8)
+                        print("\(IdentityToken!)")
+                    default:
+                        break
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    print("error")
+                }
+            }
+        )
+        .frame(width : UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.06)
+    }
+}
+
 #Preview {
     SplashView(text: "MoodMingle")
 }

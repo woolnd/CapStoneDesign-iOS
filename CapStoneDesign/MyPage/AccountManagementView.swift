@@ -10,6 +10,8 @@ import SwiftUI
 struct AccountManagementView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    @State var appleTokenChk: String = (UserDefaults.standard.string(forKey: "AppleToken") ?? "")
+    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -45,7 +47,7 @@ struct AccountManagementView: View {
                 }
                 
                 
-                Text("계정관리 페이지")
+                Text("\(appleTokenChk)")
             }
             .accentColor(Color.black)
         }
