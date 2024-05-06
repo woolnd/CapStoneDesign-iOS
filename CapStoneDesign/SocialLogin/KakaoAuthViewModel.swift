@@ -22,7 +22,11 @@ class KakaoAuthViewModel: ObservableObject{
                 
                 //do something
                 let token = oauthToken
-//                print("\(token!)")
+                if let accessToken = token?.accessToken {
+                    let accessTokenString = String(accessToken)
+                    UserDefaults.standard.set(accessTokenString, forKey: "KakaoToken")
+                    print("\(token)")
+                }
             }
         }
     }

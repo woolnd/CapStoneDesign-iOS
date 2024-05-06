@@ -17,7 +17,10 @@
 		6D0304052BC7861F008114A0 /* InitialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0304042BC7861F008114A0 /* InitialViewModel.swift */; };
 		6D03040B2BC78EA8008114A0 /* 777Balsamtint.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6D03040A2BC78EA8008114A0 /* 777Balsamtint.otf */; };
 		6D04BB392BDE6A47005A2065 /* DiarySendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D04BB382BDE6A47005A2065 /* DiarySendView.swift */; };
+		6D2D8D842BE8562100AF01E8 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2D8D832BE8562100AF01E8 /* Service.swift */; };
+		6D2D8D872BE8564C00AF01E8 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2D8D862BE8564C00AF01E8 /* ViewModel.swift */; };
 		6D54DD232BC5BF9F008F839E /* EmotionalStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */; };
+		6D5EE72B2BE6E5E600A6D428 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EE72A2BE6E5E600A6D428 /* TokenManager.swift */; };
 		6D6132482BE3517000B879AB /* EmotionGraphIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6132472BE3517000B879AB /* EmotionGraphIntroView.swift */; };
 		6D705A262BBD7B740038A9E9 /* CapStoneDesignApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A252BBD7B740038A9E9 /* CapStoneDesignApp.swift */; };
 		6D705A282BBD7B740038A9E9 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A272BBD7B740038A9E9 /* TabBarView.swift */; };
@@ -64,7 +67,10 @@
 		6D0304042BC7861F008114A0 /* InitialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewModel.swift; sourceTree = "<group>"; };
 		6D03040A2BC78EA8008114A0 /* 777Balsamtint.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 777Balsamtint.otf; sourceTree = "<group>"; };
 		6D04BB382BDE6A47005A2065 /* DiarySendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySendView.swift; sourceTree = "<group>"; };
+		6D2D8D832BE8562100AF01E8 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		6D2D8D862BE8564C00AF01E8 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionalStatusView.swift; sourceTree = "<group>"; };
+		6D5EE72A2BE6E5E600A6D428 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		6D6132472BE3517000B879AB /* EmotionGraphIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionGraphIntroView.swift; sourceTree = "<group>"; };
 		6D705A222BBD7B740038A9E9 /* CapStoneDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CapStoneDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D705A252BBD7B740038A9E9 /* CapStoneDesignApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapStoneDesignApp.swift; sourceTree = "<group>"; };
@@ -113,6 +119,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6D2D8D852BE8562600AF01E8 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				6D2D8D832BE8562100AF01E8 /* Service.swift */,
+				6D2D8D862BE8564C00AF01E8 /* ViewModel.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		6D3D96792BC1D2B800A8A0E6 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +170,7 @@
 				6D787E502BE299FE0064267B /* AppScreenLock */,
 				6D787E572BE29AB40064267B /* PasswordSetting */,
 				6DCA61832BE64867004033A4 /* SocialLogin */,
+				6D2D8D852BE8562600AF01E8 /* API */,
 				6D705A292BBD7B740038A9E9 /* Assets.xcassets */,
 				6DC553202BC6CCF3005C358B /* Resources */,
 				6DFF28EA2BC3BE6E003FE84A /* etc */,
@@ -223,6 +239,7 @@
 				6DCA61882BE64A16004033A4 /* MyAppDelegate.swift */,
 				6DCA618A2BE64A2A004033A4 /* MySceneDelegate.swift */,
 				6DCA618C2BE64A41004033A4 /* KakaoAuthViewModel.swift */,
+				6D5EE72A2BE6E5E600A6D428 /* TokenManager.swift */,
 			);
 			path = SocialLogin;
 			sourceTree = "<group>";
@@ -380,9 +397,11 @@
 				6D787E4E2BE299D70064267B /* StateManager.swift in Sources */,
 				6D0304052BC7861F008114A0 /* InitialViewModel.swift in Sources */,
 				6DA6CED82BC90E38003B30E0 /* EmotionViewModel.swift in Sources */,
+				6D2D8D842BE8562100AF01E8 /* Service.swift in Sources */,
 				6DCA618B2BE64A2A004033A4 /* MySceneDelegate.swift in Sources */,
 				6D54DD232BC5BF9F008F839E /* EmotionalStatusView.swift in Sources */,
 				6DC5531A2BC67A5D005C358B /* MyPageView.swift in Sources */,
+				6D2D8D872BE8564C00AF01E8 /* ViewModel.swift in Sources */,
 				6D02306A2BE01F5000ABDD5F /* TermsOfUseView.swift in Sources */,
 				6D705A262BBD7B740038A9E9 /* CapStoneDesignApp.swift in Sources */,
 				6DE331E32BC51E1E00227A51 /* CalendarIntroView.swift in Sources */,
@@ -397,6 +416,7 @@
 				6DC553292BC6E11A005C358B /* SplashView.swift in Sources */,
 				6DCA618D2BE64A41004033A4 /* KakaoAuthViewModel.swift in Sources */,
 				6D0230682BE01F2800ABDD5F /* AccountManagementView.swift in Sources */,
+				6D5EE72B2BE6E5E600A6D428 /* TokenManager.swift in Sources */,
 				6DBAA2172BDC274800DCECCD /* ImagePicker.swift in Sources */,
 				6D0230642BE01E8700ABDD5F /* AnnouncementView.swift in Sources */,
 				6D705A3C2BBDE00A0038A9E9 /* Diary.swift in Sources */,

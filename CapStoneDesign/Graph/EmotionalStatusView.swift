@@ -48,15 +48,15 @@ struct EmotionalStatusView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
-//                Chart(case2, id: \.name) { element in
-//                    ForEach(element.data, id: \.date) {
-//                        LineMark(
-//                            x: .value("date", $0.date),
-//                            y: .value("value", $0.value)
-//                        )
-//                    }
-//                    .foregroundStyle(by: .value("name", element.name))
-//                }
+                Chart(case2, id: \.name) { element in
+                    ForEach(element.data, id: \.date) {
+                        LineMark(
+                            x: .value("date", $0.date),
+                            y: .value("value", $0.value)
+                        )
+                    }
+                    .foregroundStyle(by: .value("name", element.name))
+                }
                 VStack{
                     HStack{
                         Button(action: {

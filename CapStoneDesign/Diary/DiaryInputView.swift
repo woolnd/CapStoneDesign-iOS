@@ -24,6 +24,7 @@ struct DiaryInputView: View {
     @State var title: String = ""
     @State var content: String = ""
     @State var characterCount: Int = 0
+    @State var imageData: Data = UIImage(named: "initial_last_logo")!.jpegData(compressionQuality: 1.0)!
     let maxContentLength = 300
     
     @FocusState var isInputActive: Bool
@@ -31,6 +32,8 @@ struct DiaryInputView: View {
     func loadImage() {
         guard let selectedImage = selectedUIImage else { return }
         image = Image(uiImage: selectedImage)
+        
+        imageData = selectedImage.jpegData(compressionQuality: 1.0)!
     }
     
     
@@ -213,6 +216,9 @@ struct DiaryInputView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 350)
+                                .onTapGesture {
+                                    DiaryRequest(dto: Dto(memberId: "1", title: title, date: "2022/03/05", content: content, emotion: "SADNESS", weather: "SUNNY"), image: imageData)
+                                }
                         }
                     }
                     else{
