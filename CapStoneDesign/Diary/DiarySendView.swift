@@ -11,6 +11,7 @@ struct DiarySendView: View {
     
     @Binding var title: String
     @Binding var content: String
+    var service = Service()
     
     var body: some View {
         NavigationStack{
@@ -62,6 +63,17 @@ struct DiarySendView: View {
                 .onAppear{
                     print("\(title)")
                     print("\(content)")
+                    service.diaryRequest { result in
+                        switch result {
+                        case .success(let response):
+                            // 성공적으로 응답을 받았을 때 수행할 동작
+                            print("Diary response: \(response)")
+                        case .failure(let error):
+                            // 요청이 실패했을 때 수행할 동작
+                            print("Error: \(error)")
+                        }
+                    }
+                    
                 }
                 
             }

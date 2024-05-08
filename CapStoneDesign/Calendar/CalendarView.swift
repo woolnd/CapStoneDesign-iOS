@@ -27,91 +27,100 @@ struct CalendarView: View {
     ]
     
     var body: some View {
-        NavigationStack{
-            ZStack{
-                Image("initial_background")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
-                VStack{
-                    HStack{
-                        Button(action: {
-                            isPresented = true
-                        }, label: {
-                            Image("introduce")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 70, height: 70)
-                        })
-                        Spacer()
-                        
-                        Text("MoodMingle")
-                            .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                            .padding(EdgeInsets(top: 0, leading: -70, bottom: 0, trailing: 0))
-                        Spacer()
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
-                    HStack{
-                        
-                        Button(action: {
-                            self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: self.currentDate)!
-                        }, label: {
-                            Image("arrow_left")
-                        })
-                        
-                        Text("\(formattedYear(date: currentDate))")
-                            .font(.custom("KyoboHandwriting2021sjy",size: 25))
-                            .frame(width: 100, height: 70)
-                            .multilineTextAlignment(.center)
-                        
-                        Button(action: {
-                            self.currentDate = Calendar.current.date(byAdding: .month, value: +1, to: self.currentDate)!
-                        }, label: {
-                            Image("arrow_right")
-                        })
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 0))
-                    
-                    
-                    ZStack{
-                        Image("calendar_background")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .padding(EdgeInsets(top: -130, leading: 0, bottom: 0, trailing: 0))
-                        
-                        VStack{
-                            LazyVGrid(columns: layout){
-                                ForEach(week, id: \.self){ week in
-                                    Text("\(week)")
-                                        .font(.custom("KyoboHandwriting2021sjy",size: 18))
-                                        .frame(width: 50)
-                                        .foregroundColor(week == "SUN" || week == "SAT" ? Color("Orange") : Color("LightGray"))
-                                    
-                                }
-                            }
-                            .padding(EdgeInsets(top: -10, leading: 10, bottom: 5, trailing: 10))
+        GeometryReader{ geo in
+            NavigationStack{
+                ZStack{
+                    Image("initial_background")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .ignoresSafeArea()
+                    VStack{
+                        HStack{
+                            Button(action: {
+                                isPresented = true
+                            }, label: {
+                                Image("introduce")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 70, height: 70)
+                            })
+                            Spacer()
                             
-                            LazyVGrid(columns: layout){
-                                ForEach(daysInMonth(date: currentDate), id: \.self) { day in
-                                    NavigationLink(destination: isMatchingDate(day) ? AnyView(CalendarDetailView()) : AnyView(EmotionInputView(date: day, currentDate: $currentDate))) {
-                                        CalendarDateView(date: day, currentDate: $currentDate)
-                                    }
-                                }
-                            }
-                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                            Text("MoodMingle")
+                                .font(.custom("KyoboHandwriting2021sjy", size: 25))
+                                .padding(EdgeInsets(top: 0, leading: -70, bottom: 0, trailing: 0))
                             Spacer()
                         }
+                        
+                        Spacer()
+                        
+                        HStack{
+                            
+                            Button(action: {
+                                self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: self.currentDate)!
+                            }, label: {
+                                Image("arrow_left")
+                            })
+                            
+                            Text("\(formattedYear(date: currentDate))")
+                                .font(.custom("KyoboHandwriting2021sjy",size: 25))
+                                .frame(width: 100, height: 70)
+                                .multilineTextAlignment(.center)
+                            
+                            Button(action: {
+                                self.currentDate = Calendar.current.date(byAdding: .month, value: +1, to: self.currentDate)!
+                            }, label: {
+                                Image("arrow_right")
+                            })
+                        }
+                        
+                        ZStack{
+                            VStack{
+                                Image("calendar_background")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: geo.size.width * 1)
+                                
+                                Spacer()
+                            }
+                            
+                            VStack{
+                                LazyVGrid(columns: layout){
+                                    ForEach(week, id: \.self){ week in
+                                        Text("\(week)")
+                                            .font(.custom("KyoboHandwriting2021sjy",size: 18))
+                                            .foregroundColor(week == "SUN" || week == "SAT" ? Color("Orange") : Color("LightGray"))
+                                    }
+                                }
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
+                        
+                                LazyVGrid(columns: layout){
+                                    ForEach(daysInMonth(date: currentDate), id: \.self) { day in
+                                        NavigationLink(destination: isMatchingDate(day) ? AnyView(CalendarDetailView()) : AnyView(EmotionInputView(date: day, currentDate: $currentDate))) {
+                                            CalendarDateView(date: day, currentDate: $currentDate)
+                                                .frame(height: geo.size.height * 0.08)
+                                                
+                                        }
+                                    }
+                                }
+                                Spacer()
+                                
+                            }
+                            .padding()
+                            
+                            Spacer()
+                        }
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
                 }
-            }            
+            }
+            .toolbar(.hidden)
+            .navigationBarBackButtonHidden(true)
+            .sheet(isPresented: $isPresented, content: {
+                CalendarIntroView()
+            })
         }
-        .toolbar(.hidden)
-        .navigationBarBackButtonHidden(true)
-        .sheet(isPresented: $isPresented, content: {
-            CalendarIntroView()
-        })
         
     }
 }

@@ -249,8 +249,8 @@
 			children = (
 				6DE331E22BC51E1E00227A51 /* CalendarIntroView.swift */,
 				6DA67AA32BC7BC0800209864 /* CalendarView.swift */,
-				6DFF28EB2BC3C020003FE84A /* CalendarDetailView.swift */,
 				6DFF28ED2BC429DD003FE84A /* CalendarDateView.swift */,
+				6DFF28EB2BC3C020003FE84A /* CalendarDetailView.swift */,
 				6DFF28F02BC42CD1003FE84A /* CalendarViewModel.swift */,
 			);
 			path = Calendar;

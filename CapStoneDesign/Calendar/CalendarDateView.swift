@@ -12,19 +12,25 @@ struct CalendarDateView: View {
         VStack{
             if(date == 0){
                 Text("")
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: -3, trailing: 20))
             }
             else{
-                ZStack{
-                    Text("\(date)")
-                        .font(.custom("777Balsamtint", size: 15))
-                        .foregroundColor(isToday(date) ? Color("Orange"): Color("LightGray"))
-                        .frame(width: 20)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 30))
-                    if(isToday(date)){
-                        Image("today")
-                            .padding(EdgeInsets(top: -15, leading: -8, bottom: -11, trailing: 25))
+                HStack{
+                    ZStack{
+                        Text("\(date)")
+                            .font(.custom("777Balsamtint", size: 15))
+                            .foregroundColor(isToday(date) ? Color("Orange"): Color("LightGray"))
+                        if(isToday(date)){
+                            Image("today")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 25)
+                        }else{
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 25)
+                        }
                     }
+                    Spacer()
                 }
                 
                 HStack{
@@ -34,18 +40,18 @@ struct CalendarDateView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 40, height: 40)
-                            .padding(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
                         
                     }else{
                         Rectangle()
                             .frame(width: 40, height: 40)
                             .foregroundColor(.clear)
-                            .padding(EdgeInsets(top: -10, leading: 0, bottom: 0, trailing: 0))
                     }
                     
                     Spacer()
                 }
+                .offset(y: -10.0)
             }
+            
         }
     }
     

@@ -13,7 +13,7 @@ struct DiaryRequest: Codable{
 }
 
 struct Dto: Codable{
-    var memberId: String
+    var memberId: Int
     var title: String
     var date: String
     var content: String

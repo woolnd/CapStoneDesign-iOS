@@ -34,14 +34,14 @@ extension EmotionViewModel{
     static var list : [emotion] = [
     
         emotion(name: "기쁨", imageName: "pleasure", isSelected: false),
-        emotion(name: "평온", imageName: "peace", isSelected: false),
-        emotion(name: "설렘", imageName: "flutter", isSelected: false),
-        emotion(name: "감동", imageName: "moved", isSelected: false),
-        emotion(name: "자신감", imageName: "confidence", isSelected: false),
         emotion(name: "공포", imageName: "fear", isSelected: false),
+        emotion(name: "평온", imageName: "peace", isSelected: false),
         emotion(name: "분노", imageName: "angry", isSelected: false),
+        emotion(name: "설렘", imageName: "flutter", isSelected: false),
         emotion(name: "슬픔", imageName: "sadness", isSelected: false),
+        emotion(name: "감동", imageName: "moved", isSelected: false),
         emotion(name: "걱정", imageName: "worry", isSelected: false),
+        emotion(name: "자신감", imageName: "confidence", isSelected: false),
         emotion(name: "무기력", imageName: "lethargy", isSelected: false)
     ]
     
