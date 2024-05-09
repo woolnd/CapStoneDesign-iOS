@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct DiaryInputView: View {
     
@@ -60,7 +61,7 @@ struct DiaryInputView: View {
                                     .resizable()// 화살표 Image
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20, height: 20)
-                                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
                                 
                             })
                             
@@ -68,7 +69,7 @@ struct DiaryInputView: View {
                             
                             Text("MoodMingle")
                                 .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                                .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                .padding(EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 0))
                             
                             Spacer()
                             
@@ -80,12 +81,14 @@ struct DiaryInputView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 70,height: 70)
                             })
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
                         }
                         
                         ZStack{
                             Image("input_background")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
+                                .padding(EdgeInsets(top: -20, leading: 0, bottom: 0, trailing: 10))
                             
                             HStack{
                                 VStack{
@@ -128,36 +131,60 @@ struct DiaryInputView: View {
                                     Spacer()
                                 }
                             }
-                            .offset(CGSize(width: geo.size.width * 0.25, height: geo.size.height * 0.05))
-                            
-                            HStack {
-                                if let image = image {
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: geo.size.width * 0.4, height: geo.size.height * 0.25)
-                                        .clipped()
-                                        .cornerRadius(20)
-                                }
-                            }
-                            .offset(CGSize(width: -geo.size.width * 0.25, height: -geo.size.height * 0.31))
-                            
+                            .offset(CGSize(width: geo.size.width * 0.22, height: geo.size.height * 0.025))
                             HStack{
-                                Button(action: {
-                                    showImagePicker.toggle()
-                                }, label: {
-                                    Text("사진 등록하기")
-                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
-                                })
-                                .sheet(isPresented: $showImagePicker, onDismiss: {
-                                    loadImage()
-                                }) {
-                                    ImagePicker(image: $selectedUIImage)
+                                VStack{
+                                    if let image = image {
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: geo.size.width * 0.4, height: geo.size.height * 0.27)
+                                            .clipped()
+                                            .cornerRadius(20)
+                                    }else{
+                                        Rectangle()
+                                            .frame(width: geo.size.width * 0.4, height: geo.size.height * 0.27)
+                                            .clipped()
+                                            .cornerRadius(20)
+                                            .foregroundColor(.clear)
+                                    }
+                                    
+                                    Button(action: {
+                                        showImagePicker.toggle()
+                                    }, label: {
+                                        Text("사진 등록하기")
+                                            .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
+                                    })
+                                    .sheet(isPresented: $showImagePicker, onDismiss: {
+                                        loadImage()
+                                    }) {
+                                        ImagePicker(image: $selectedUIImage)
+                                    }
+                                    
+                                    Spacer()
+                                }
+                                Spacer()
+                            }
+                            VStack{
+                                
+                                TextField("제목을 입력하세요", text: $title)
+                                    .submitLabel(.done)  //  "검색" 버튼
+                                    .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
+                                    .frame(width: geo.size.width * 0.65)
+                                
+                                ScrollViewReader{ sv in
+                                    ScrollView{
+                                        TextField("일기를 입력하세요", text: $content, axis: .vertical)
+                                            .submitLabel(.done)
+                                            .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
+                                            .onAppear(){
+                                                sv.scrollTo(content.count - 1, anchor: .bottom)
+                                            }
+                                    }
+                                    .padding(EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 40))
                                 }
                             }
-                            .offset(CGSize(width: -geo.size.width * 0.24, height: -geo.size.height * 0.16))
                         }
-                        
                     }
                 }
                 .accentColor(Color.black)
