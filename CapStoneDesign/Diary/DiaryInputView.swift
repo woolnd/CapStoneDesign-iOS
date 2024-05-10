@@ -165,14 +165,18 @@ struct DiaryInputView: View {
                                 }
                                 Spacer()
                             }
+                        
+                            
                             VStack{
-                                
-                                TextField("제목을 입력하세요", text: $title)
-                                    .submitLabel(.done)  //  "검색" 버튼
-                                    .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
-                                    .frame(width: geo.size.width * 0.65)
+                                VStack{
+                                    TextField("제목을 입력하세요", text: $title)
+                                        .submitLabel(.done)  //  "검색" 버튼
+                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
+                                        .frame(width: geo.size.width * 0.65)
+                                }
                                 
                                 ScrollViewReader{ sv in
+                                    
                                     ScrollView{
                                         TextField("일기를 입력하세요", text: $content, axis: .vertical)
                                             .submitLabel(.done)
@@ -181,9 +185,11 @@ struct DiaryInputView: View {
                                                 sv.scrollTo(content.count - 1, anchor: .bottom)
                                             }
                                     }
-                                    .padding(EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 40))
                                 }
+
                             }
+                            .frame(width: geo.size.width * 0.9)
+
                         }
                     }
                 }
