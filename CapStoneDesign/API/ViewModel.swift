@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct DiaryRequest: Codable{
+struct LetterDto: Codable{
     var dto: Dto
-    var image: Data
+    var image: String
 }
 
 struct Dto: Codable{

@@ -21,96 +21,99 @@ struct EmotionInputView: View {
     ]
     
     var body: some View {
-        NavigationStack{
-            ZStack{
-                Image("initial_background")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
-                
-                VStack {
+        GeometryReader{ geo in
+            NavigationStack{
+                ZStack{
+                    Image("initial_background")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .ignoresSafeArea()
                     
-                    HStack{
-                        Button(action: {
-                            self.presentationMode.wrappedValue.dismiss()
-                        }, label: {
+                    VStack {
+                        
+                        HStack{
+                            Button(action: {
+                                self.presentationMode.wrappedValue.dismiss()
+                            }, label: {
+                                
+                                Image(systemName: "chevron.left")
+                                    .resizable()// 화살표 Image
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20, height: 20)
+                                    .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                
+                            })
+                            Spacer()
                             
-                            Image(systemName: "chevron.left")
-                                .resizable()// 화살표 Image
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height: 20)
-                                .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                            Text("MoodMingle")
+                                .font(.custom("KyoboHandwriting2021sjy", size: 25))
+                                .padding(EdgeInsets(top: 0, leading: -50, bottom: 0, trailing: 0))
                             
-                        })
-                        Spacer()
+                            Spacer()
+                        }
+                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
                         
-                        Text("MoodMingle")
-                            .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                            .padding(EdgeInsets(top: 0, leading: -50, bottom: 0, trailing: 0))
                         
-                        Spacer()
-                    }
-                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
-                    
-                    
-                    Text("감성을 선택해주세요!")
-                        .font(.custom("777Balsamtint", size: 35))
-                    
-                    HStack{
-                        Spacer()
+                        Text("감성을 선택해주세요!")
+                            .font(.custom("777Balsamtint", size: 35))
+                            .padding()
                         
-                        ScrollView{
-                            LazyVGrid(columns: layout){
-                                ForEach(vm.emotions.indices, id: \.self) { index in
-                                    let emotion = vm.emotions[index]
-                                    EmotionDetailView(emotion: emotion)
-                                        .opacity(selectedEmotionIndex != nil && selectedEmotionIndex != index ? 0.5 : 1.0)
-                                        .onTapGesture {
-                                            if let prevSelectedIndex = selectedEmotionIndex {
-                                                vm.emotions[prevSelectedIndex].isSelected = false
+                        HStack{
+                            Spacer()
+                            
+                            ScrollView{
+                                LazyVGrid(columns: layout){
+                                    ForEach(vm.emotions.indices, id: \.self) { index in
+                                        let emotion = vm.emotions[index]
+                                        EmotionDetailView(emotion: emotion)
+                                            .opacity(selectedEmotionIndex != nil && selectedEmotionIndex != index ? 0.5 : 1.0)
+                                            .onTapGesture {
+                                                if let prevSelectedIndex = selectedEmotionIndex {
+                                                    vm.emotions[prevSelectedIndex].isSelected = false
+                                                }
+                                                vm.emotions[index].isSelected.toggle()
+                                                selectedEmotionIndex = index
                                             }
-                                            vm.emotions[index].isSelected.toggle()
-                                            selectedEmotionIndex = index
-                                        }
+                                    }
                                 }
                             }
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: 0))
+                            Spacer()
                         }
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: 0))
+                        
                         Spacer()
                     }
+                    .onAppear {
+                        choiceDate = formattedDate
+                    }
                     
-                    Spacer()
-                }
-                .onAppear {
-                    choiceDate = formattedDate
-                }
-                
-                VStack {
-                    Spacer()
-                    
-                    if selectedEmotionIndex != nil {
-                        NavigationLink {
-                            DiaryInputView(currentDate: formattedDate, currentEmotion: selectedEmotionIndex!)
-                        } label: {
-                            Image(selectedEmotionIndex != nil ? "emotion_btn_on" : "emotion_btn_off")
+                    VStack {
+                        Spacer()
+                        
+                        if selectedEmotionIndex != nil {
+                            NavigationLink {
+                                ResponseView(currentDate: formattedDate, currentEmotion: selectedEmotionIndex!)
+                            } label: {
+                                Image("emotion_btn_on")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: geo.size.width * 0.9)
+                            }
+
+                        }else{
+                            Image("emotion_btn_off")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 350)
+                                .frame(width: geo.size.width * 0.9)
                         }
-
-                    }else{
-                        Image(selectedEmotionIndex != nil ? "emotion_btn_on" : "emotion_btn_off")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 350)
                     }
+                    
                 }
-                
+                .accentColor(Color.black)
             }
-            .accentColor(Color.black)
+            .toolbar(.hidden)
+            .navigationBarBackButtonHidden()
         }
-        .toolbar(.hidden)
-        .navigationBarBackButtonHidden()
     }
     
     private var formattedDate: String {

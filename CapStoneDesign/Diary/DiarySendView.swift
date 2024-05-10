@@ -9,8 +9,7 @@ import SwiftUI
 
 struct DiarySendView: View {
     
-    @Binding var title: String
-    @Binding var content: String
+    @State var requestBody: LetterDto
     var service = Service()
     
     var body: some View {
@@ -60,29 +59,28 @@ struct DiarySendView: View {
                     }
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                 }
-                .onAppear{
-                    print("\(title)")
-                    print("\(content)")
-                    service.diaryRequest { result in
-                        switch result {
-                        case .success(let response):
-                            // 성공적으로 응답을 받았을 때 수행할 동작
-                            print("Diary response: \(response)")
-                        case .failure(let error):
-                            // 요청이 실패했을 때 수행할 동작
-                            print("Error: \(error)")
-                        }
+            }
+            .onAppear(){
+                service.LetterRequest(letter: requestBody) { result in
+                    switch result {
+                    case .success(let response):
+                        // 성공적으로 응답을 받았을 때 수행할 동작
+                        print("Diary response: \(response)")
+                    case .failure(let error):
+                        // 요청이 실패했을 때 수행할 동작
+                        print("Error: \(error)")
                     }
-                    
                 }
-                
             }
         }
         .toolbar(.hidden)
         .navigationBarBackButtonHidden(true)
+        .onAppear(){
+            
+        }
     }
 }
 
 #Preview {
-    DiarySendView(title: .constant("제목입니다"), content: .constant("내용입니다"))
+    DiarySendView(requestBody: LetterDto(dto: Dto(memberId: 1, title: "", date: "", content: "", emotion: "", weather: ""), image: ""))
 }

@@ -14,6 +14,7 @@ struct DiaryInputView: View {
     
     @State var currentDate: String
     @State var currentEmotion: Int
+    @State var currentResponse: Int
     
     @State var vm = EmotionViewModel(emotions: EmotionViewModel.list, weathers: EmotionViewModel.weatherList)
     
@@ -21,17 +22,20 @@ struct DiaryInputView: View {
     
     @State var showImagePicker = false
     @State var selectedUIImage: UIImage?
+    @State var imageData: String?
     @State var image: Image?
     @State var title: String = ""
     @State var content: String = ""
     @State var characterCount: Int = 0
-    @State var imageData: Data = UIImage(named: "initial_last_logo")!.pngData()!
     let maxContentLength = 1000
     
     @FocusState var isInputActive: Bool
     
+    var service = Service()
+    
     func loadImage() {
         guard let selectedImage = selectedUIImage else { return }
+        imageData = imageToBase64(selectedImage)
         image = Image(uiImage: selectedImage)
     }
     
@@ -133,17 +137,19 @@ struct DiaryInputView: View {
                             }
                             .offset(CGSize(width: geo.size.width * 0.22, height: geo.size.height * 0.025))
                             HStack{
+                                
                                 VStack{
+                                    
                                     if let image = image {
                                         image
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
-                                            .frame(width: geo.size.width * 0.4, height: geo.size.height * 0.27)
+                                            .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.52)
                                             .clipped()
                                             .cornerRadius(20)
                                     }else{
                                         Rectangle()
-                                            .frame(width: geo.size.width * 0.4, height: geo.size.height * 0.27)
+                                            .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.52)
                                             .clipped()
                                             .cornerRadius(20)
                                             .foregroundColor(.clear)
@@ -160,20 +166,20 @@ struct DiaryInputView: View {
                                     }) {
                                         ImagePicker(image: $selectedUIImage)
                                     }
-                                    
-                                    Spacer()
                                 }
+                                .padding(EdgeInsets(top: -geo.size.width * 0.9, leading: geo.size.width * 0.05, bottom: 0, trailing: 0))
                                 Spacer()
                             }
-                        
                             
                             VStack{
-                                VStack{
-                                    TextField("제목을 입력하세요", text: $title)
-                                        .submitLabel(.done)  //  "검색" 버튼
-                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
-                                        .frame(width: geo.size.width * 0.65)
-                                }
+                                Spacer()
+                                    .padding()
+                                
+                                TextField("제목을 입력하세요", text: $title)
+                                    .submitLabel(.done)  //  "검색" 버튼
+                                    .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
+                                    .frame(width: geo.size.width * 0.6)
+                                    .padding()
                                 
                                 ScrollViewReader{ sv in
                                     
@@ -184,12 +190,66 @@ struct DiaryInputView: View {
                                             .onAppear(){
                                                 sv.scrollTo(content.count - 1, anchor: .bottom)
                                             }
+                                            .frame(width: geo.size.width * 0.85)
+                                            .padding()
                                     }
+                                    
+                                }
+                                .padding()
+                            }
+                            .padding(EdgeInsets(top: -110, leading: 0, bottom: 0, trailing: 0))
+                        }
+                    }
+                    
+                    VStack {
+                        Spacer()
+                        
+                        if(title != "" && content != "" && selectedWeatherIndex != nil){
+                            if currentResponse == 0 {
+                                NavigationLink {
+                                    DiarySendView(requestBody: requestLetter())
+                                } label: {
+                                    Image("diary_btn_on")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: geo.size.width * 0.9)
+                                }
+                                .onTapGesture {
+//                                    requestLetter()
                                 }
 
-                            }
-                            .frame(width: geo.size.width * 0.9)
+                            } else if currentResponse == 1 {
+                                NavigationLink {
+                                    DiarySendView(requestBody: requestLetter())
+                                } label: {
+                                    Image("diary_btn_on")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: geo.size.width * 0.9)
+                                }
+                                .onTapGesture {
+                                    
+                                }
 
+                            } else{
+                                NavigationLink {
+                                    DiarySendView(requestBody: requestLetter())
+                                } label: {
+                                    Image("diary_btn_on")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: geo.size.width * 0.9)
+                                }
+                                .onTapGesture {
+
+                                    
+                                }
+                            }
+                        }else{
+                            Image("diary_btn_off")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: geo.size.width * 0.9)
                         }
                     }
                 }
@@ -220,8 +280,36 @@ struct DiaryInputView: View {
         return outputFormatter.string(from: date!)
     }
     
+    func formatReqDate(dateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        
+        let date = dateFormatter.date(from: dateString)
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "yyyy/MM/dd"
+        
+        return outputFormatter.string(from: date!)
+    }
+    
+    func requestLetter() -> LetterDto{
+        switch selectedWeatherIndex{
+        case 0:
+            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].name, weather: "SUNNY"), image: imageData ?? "")
+        case 1:
+            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].name, weather: "CLOUDY"), image: imageData ?? "")
+        default:
+            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].name, weather: "RAINY"), image: imageData ?? "")
+        }
+    }
+    
+    func imageToBase64(_ image: UIImage) -> String? {
+        let imageData = image.jpegData(compressionQuality: 1)
+        return imageData?.base64EncodedString()
+    }
+ 
 }
 
 #Preview {
-    DiaryInputView(currentDate: "2024-04-18", currentEmotion: 0)
+    DiaryInputView(currentDate: "2024-04-18", currentEmotion: 0, currentResponse: 0)
 }

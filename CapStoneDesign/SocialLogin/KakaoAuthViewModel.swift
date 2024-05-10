@@ -25,7 +25,6 @@ class KakaoAuthViewModel: ObservableObject{
                 if let accessToken = token?.accessToken {
                     let accessTokenString = String(accessToken)
                     UserDefaults.standard.set(accessTokenString, forKey: "KakaoToken")
-                    print("\(token)")
                 }
             }
         }
