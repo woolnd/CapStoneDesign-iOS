@@ -33,3 +33,30 @@ struct Dto: Codable{
 struct DiaryResponse: Codable{
     
 }
+
+
+struct GraphResponse: Codable{
+    var fear: Int
+    var moved: Int
+    var lethargy: Int
+    var flutter: Int
+    var peace: Int
+    var pleasure: Int
+    var confidence: Int
+    var worry: Int
+    var anger: Int
+    var sadness: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case fear = "FEAR"
+        case moved = "MOVED"
+        case lethargy = "LETHARGY"
+        case flutter = "FLUTTER"
+        case peace = "PEACE"
+        case pleasure = "PLEASURE"
+        case confidence = "CONFIDENCE"
+        case worry = "WORRY"
+        case anger = "ANGER"
+        case sadness = "SADNESS"
+    }
+}

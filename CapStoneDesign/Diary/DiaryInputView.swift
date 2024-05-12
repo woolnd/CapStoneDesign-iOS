@@ -214,9 +214,6 @@ struct DiaryInputView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: geo.size.width * 0.9)
                                 }
-                                .onTapGesture {
-//                                    requestLetter()
-                                }
 
                             } else if currentResponse == 1 {
                                 NavigationLink {
@@ -227,9 +224,6 @@ struct DiaryInputView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: geo.size.width * 0.9)
                                 }
-                                .onTapGesture {
-                                    
-                                }
 
                             } else{
                                 NavigationLink {
@@ -239,10 +233,6 @@ struct DiaryInputView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: geo.size.width * 0.9)
-                                }
-                                .onTapGesture {
-
-                                    
                                 }
                             }
                         }else{
@@ -295,11 +285,11 @@ struct DiaryInputView: View {
     func requestLetter() -> LetterDto{
         switch selectedWeatherIndex{
         case 0:
-            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].name, weather: "SUNNY"), image: imageData ?? "")
+            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "SUNNY"), image: imageData ?? "")
         case 1:
-            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].name, weather: "CLOUDY"), image: imageData ?? "")
+            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "CLOUDY"), image: imageData ?? "")
         default:
-            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].name, weather: "RAINY"), image: imageData ?? "")
+            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "RAINY"), image: imageData ?? "")
         }
     }
     

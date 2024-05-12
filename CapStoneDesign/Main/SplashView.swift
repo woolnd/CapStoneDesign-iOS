@@ -15,6 +15,8 @@ struct SplashView: View {
     @State var kakaoTokenCheck: Bool = false
     
     @State var isActive = false
+    @State var isInitial = false
+    
     let text: String
     @State private var splashChar = ""
     @State private var logoOpacity = 0.0
@@ -88,11 +90,14 @@ struct SplashView: View {
                         
                         Spacer()
                         
-                        
-                        //                            AppleSigninButton()
-                        //                                .opacity(buttonOpacity)
                         Button {
-                            kakaoAuthVM.handleKakaoLogin()
+                            kakaoAuthVM.handleKakaoLogin { success in
+                                if success {
+                                    isInitial = true
+                                } else {
+                                   isInitial = false
+                                }
+                            }
                         } label: {
                             Image("kakao_login")
                                 .resizable()
@@ -100,6 +105,16 @@ struct SplashView: View {
                                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
                                 .opacity(buttonOpacity)
                         }
+//                        NavigationLink {
+//                            
+//                        } label: {
+//                            Image("kakao_login")
+//                                .resizable()
+//                                .frame(width : UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.06)
+//                                .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
+//                                .opacity(buttonOpacity)
+//                        }
+                        
                     }
                     .onReceive(aftertimer){_ in
                         withAnimation{
@@ -116,6 +131,9 @@ struct SplashView: View {
                 performTokenCheck()
             }
         }
+        .fullScreenCover(isPresented: $isInitial, content: {
+            InitialView()
+        })
     }
     
     // Function to perform token check
@@ -157,6 +175,16 @@ struct SplashView: View {
             }
         }
     }
+    
+//    func loginSuccess() -> some View{
+//        kakaoAuthVM.handleKakaoLogin { success in
+//            if success {
+//               return InitialView()
+//            } else {
+//               return SplashView(text: "MoodMingle")
+//            }
+//        }
+//    }
     
     func changedView(){
         self.isActive.toggle()

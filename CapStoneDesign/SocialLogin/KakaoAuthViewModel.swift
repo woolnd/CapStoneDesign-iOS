@@ -12,23 +12,42 @@ import KakaoSDKAuth
 
 class KakaoAuthViewModel: ObservableObject{
     
-    func handleKakaoLogin(){
-        UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-            if let error = error {
-                print(error)
-            }
-            else {
-                print("loginWithKakaoAccount() success.")
-                
-                //do something
-                let token = oauthToken
-                if let accessToken = token?.accessToken {
-                    let accessTokenString = String(accessToken)
-                    UserDefaults.standard.set(accessTokenString, forKey: "KakaoToken")
+//    func handleKakaoLogin(){
+//        UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+//            if let error = error {
+//                print(error)
+//            }
+//            else {
+//                print("loginWithKakaoAccount() success.")
+//                
+//                //do something
+//                let token = oauthToken
+//                if let accessToken = token?.accessToken {
+//                    let accessTokenString = String(accessToken)
+//                    UserDefaults.standard.set(accessTokenString, forKey: "KakaoToken")
+//                }
+//            }
+//        }
+//    }
+    func handleKakaoLogin(completion: @escaping (Bool) -> Void) {
+            UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
+                if let error = error {
+                    print(error)
+                    completion(false)
+                } else {
+                    print("loginWithKakaoAccount() success.")
+                    
+                    // 로그인 성공 시 처리
+                    if let token = oauthToken?.accessToken {
+                        let accessTokenString = String(token)
+                        UserDefaults.standard.set(accessTokenString, forKey: "KakaoToken")
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
                 }
             }
         }
-    }
     
     func handleKakaoLogout(){
         UserApi.shared.logout {(error) in

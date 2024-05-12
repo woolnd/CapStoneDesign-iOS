@@ -22,12 +22,15 @@ class Service{
                                     "emotion": letter.dto.emotion,
                                     "weather": letter.dto.weather]
         
-        var image = UIImage(named: letter.image)
+        var image = base64ToImage(letter.image)
+//        var image = UIImage(named: letter.image)
+        
         
         guard let imageData = image?.jpegData(compressionQuality: 1) else {
             print("Failed to convert image to JPEG data")
             return
         }
+        
         AF.upload(multipartFormData: { multipartFormData in
 
             multipartFormData.append(try! JSONSerialization.data(withJSONObject: dto), withName: "dto", mimeType: "application/json")
@@ -48,6 +51,15 @@ class Service{
         }
     }
     
+    func base64ToImage(_ base64String: String) -> UIImage? {
+        guard let imageData = Data(base64Encoded: base64String) else {
+            return nil
+        }
+        guard let image = UIImage(data: imageData) else {
+            return nil
+        }
+        return image
+    }
 //    func diaryRequest(completion: @escaping (Result<Int, Error>) -> Void) {
 //        let URL = "http://52.78.41.105:8080/api/v1/diary/letter"
 //        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
