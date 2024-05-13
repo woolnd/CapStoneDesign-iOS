@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DiarySendView: View {
     
-    @State var requestBody: LetterDto
+    @State var requestBody: DiaryDto
     var service = Service()
     
     var body: some View {
@@ -82,5 +82,5 @@ struct DiarySendView: View {
 }
 
 #Preview {
-    DiarySendView(requestBody: LetterDto(dto: Dto(memberId: 1, title: "", date: "", content: "", emotion: "", weather: ""), image: ""))
+    DiarySendView(requestBody: DiaryDto(dto: Dto(memberId: 1, title: "", date: "", content: "", emotion: "", weather: ""), image: ""))
 }

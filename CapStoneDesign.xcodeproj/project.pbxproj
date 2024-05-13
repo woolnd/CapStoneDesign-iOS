@@ -26,8 +26,6 @@
 		6D705A282BBD7B740038A9E9 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A272BBD7B740038A9E9 /* TabBarView.swift */; };
 		6D705A2A2BBD7B740038A9E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D705A292BBD7B740038A9E9 /* Assets.xcassets */; };
 		6D705A2D2BBD7B740038A9E9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D705A2C2BBD7B740038A9E9 /* Preview Assets.xcassets */; };
-		6D705A3A2BBDCDEE0038A9E9 /* DateValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A392BBDCDEE0038A9E9 /* DateValue.swift */; };
-		6D705A3C2BBDE00A0038A9E9 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D705A3B2BBDE00A0038A9E9 /* Diary.swift */; };
 		6D787E4C2BE2994B0064267B /* UserDefaultUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D787E4B2BE2994B0064267B /* UserDefaultUtil.swift */; };
 		6D787E4E2BE299D70064267B /* StateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D787E4D2BE299D70064267B /* StateManager.swift */; };
 		6D787E522BE29A240064267B /* AppScreenLockViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D787E512BE29A240064267B /* AppScreenLockViewModel.swift */; };
@@ -49,6 +47,7 @@
 		6DCA618D2BE64A41004033A4 /* KakaoAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCA618C2BE64A41004033A4 /* KakaoAuthViewModel.swift */; };
 		6DCD4CD52BEE907D00174224 /* ResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCD4CD42BEE907D00174224 /* ResponseView.swift */; };
 		6DCF7B6C2BE09C29009AB42A /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DCF7B6B2BE09C29009AB42A /* LocalNotification.swift */; };
+		6DD04D9C2BF26B8D009DB012 /* DiaryIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD04D9B2BF26B8D009DB012 /* DiaryIntroView.swift */; };
 		6DE331E32BC51E1E00227A51 /* CalendarIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE331E22BC51E1E00227A51 /* CalendarIntroView.swift */; };
 		6DFF28E92BC3BB05003FE84A /* EmotionInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF28E82BC3BB05003FE84A /* EmotionInputView.swift */; };
 		6DFF28EC2BC3C020003FE84A /* CalendarDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF28EB2BC3C020003FE84A /* CalendarDetailView.swift */; };
@@ -78,8 +77,6 @@
 		6D705A272BBD7B740038A9E9 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		6D705A292BBD7B740038A9E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6D705A2C2BBD7B740038A9E9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		6D705A392BBDCDEE0038A9E9 /* DateValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateValue.swift; sourceTree = "<group>"; };
-		6D705A3B2BBDE00A0038A9E9 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		6D787E4B2BE2994B0064267B /* UserDefaultUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultUtil.swift; sourceTree = "<group>"; };
 		6D787E4D2BE299D70064267B /* StateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManager.swift; sourceTree = "<group>"; };
 		6D787E512BE29A240064267B /* AppScreenLockViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreenLockViewModel.swift; sourceTree = "<group>"; };
@@ -102,6 +99,7 @@
 		6DCA618C2BE64A41004033A4 /* KakaoAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAuthViewModel.swift; sourceTree = "<group>"; };
 		6DCD4CD42BEE907D00174224 /* ResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseView.swift; sourceTree = "<group>"; };
 		6DCF7B6B2BE09C29009AB42A /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
+		6DD04D9B2BF26B8D009DB012 /* DiaryIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryIntroView.swift; sourceTree = "<group>"; };
 		6DE331E22BC51E1E00227A51 /* CalendarIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarIntroView.swift; sourceTree = "<group>"; };
 		6DFF28E82BC3BB05003FE84A /* EmotionInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionInputView.swift; sourceTree = "<group>"; };
 		6DFF28EB2BC3C020003FE84A /* CalendarDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDetailView.swift; sourceTree = "<group>"; };
@@ -175,7 +173,6 @@
 				6D2D8D852BE8562600AF01E8 /* API */,
 				6D705A292BBD7B740038A9E9 /* Assets.xcassets */,
 				6DC553202BC6CCF3005C358B /* Resources */,
-				6DFF28EA2BC3BE6E003FE84A /* etc */,
 				6D705A2B2BBD7B740038A9E9 /* Preview Content */,
 				6DCA61872BE6498C004033A4 /* Config.xcconfig */,
 			);
@@ -269,6 +266,7 @@
 				6DBAA2142BDC191900DCECCD /* DiaryWeatherView.swift */,
 				6DBAA2162BDC274800DCECCD /* ImagePicker.swift */,
 				6D04BB382BDE6A47005A2065 /* DiarySendView.swift */,
+				6DD04D9B2BF26B8D009DB012 /* DiaryIntroView.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -294,15 +292,6 @@
 				6D0230692BE01F5000ABDD5F /* TermsOfUseView.swift */,
 			);
 			path = MyPage;
-			sourceTree = "<group>";
-		};
-		6DFF28EA2BC3BE6E003FE84A /* etc */ = {
-			isa = PBXGroup;
-			children = (
-				6D705A392BBDCDEE0038A9E9 /* DateValue.swift */,
-				6D705A3B2BBDE00A0038A9E9 /* Diary.swift */,
-			);
-			path = etc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,6 +389,7 @@
 				6D787E4E2BE299D70064267B /* StateManager.swift in Sources */,
 				6D0304052BC7861F008114A0 /* InitialViewModel.swift in Sources */,
 				6DA6CED82BC90E38003B30E0 /* EmotionViewModel.swift in Sources */,
+				6DD04D9C2BF26B8D009DB012 /* DiaryIntroView.swift in Sources */,
 				6D2D8D842BE8562100AF01E8 /* Service.swift in Sources */,
 				6DCA618B2BE64A2A004033A4 /* MySceneDelegate.swift in Sources */,
 				6D54DD232BC5BF9F008F839E /* EmotionalStatusView.swift in Sources */,
@@ -413,7 +403,6 @@
 				6DA6CED62BC8F74A003B30E0 /* EmotionDetailView.swift in Sources */,
 				6DFF28E92BC3BB05003FE84A /* EmotionInputView.swift in Sources */,
 				6DCD4CD52BEE907D00174224 /* ResponseView.swift in Sources */,
-				6D705A3A2BBDCDEE0038A9E9 /* DateValue.swift in Sources */,
 				6D787E562BE29A580064267B /* AppScreenLockView.swift in Sources */,
 				6D04BB392BDE6A47005A2065 /* DiarySendView.swift in Sources */,
 				6D00E83B2BC98BA5006E2FB2 /* DiaryInputView.swift in Sources */,
@@ -423,7 +412,6 @@
 				6D5EE72B2BE6E5E600A6D428 /* TokenManager.swift in Sources */,
 				6DBAA2172BDC274800DCECCD /* ImagePicker.swift in Sources */,
 				6D0230642BE01E8700ABDD5F /* AnnouncementView.swift in Sources */,
-				6D705A3C2BBDE00A0038A9E9 /* Diary.swift in Sources */,
 				6DBAA2152BDC191900DCECCD /* DiaryWeatherView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,6 +554,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CapStoneDesign/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MoodMingle;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -599,6 +589,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CapStoneDesign/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MoodMingle;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

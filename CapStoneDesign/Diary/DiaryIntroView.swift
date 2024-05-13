@@ -1,13 +1,13 @@
 //
-//  EmotionGraphIntroView.swift
+//  DiaryIntroView.swift
 //  CapStoneDesign
 //
-//  Created by Wodnd on 5/2/24.
+//  Created by Wodnd on 5/14/24.
 //
 
 import SwiftUI
 
-struct EmotionGraphIntroView: View {
+struct DiaryIntroView: View {
     @ObservedObject var viewModel = InitialViewModel(contents: InitialViewModel.mock)
     
     var body: some View {
@@ -25,7 +25,7 @@ struct EmotionGraphIntroView: View {
                         .font(.custom("KyoboHandwriting2021sjy", size: 25))
                     
                     VStack {
-                        Text("\(viewModel.contents[2].title)")
+                        Text("\(viewModel.contents[0].title)")
                             .font(.custom("777Balsamtint", size: 35))
                     
                         Image("initial_logo")
@@ -39,7 +39,7 @@ struct EmotionGraphIntroView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.8)
                             
-                            Text("\(viewModel.contents[2].content)")
+                            Text("\(viewModel.contents[0].content)")
                                 .font(.custom("777Balsamtint", size: 19))
                                 .frame(width: geo.size.width * 0.7)
                         }
@@ -53,5 +53,5 @@ struct EmotionGraphIntroView: View {
 }
 
 #Preview {
-    EmotionGraphIntroView()
+    DiaryIntroView()
 }

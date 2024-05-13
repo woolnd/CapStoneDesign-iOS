@@ -30,6 +30,7 @@ struct DiaryInputView: View {
     let maxContentLength = 1000
     
     @FocusState var isInputActive: Bool
+    @State var isPresented: Bool = false
     
     var service = Service()
     
@@ -78,7 +79,7 @@ struct DiaryInputView: View {
                             Spacer()
                             
                             Button(action: {
-                                
+                                isPresented = true
                             }, label: {
                                 Image("introduce")
                                     .resizable()
@@ -254,6 +255,9 @@ struct DiaryInputView: View {
                     content = String(newValue.prefix(maxContentLength))
                 }
             }
+            .sheet(isPresented: $isPresented, content: {
+                DiaryIntroView()
+            })
         }
         
     }
@@ -282,14 +286,14 @@ struct DiaryInputView: View {
         return outputFormatter.string(from: date!)
     }
     
-    func requestLetter() -> LetterDto{
+    func requestLetter() -> DiaryDto{
         switch selectedWeatherIndex{
         case 0:
-            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "SUNNY"), image: imageData ?? "")
+            return DiaryDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "SUNNY"), image: imageData ?? "")
         case 1:
-            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "CLOUDY"), image: imageData ?? "")
+            return DiaryDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "CLOUDY"), image: imageData ?? "")
         default:
-            return LetterDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "RAINY"), image: imageData ?? "")
+            return DiaryDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "RAINY"), image: imageData ?? "")
         }
     }
     

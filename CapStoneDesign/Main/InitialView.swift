@@ -48,7 +48,8 @@ struct InitialView: View {
                                                     .frame(width: geo.size.width * 0.8)
                                                 
                                                 Text("\(viewModel.contents[index].content)")
-                                                    .font(.custom("777Balsamtint", size: 20))
+                                                    .font(.custom("777Balsamtint", size: 19))
+                                                    .frame(width: geo.size.width * 0.7)
                                                 
                                                 HStack(spacing: 5) {
                                                     ForEach(0..<viewModel.contents.count) { index in
@@ -85,7 +86,8 @@ struct InitialView: View {
                                                 .frame(width: geo.size.width * 0.8)
                                             
                                             Text("\(viewModel.contents[index].content)")
-                                                .font(.custom("777Balsamtint", size: 20))
+                                                .font(.custom("777Balsamtint", size: 19))
+                                                .frame(width: geo.size.width * 0.7)
                                             
                                             HStack(spacing: 5) {
                                                 ForEach(0..<viewModel.contents.count) { index in

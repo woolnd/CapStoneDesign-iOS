@@ -13,6 +13,7 @@ struct CalendarView: View {
     @StateObject var viewModel = CalendarViewModel(diary: CalendarViewModel.mock)
     @State var currentDate: Date = Date()
     @State var selectionDate = 0
+    let service = Service()
     
     let week: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     
@@ -120,6 +121,18 @@ struct CalendarView: View {
             .sheet(isPresented: $isPresented, content: {
                 CalendarIntroView()
             })
+            .onAppear(){
+                service.DiaryRequest(dto: DiaryRequest(dto: MonthDto(memberId: 1, date: "2024/05"))) { result in
+                    switch result {
+                    case .success(let response):
+                        // 성공적으로 응답을 받았을 때 수행할 동작
+                        print("Diary response: \(response)")
+                    case .failure(let error):
+                        // 요청이 실패했을 때 수행할 동작
+                        print("Error: \(error)")
+                    }
+                }
+            }
         }
         
     }

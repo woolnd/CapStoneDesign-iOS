@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LetterDto: Codable{
+struct DiaryDto: Codable{
     var dto: Dto
     var image: String
 }
@@ -30,10 +30,35 @@ struct Dto: Codable{
     }
 }
 
-struct DiaryResponse: Codable{
-    
+struct DiaryRequest: Codable{
+    var dto: MonthDto
 }
 
+struct MonthDto: Codable{
+    var memberId: Int
+    var date: String
+    
+    private enum CodingKeys: String, CodingKey {
+            case memberId = "memberId"
+            case date = "date"
+    }
+}
+
+struct DiaryResponse: Codable{
+    var diary: [MonthDiary]
+}
+
+struct MonthDiary: Codable{
+    var diaryId: Int
+    var date: String
+    var emotion: String
+    
+    private enum CodingKeys: String, CodingKey {
+            case diaryId = "memberId"
+            case date = "date"
+            case emotion = "emotion"
+    }
+}
 
 struct GraphResponse: Codable{
     var fear: Int

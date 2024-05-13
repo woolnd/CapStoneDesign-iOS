@@ -46,7 +46,15 @@ struct ServiceCenterView: View {
                 }
                 
                 
-                Text("고객센터 페이지")
+                VStack{
+                    Text("고객센터 이메일")
+                        .font(.custom("777Balsamtint", size: 35))
+                        .padding()
+                    
+                    Text("wodnd0418@gmail.com")
+                        .font(.custom("777Balsamtint", size: 35))
+                        .padding()
+                }
             }
             .accentColor(Color.black)
         }
