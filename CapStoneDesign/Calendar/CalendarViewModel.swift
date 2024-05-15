@@ -13,8 +13,8 @@ final class CalendarViewModel: ObservableObject{
     
     struct CalendarModel: Hashable, Identifiable{
         var id: UUID = UUID()
-        var day: String
-        var content: String
+        var diaryId: Int
+        var date: String
         var emotion: String
 
     }
@@ -22,13 +22,18 @@ final class CalendarViewModel: ObservableObject{
     init(diary: [CalendarModel]) {
         self.diary = diary
     }
+    
+    func updateDiary(with newDiary: [CalendarModel]) {
+            self.diary = newDiary
+    }
+    
 }
 
 extension CalendarViewModel{
     static let mock: [CalendarModel] = [
-        CalendarModel(day: "2024-03-04", content: "hello", emotion: "pleasure"),
-        CalendarModel(day: "2024-04-04", content: "bye", emotion: "pleasure"),
-        CalendarModel(day: "2024-04-01", content: "hellobye", emotion: "pleasure")
+        CalendarModel(diaryId: 1, date: "2024-03-04", emotion: "PLEASURE"),
+        CalendarModel(diaryId: 2, date: "2024-04-04", emotion: "PLEASURE"),
+        CalendarModel(diaryId: 3, date: "2024-04-01", emotion: "PLEASURE")
     ]
 }
 

@@ -66,18 +66,14 @@ struct DiarySendView: View {
                     case .success(let response):
                         // 성공적으로 응답을 받았을 때 수행할 동작
                         print("Diary response: \(response)")
-                    case .failure(let error):
+                    case .failure(let error): break
                         // 요청이 실패했을 때 수행할 동작
-                        print("Error: \(error)")
                     }
                 }
             }
         }
         .toolbar(.hidden)
         .navigationBarBackButtonHidden(true)
-        .onAppear(){
-            
-        }
     }
 }
 

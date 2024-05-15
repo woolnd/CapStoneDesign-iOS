@@ -3,7 +3,7 @@ import SwiftUI
 
 struct CalendarDateView: View {
     
-    @StateObject var viewModel = CalendarViewModel(diary: CalendarViewModel.mock)
+    @ObservedObject var viewModel: CalendarViewModel
     @State var date: Int
     @Binding var currentDate: Date
     
@@ -57,12 +57,12 @@ struct CalendarDateView: View {
     
     private func isMatchingDate(_ date: Int) -> Bool {
         let dateString = "\(formattedYear(date: currentDate))-\(formattedMonth(date: currentDate))-\(String(format: "%02d", date))"
-        return viewModel.diary.contains { $0.day == dateString }
+        return viewModel.diary.contains { $0.date == dateString }
     }
     
     private func emotionForDate(_ date: Int) -> String? {
         let dateString = "\(formattedYear(date: currentDate))-\(formattedMonth(date: currentDate))-\(String(format: "%02d", date))"
-        if let diaryEntry = viewModel.diary.first(where: { $0.day == dateString }) {
+        if let diaryEntry = viewModel.diary.first(where: { $0.date == dateString }) {
             return diaryEntry.emotion
         }
         return nil
@@ -99,5 +99,5 @@ struct CalendarDateView: View {
 }
 
 #Preview {
-    CalendarDateView(date: 1, currentDate: .constant(Date()))
+    CalendarDateView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock), date: 1, currentDate: .constant(Date()))
 }

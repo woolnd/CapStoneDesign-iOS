@@ -40,10 +40,8 @@ class Service{
             case .success:
                 guard let statusCode = response.response?.statusCode else { return }
                 guard response.value != nil else { return }
-                print("\(response.result)")
                 completion(.success(statusCode))
             case .failure(let err):
-                print(err)
                 completion(.failure(err))
             }
         }
@@ -78,10 +76,8 @@ class Service{
             case .success:
                 guard let statusCode = response.response?.statusCode else { return }
                 guard response.value != nil else { return }
-                print("\(response.result)")
                 completion(.success(statusCode))
             case .failure(let err):
-                print(err)
                 completion(.failure(err))
             }
         }
@@ -116,10 +112,8 @@ class Service{
             case .success:
                 guard let statusCode = response.response?.statusCode else { return }
                 guard response.value != nil else { return }
-                print("\(response.result)")
                 completion(.success(statusCode))
             case .failure(let err):
-                print(err)
                 completion(.failure(err))
             }
         }
@@ -136,36 +130,78 @@ class Service{
     }
     
     
-    func DiaryRequest(dto: DiaryRequest, completion: @escaping (Result<Int, Error>) -> Void) {
-
-        do {
-            let URL = "http://52.78.41.105:8080/api/v1/diary"
-            
-            // DiaryRequest를 JSON으로 직렬화합니다.
-            let jsonEncoder = JSONEncoder()
-            let jsonData = try jsonEncoder.encode(dto)
-            
-            var request = URLRequest(url: try! URL.asURL())
-            request.httpMethod = HTTPMethod.get.rawValue
-            request.httpBody = jsonData
-            
-            AF.request(request)
-                .validate(statusCode: 200..<300)
-                .responseDecodable(of: DiaryResponse.self) { response in
-                    switch response.result {
-                    case .success:
-                        guard let statusCode = response.response?.statusCode else { return }
-                        guard response.value != nil else { return }
-                        print("\(response.result)")
-                        completion(.success(statusCode))
-                    case .failure(let err):
-                        print(err)
-                        completion(.failure(err))
-                    }
-                }
-        } catch {
-            // JSON 직렬화에 실패한 경우 에러를 처리합니다.
-            completion(.failure(error))
+    func DiaryRequest(dto: DiaryRequest, completion: @escaping (Result<[DiaryResponse], Error>) -> Void) {
+        
+        let URL = "http://52.78.41.105:8080/api/v1/diary"
+        
+        let dto : [String : Any] = ["memberId": dto.dto.memberId,
+                                    "date": dto.dto.date]
+        
+        AF.request(URL,
+                   method: .get,
+                   parameters: dto)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: [DiaryResponse].self) { response in
+            switch response.result {
+            case .success(let diaryResponses):
+                completion(.success(diaryResponses))
+            case .failure(let error):
+                print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func DiaryDetailRequest(dto: DiaryDetailRequest, completion: @escaping (Result<[DiaryDetailReponse], Error>) -> Void) {
+        
+        let URL = "http://52.78.41.105:8080/api/v1/diary/detail"
+        
+        let dto : [String : Any] = ["memberId": dto.dto.memberId,
+                                    "date": dto.dto.diaryId]
+        
+        AF.request(URL,
+                   method: .get,
+                   parameters: dto)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: [DiaryDetailReponse].self) { response in
+            switch response.result {
+            case .success(let diaryResponses):
+                completion(.success(diaryResponses))
+            case .failure(let error):
+                print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func EmotionRequest(dto: DiaryRequest, completion: @escaping (Result<Int, Error>) -> Void) {
+        
+        let URL = "http://52.78.41.105:8080/api/v1/diary/monthly-emotion"
+        
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json" // JSON 형식으로 전송하기 위한 헤더
+        ]
+        
+        let dto : [String : Any] = ["memberId": dto.dto.memberId,
+                                    "date": dto.dto.date]
+        
+        AF.request(URL,
+                   method: .get,
+                   parameters: dto,
+                   encoding: JSONEncoding.default,
+                   headers: headers)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: GraphResponse.self) { response in
+            switch response.result {
+            case .success:
+                guard let statusCode = response.response?.statusCode else { return }
+                guard response.value != nil else { return }
+                print("\(response.result)")
+                completion(.success(statusCode))
+            case .failure(let err):
+                print(err)
+                completion(.failure(err))
+            }
         }
     }
 }

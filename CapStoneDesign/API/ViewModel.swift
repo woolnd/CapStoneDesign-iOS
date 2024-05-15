@@ -21,12 +21,12 @@ struct Dto: Codable{
     var weather: String
     
     private enum CodingKeys: String, CodingKey {
-            case memberId = "memberId"
-            case title = "title"
-            case date = "date"
-            case content = "content"
-            case emotion = "emotion"
-            case weather = "weather"
+        case memberId = "memberId"
+        case title = "title"
+        case date = "date"
+        case content = "content"
+        case emotion = "emotion"
+        case weather = "weather"
     }
 }
 
@@ -39,26 +39,44 @@ struct MonthDto: Codable{
     var date: String
     
     private enum CodingKeys: String, CodingKey {
-            case memberId = "memberId"
-            case date = "date"
+        case memberId = "memberId"
+        case date = "date"
     }
 }
 
 struct DiaryResponse: Codable{
-    var diary: [MonthDiary]
-}
-
-struct MonthDiary: Codable{
     var diaryId: Int
     var date: String
     var emotion: String
+}
+
+
+struct DiaryDetailRequest: Codable{
+    var dto: Diary
+}
+
+struct Diary: Codable{
+    var memberId: Int
+    var diaryId: Int
     
     private enum CodingKeys: String, CodingKey {
-            case diaryId = "memberId"
-            case date = "date"
-            case emotion = "emotion"
+        case memberId = "memberId"
+        case diaryId = "diaryId"
     }
 }
+
+struct DiaryDetailReponse: Codable{
+    var diaryId: Int
+    var title: String
+    var content: String
+    var date: String
+    var emotion: String
+    var weather: String
+    var imageUrl: String
+    var replyContent: String
+    var type: String
+}
+
 
 struct GraphResponse: Codable{
     var fear: Int

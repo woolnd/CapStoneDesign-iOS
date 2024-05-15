@@ -186,12 +186,11 @@ struct DiaryInputView: View {
                                     
                                     ScrollView{
                                         TextField("일기를 입력하세요", text: $content, axis: .vertical)
-                                            .submitLabel(.done)
                                             .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                                             .onAppear(){
                                                 sv.scrollTo(content.count - 1, anchor: .bottom)
                                             }
-                                            .frame(width: geo.size.width * 0.85)
+                                            .frame(width: geo.size.width * 0.85, height: geo.size.width * 0.5)
                                             .padding()
                                     }
                                     
@@ -199,6 +198,15 @@ struct DiaryInputView: View {
                                 .padding()
                             }
                             .padding(EdgeInsets(top: -110, leading: 0, bottom: 0, trailing: 0))
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    
+                                    Button("Done") {
+                                        isInputActive = false
+                                    }
+                                }
+                            }
                         }
                     }
                     
@@ -215,7 +223,7 @@ struct DiaryInputView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: geo.size.width * 0.9)
                                 }
-
+                                
                             } else if currentResponse == 1 {
                                 NavigationLink {
                                     DiarySendView(requestBody: requestLetter())
@@ -225,7 +233,7 @@ struct DiaryInputView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: geo.size.width * 0.9)
                                 }
-
+                                
                             } else{
                                 NavigationLink {
                                     DiarySendView(requestBody: requestLetter())
@@ -242,6 +250,19 @@ struct DiaryInputView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.9)
                         }
+                    }
+                    
+                    VStack{
+                        Spacer()
+                        
+                        HStack{
+                            Spacer()
+                            
+                            Text("\(characterCount)/1000")
+                                .font(Font.custom("777Balsamtint", size: 20))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.25, trailing: geo.size.width * 0.1))
+                        }
+                        
                     }
                 }
                 .accentColor(Color.black)
@@ -301,7 +322,7 @@ struct DiaryInputView: View {
         let imageData = image.jpegData(compressionQuality: 1)
         return imageData?.base64EncodedString()
     }
- 
+    
 }
 
 #Preview {

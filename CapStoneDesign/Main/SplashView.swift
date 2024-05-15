@@ -11,7 +11,6 @@ import AuthenticationServices
 struct SplashView: View {
     
     @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
-    @State var appleTokenCheck: Bool = false
     @State var kakaoTokenCheck: Bool = false
     
     @State var isActive = false
@@ -35,7 +34,7 @@ struct SplashView: View {
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
                 
-                if(appleTokenCheck || kakaoTokenCheck){
+                if(kakaoTokenCheck){
                     ZStack{
                         Image("logo")
                             .resizable()
