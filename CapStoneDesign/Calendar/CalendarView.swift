@@ -104,6 +104,10 @@ struct CalendarView: View {
                                             CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
                                                 .frame(height: geo.size.height * 0.08)
                                         }
+                                        .onTapGesture {
+                                            loadDiaryData()
+                                        }
+
                                     }
                                 }
                                 Spacer()
@@ -123,9 +127,9 @@ struct CalendarView: View {
             .sheet(isPresented: $isPresented, content: {
                 CalendarIntroView()
             })
-            .onAppear(){
-                loadDiaryData()
-            }
+        }
+        .onAppear(){
+            loadDiaryData()
         }
     }
     private func loadDiaryData() {
@@ -149,8 +153,7 @@ struct CalendarView: View {
     }
     
     private func diaryForDay(_ day: Int) -> CalendarViewModel.CalendarModel? {
-        let dateString = "\(formattedYear(date: currentDate))-\(formattedMonth(date: currentDate))-\(String(format: "%02d", day))"
-        print("Selected Date String: \(dateString)")
+        let dateString = "\(formattedyear(date: currentDate))-\(formattedMonth(date: currentDate))-\(String(format: "%02d", day))"
         return viewModel.diary.first { $0.date == dateString }
     }
 }

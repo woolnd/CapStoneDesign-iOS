@@ -20,6 +20,7 @@
 		6D2D8D842BE8562100AF01E8 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2D8D832BE8562100AF01E8 /* Service.swift */; };
 		6D2D8D872BE8564C00AF01E8 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2D8D862BE8564C00AF01E8 /* ViewModel.swift */; };
 		6D2E8FD02BF4F9EA005B7BA8 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8FCF2BF4F9EA005B7BA8 /* DiaryViewModel.swift */; };
+		6D2E8FD32BF51732005B7BA8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6D2E8FD22BF51732005B7BA8 /* Kingfisher */; };
 		6D54DD232BC5BF9F008F839E /* EmotionalStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */; };
 		6D5EE72B2BE6E5E600A6D428 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5EE72A2BE6E5E600A6D428 /* TokenManager.swift */; };
 		6D6132482BE3517000B879AB /* EmotionGraphIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6132472BE3517000B879AB /* EmotionGraphIntroView.swift */; };
@@ -114,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D2E8FD32BF51732005B7BA8 /* Kingfisher in Frameworks */,
 				6DCA61862BE64932004033A4 /* KakaoSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -315,6 +317,7 @@
 			name = CapStoneDesign;
 			packageProductDependencies = (
 				6DCA61852BE64932004033A4 /* KakaoSDK */,
+				6D2E8FD22BF51732005B7BA8 /* Kingfisher */,
 			);
 			productName = CapStoneDesign;
 			productReference = 6D705A222BBD7B740038A9E9 /* CapStoneDesign.app */;
@@ -346,6 +349,7 @@
 			mainGroup = 6D705A192BBD7B730038A9E9;
 			packageReferences = (
 				6DCA61842BE64932004033A4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				6D2E8FD12BF51732005B7BA8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 6D705A232BBD7B740038A9E9 /* Products */;
 			projectDirPath = "";
@@ -638,6 +642,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6D2E8FD12BF51732005B7BA8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 		6DCA61842BE64932004033A4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -649,6 +661,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6D2E8FD22BF51732005B7BA8 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6D2E8FD12BF51732005B7BA8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		6DCA61852BE64932004033A4 /* KakaoSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6DCA61842BE64932004033A4 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;

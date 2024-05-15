@@ -13,6 +13,8 @@ struct TabBarView: View {
     @EnvironmentObject var stateManager : StateManager
     @StateObject var appScreenLockModel : AppScreenLockViewModel = AppScreenLockViewModel()
     
+    let service = Service()
+    
     var body: some View {
         
         NavigationStack{
@@ -37,6 +39,7 @@ struct TabBarView: View {
                                 .font(.custom("777Balsamtint", size: 18))
                                 .foregroundColor(selection == 1 ? .black : .gray)
                         }.tag(1)
+
                     MyPageView()
                         .tabItem {
                             Image(selection == 2 ? "mypage_tab" : "mypage_blank_tab")
@@ -46,12 +49,14 @@ struct TabBarView: View {
                         }.tag(2)
                 }
                 .accentColor(Color.black)
+                
             }
         }
         .toolbar(.hidden)
         .navigationBarBackButtonHidden(true)
         .onAppear{
             appScreenLockModel.checkIsUserSetScreenLockPassword()
+                
         }
     }
 }

@@ -152,18 +152,18 @@ class Service{
         }
     }
     
-    func DiaryDetailRequest(dto: DiaryDetailRequest, completion: @escaping (Result<[DiaryDetailReponse], Error>) -> Void) {
+    func DiaryDetailRequest(dto: DiaryDetailRequest, completion: @escaping (Result<DiaryDetailReponse, Error>) -> Void) {
         
         let URL = "http://52.78.41.105:8080/api/v1/diary/detail"
         
         let dto : [String : Any] = ["memberId": dto.dto.memberId,
-                                    "date": dto.dto.diaryId]
+                                    "diaryId": dto.dto.diaryId]
         
         AF.request(URL,
                    method: .get,
                    parameters: dto)
         .validate(statusCode: 200..<300)
-        .responseDecodable(of: [DiaryDetailReponse].self) { response in
+        .responseDecodable(of: DiaryDetailReponse.self) { response in
             switch response.result {
             case .success(let diaryResponses):
                 completion(.success(diaryResponses))

@@ -186,6 +186,7 @@ struct DiaryInputView: View {
                                     
                                     ScrollView{
                                         TextField("일기를 입력하세요", text: $content, axis: .vertical)
+                                            .focused($isInputActive)
                                             .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                                             .onAppear(){
                                                 sv.scrollTo(content.count - 1, anchor: .bottom)

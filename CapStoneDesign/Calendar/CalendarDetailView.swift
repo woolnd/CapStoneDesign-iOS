@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CalendarDetailView: View {
     
@@ -16,9 +17,52 @@ struct CalendarDetailView: View {
     @State var diaryId: Int
     @State var date: Int
     @Binding var currentDate: Date
+    @State private var isShowingFullImage = false
     
     let service = Service()
     @ObservedObject var viewModel: DiaryViewModel
+    
+    private func emotionInKorean(_ emotion: String) -> String {
+        switch emotion {
+        case "PLEASURE":
+            return "기쁨"
+        case "PEACE":
+            return "평온"
+        case "FLUTTER":
+            return "설렘"
+        case "MOVED":
+            return "감동"
+        case "COFIDENCE":
+            return "자신감"
+        case "SADNESS":
+            return "우울"
+        case "ANGER":
+            return "분노"
+        case "FEAR":
+            return "공포"
+        case "WORRY":
+            return "걱정"
+        case "LETHARGY":
+            return "무기력"
+            // 다른 감정에 대한 케이스 추가
+        default:
+            return emotion // 기본적으로는 원래의 영어 감정을 반환
+        }
+    }
+    
+    private func weatherInKorean(_ weather: String) -> String {
+        switch weather {
+        case "SUNNY":
+            return "맑음"
+        case "CLOUDY":
+            return "흐림"
+        case "RAINY":
+            return "비"
+            // 다른 감정에 대한 케이스 추가
+        default:
+            return weather // 기본적으로는 원래의 영어 감정을 반환
+        }
+    }
     
     var body: some View {
         GeometryReader{ geo in
@@ -77,22 +121,22 @@ struct CalendarDetailView: View {
                                     }
                                     
                                     HStack{
-                                        Text("감정: 감정")
+                                        Text("감정: \(emotionInKorean(viewModel.diary.emotion))")
                                             .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                                             .padding(EdgeInsets(top: 17, leading: 0, bottom: 0, trailing: 0))
                                         
-                                        Image("PLEASURE")
+                                        Image("\(viewModel.diary.emotion)")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: geo.size.width * 0.16)
                                     }
                                     
                                     HStack{
-                                        Text("날씨: 날씨")
+                                        Text("날씨: \(weatherInKorean(viewModel.diary.weather))")
                                             .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                                             .padding(EdgeInsets(top: 17, leading: 0, bottom: 0, trailing: 0))
                                         
-                                        Image("SUNNY_1")
+                                        Image("\(viewModel.diary.weather)_1")
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: geo.size.width * 0.16)
@@ -102,12 +146,48 @@ struct CalendarDetailView: View {
                                     Spacer()
                                 }
                                 
-                                
                             }
                             .offset(CGSize(width: geo.size.width * 0.22, height: geo.size.height * 0.025))
                             
+                            HStack{
+                                VStack{
+                                    let url = URL(string: "\(viewModel.diary.imageUrl)")
+                                    KFImage(url)
+                                        .onSuccess { result in
+                                            print("\(result)")
+                                        }
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.52)
+                                        .clipped()
+                                        .cornerRadius(20)
+                                        .padding()
+                                    
+                                    Button(action: {
+                                        isShowingFullImage.toggle()
+                                    }, label: {
+                                        Text("전체 사진보기")
+                                            .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
+                                    })
+                                    .padding(EdgeInsets(top: -geo.size.width * 0.05, leading: 0, bottom: 0, trailing: 0))
+                                    .sheet(isPresented: $isShowingFullImage, content: {
+                                        ZStack {
+                                            KFImage(url)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .edgesIgnoringSafeArea(.all)
+                                                
+                                        }
+                                    })
+                                    
+                                }
+                                .padding(EdgeInsets(top: -geo.size.width * 0.94, leading: 0, bottom: 0, trailing: 0))
+                                Spacer()
+                                
+                            }
+                            
                             ScrollView(.horizontal){
-                                Text("제목")
+                                Text("\(viewModel.diary.title)")
                                     .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
                             }
                             .frame(width: geo.size.width * 0.6)
@@ -115,7 +195,7 @@ struct CalendarDetailView: View {
                             
                             
                             ScrollView(.vertical){
-                                Text("내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐내용이 들어갈 자리 입니다람쥐")
+                                Text("\(viewModel.diary.content)")
                                     .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                             }
                             .frame(width: geo.size.width * 0.9, height: geo.size.height * 0.3)
@@ -133,34 +213,33 @@ struct CalendarDetailView: View {
             DiaryIntroView()
         })
         .onAppear(){
-            loadDiaryData()
+            loadDetailData()
         }
     }
     
-    private func loadDiaryData() {
+    private func loadDetailData() {
         service.DiaryDetailRequest(dto: DiaryDetailRequest(dto: Diary(memberId: memberId, diaryId: diaryId))) { result in
             switch result {
             case .success(let response):
-                if let diaryResponse = response.first {
-                    let diaryModel = DiaryViewModel.DiaryModel(
-                        diaryId: diaryResponse.diaryId,
-                        title: diaryResponse.title,
-                        content: diaryResponse.content,
-                        date: diaryResponse.date,
-                        emotion: diaryResponse.emotion,
-                        weather: diaryResponse.weather,
-                        imageUrl: diaryResponse.imageUrl,
-                        replyContent: diaryResponse.replyContent,
-                        type: diaryResponse.type
-                    )
-                    viewModel.updateDiary(with: diaryModel)
-                    print("\(diaryResponse)")
-                }
+                let diaryModel = DiaryViewModel.DiaryModel(
+                    diaryId: response.diaryId,
+                    title: response.title,
+                    content: response.content,
+                    date: response.date,
+                    emotion: response.emotion,
+                    weather: response.weather,
+                    imageUrl: response.imageUrl,
+                    replyContent: response.replyContent,
+                    type: response.type
+                )
+                viewModel.updateDiary(with: diaryModel)
+                print("\(response)")
             case .failure(let error):
                 print("Error: \(error)")
             }
         }
     }
+    
     
     private var formattedDate: String {
         let formatter = DateFormatter()
