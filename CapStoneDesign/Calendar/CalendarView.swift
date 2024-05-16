@@ -51,8 +51,13 @@ struct CalendarView: View {
                             
                             Text("MoodMingle")
                                 .font(.custom("KyoboHandwriting2021sjy", size: geo.size.width * 0.05))
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.2))
                             Spacer()
+                            
+                            Rectangle()
+                                .frame(width: geo.size.width * 0.18, height: geo.size.width * 0.18)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.05))
+                                .foregroundColor(.clear)
+                                
                         }
                         
                         Spacer()
@@ -104,12 +109,11 @@ struct CalendarView: View {
                                     ForEach(daysInMonth(date: currentDate), id: \.self) { day in
                                         NavigationLink(destination: destinationView(for: day)) {
                                             CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
-                                                .frame(height: geo.size.height * 0.08)
+                                                .frame(height: geo.size.height * 0.075)
                                         }
                                         .onTapGesture {
                                             loadDiaryData()
                                         }
-
                                     }
                                 }
                                 Spacer()

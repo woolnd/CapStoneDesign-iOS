@@ -69,7 +69,9 @@ struct DiaryInputView: View {
                         ZStack{
                             ScrollView {
                                 VStack{
+                                    
                                     HStack{
+                                        
                                         Button(action: {
                                             self.presentationMode.wrappedValue.dismiss()
                                         }, label: {
@@ -77,15 +79,17 @@ struct DiaryInputView: View {
                                             Image(systemName: "chevron.left")
                                                 .resizable()// 화살표 Image
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(width: geo.size.width * 0.03)
-                                                .padding(EdgeInsets(top: 0, leading: geo.size.width * 0.1, bottom: 0, trailing: 0))
+                                                .frame(width: geo.size.width * 0.04)
                                         })
+                                        .padding(EdgeInsets(top: 0, leading: geo.size.width * 0.05, bottom: 0, trailing: 0))
+                                        
                                         Spacer()
                                         
                                         Text("MoodMingle")
                                             .font(.custom("KyoboHandwriting2021sjy", size: geo.size.width * 0.05))
-                                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.16))
+                                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -geo.size.width * 0.1))
                                         
+                                        Spacer()
                                         
                                         Button(action: {
                                             isPresented = true
@@ -93,10 +97,11 @@ struct DiaryInputView: View {
                                             Image("introduce")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(width: geo.size.width * 0.18)
+                                                .frame(width: geo.size.width * 0.18, height: geo.size.width * 0.18)
                                         })
-                                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.08))
+                                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.05))
                                     }
+                                    
                                     
                                     ZStack{
                                         Image("input_background")

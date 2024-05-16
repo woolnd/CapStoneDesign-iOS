@@ -19,166 +19,175 @@ struct MyPageView: View {
     
     
     var body: some View {
-        NavigationStack{
-            ZStack{
-                Image("initial_background")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .ignoresSafeArea()
-                
-                VStack{
-                    HStack{
-                        
-                        Spacer()
-                        
-                        Text("MoodMingle")
-                            .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                            .padding(EdgeInsets(top: 25, leading: 0, bottom: 0, trailing: 0))
-                        
-                        Spacer()
-                    }
-                    
-                    Spacer()
-                    
-                    Image("mypage_main")
+        GeometryReader{ geo in
+            NavigationStack{
+                ZStack{
+                    Image("initial_background")
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                        .aspectRatio(contentMode: .fill)
+                        .ignoresSafeArea()
                     
-                    Spacer()
-                    
-                }
-                
-                VStack(spacing: 35){
-                    
-                    Rectangle()
-                        .opacity(0)
-                    
-                    Spacer()
-                    
-                    Rectangle()
-                        .opacity(0)
-                    
-                    
-                    Spacer()
-                    
-                    HStack{
+                    VStack{
+                        HStack{
+                            
+                            Rectangle()
+                                .frame(width: geo.size.width * 0.13, height: geo.size.width * 0.18)
+                                .foregroundColor(.clear)
+                            
+                            Spacer()
+                            
+                            Text("MoodMingle")
+                                .font(.custom("KyoboHandwriting2021sjy", size: geo.size.width * 0.05))
+                            
+                            Spacer()
+                            
+                            Rectangle()
+                                .frame(width: geo.size.width * 0.13, height: geo.size.width * 0.18)
+                                .foregroundColor(.clear)
+                        }
+                        
                         Spacer()
                         
-                        Button(action: {
-                            manager.requestAuthorization()
-                        }, label: {
-                            Image("mypage_btn")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        })
+                        Image("mypage_main")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(EdgeInsets(top: 0, leading: geo.size.width * 0.03, bottom: geo.size.width * 0.05, trailing: geo.size.width * 0.03))
+                        
+                        Spacer()
+                        
                     }
                     
-                    HStack{
+                    VStack(spacing: 35){
+                        
+                        Rectangle()
+                            .opacity(0)
+                        
                         Spacer()
-
-                        Toggle("", isOn: $stateManager.isPasswordSetting)
-                            .tint(.orange)
-                            .onChange(of: stateManager.isPasswordSetting) { newValue in
-                                if newValue {
-                                    
-                                    let AppScreenLockPassword = getUD(key: APP_SCREEN_LOCK_PASSWORD)
-                                    if AppScreenLockPassword as! [Int] == [] {
-                                        stateManager.isPasswordSettingView = true
-                                    } else {
-                                        // User Set Password
-                                        stateManager.isPasswordSettingView = false
-                                    }
-                                    
-                                } else {
-                                    removeUD(key: APP_SCREEN_LOCK_PASSWORD)
-                                }
-                            }
-                            .sheet(isPresented: $stateManager.isPasswordSettingView, content: {
-                                PasswordSettingView()
+                        
+                        Rectangle()
+                            .opacity(0)
+                        
+                        
+                        Spacer()
+                        
+                        HStack{
+                            Spacer()
+                            
+                            Button(action: {
+                                manager.requestAuthorization()
+                            }, label: {
+                                Image("mypage_btn")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
                             })
-                        
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                    
-                    HStack{
-                        Spacer()
-                        
-                        NavigationLink {
-                            AnnouncementView()
-                        } label: {
-                            Image("mypage_btn")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
                         }
                         
-                    }
-                    
-                    HStack{
+                        HStack{
+                            Spacer()
+
+                            Toggle("", isOn: $stateManager.isPasswordSetting)
+                                .tint(.orange)
+                                .onChange(of: stateManager.isPasswordSetting) { newValue in
+                                    if newValue {
+                                        
+                                        let AppScreenLockPassword = getUD(key: APP_SCREEN_LOCK_PASSWORD)
+                                        if AppScreenLockPassword as! [Int] == [] {
+                                            stateManager.isPasswordSettingView = true
+                                        } else {
+                                            // User Set Password
+                                            stateManager.isPasswordSettingView = false
+                                        }
+                                        
+                                    } else {
+                                        removeUD(key: APP_SCREEN_LOCK_PASSWORD)
+                                    }
+                                }
+                                .sheet(isPresented: $stateManager.isPasswordSettingView, content: {
+                                    PasswordSettingView()
+                                })
+                            
+                        }
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                        
+                        HStack{
+                            Spacer()
+                            
+                            NavigationLink {
+                                AnnouncementView()
+                            } label: {
+                                Image("mypage_btn")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                            
+                        }
+                        
+                        HStack{
+                            Spacer()
+                            
+                            NavigationLink {
+                                ServiceCenterView()
+                            } label: {
+                                Image("mypage_btn")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
+                        
+                        HStack{
+                            Spacer()
+                            
+                            NavigationLink {
+                                AccountManagementView()
+                            } label: {
+                                Image("mypage_btn")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
+                        
+                        HStack{
+                            Spacer()
+                            
+                            NavigationLink {
+                                TermsOfUseView()
+                            } label: {
+                                Image("mypage_btn")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }
+                        }
+                        
                         Spacer()
                         
-                        NavigationLink {
-                            ServiceCenterView()
-                        } label: {
-                            Image("mypage_btn")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                    }
-                    
-                    HStack{
-                        Spacer()
+                        Rectangle()
+                            .opacity(0)
                         
-                        NavigationLink {
-                            AccountManagementView()
-                        } label: {
-                            Image("mypage_btn")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
-                    }
-                    
-                    HStack{
-                        Spacer()
                         
-                        NavigationLink {
-                            TermsOfUseView()
-                        } label: {
-                            Image("mypage_btn")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        }
+                        Rectangle()
+                            .opacity(0)
                     }
-                    
-                    Spacer()
-                    
-                    Rectangle()
-                        .opacity(0)
-                    
-                    
-                    Rectangle()
-                        .opacity(0)
+                    .offset(x: -40)
+                    //푸시알림 테스트 코드
+                    //                HStack{
+                    //                    Spacer()
+                    //
+                    //                    Button(action: {
+                    //                        manager.scheduleNotification(trigger: .time)
+                    //                    }, label: {
+                    //                        Image("mypage_btn")
+                    //                            .resizable()
+                    //                            .aspectRatio(contentMode: .fit)
+                    //                            .frame(width: 100)
+                    //                    })
+                    //                }
                 }
-                .offset(x: -40)
-                //푸시알림 테스트 코드
-                //                HStack{
-                //                    Spacer()
-                //
-                //                    Button(action: {
-                //                        manager.scheduleNotification(trigger: .time)
-                //                    }, label: {
-                //                        Image("mypage_btn")
-                //                            .resizable()
-                //                            .aspectRatio(contentMode: .fit)
-                //                            .frame(width: 100)
-                //                    })
-                //                }
             }
-        }
-        .toolbar(.hidden)
-        .navigationBarBackButtonHidden(true)
-        .onAppear(){
-            stateManager.checkIsUserSetPassword()
+            .toolbar(.hidden)
+            .navigationBarBackButtonHidden(true)
+            .onAppear(){
+                stateManager.checkIsUserSetPassword()
+            }
         }
         
     }

@@ -18,6 +18,7 @@
 		6D03040B2BC78EA8008114A0 /* 777Balsamtint.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6D03040A2BC78EA8008114A0 /* 777Balsamtint.otf */; };
 		6D04BB392BDE6A47005A2065 /* DiarySendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D04BB382BDE6A47005A2065 /* DiarySendView.swift */; };
 		6D18EB4B2BF690EE00ED0962 /* KeyboardMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D18EB4A2BF690EE00ED0962 /* KeyboardMonitor.swift */; };
+		6D18EB4D2BF6B5CB00ED0962 /* EmotionStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D18EB4C2BF6B5CB00ED0962 /* EmotionStatusViewModel.swift */; };
 		6D2D8D842BE8562100AF01E8 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2D8D832BE8562100AF01E8 /* Service.swift */; };
 		6D2D8D872BE8564C00AF01E8 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2D8D862BE8564C00AF01E8 /* ViewModel.swift */; };
 		6D2E8FD02BF4F9EA005B7BA8 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2E8FCF2BF4F9EA005B7BA8 /* DiaryViewModel.swift */; };
@@ -72,6 +73,7 @@
 		6D03040A2BC78EA8008114A0 /* 777Balsamtint.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 777Balsamtint.otf; sourceTree = "<group>"; };
 		6D04BB382BDE6A47005A2065 /* DiarySendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiarySendView.swift; sourceTree = "<group>"; };
 		6D18EB4A2BF690EE00ED0962 /* KeyboardMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardMonitor.swift; sourceTree = "<group>"; };
+		6D18EB4C2BF6B5CB00ED0962 /* EmotionStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionStatusViewModel.swift; sourceTree = "<group>"; };
 		6D2D8D832BE8562100AF01E8 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		6D2D8D862BE8564C00AF01E8 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		6D2E8FCF2BF4F9EA005B7BA8 /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 			children = (
 				6D54DD222BC5BF9F008F839E /* EmotionalStatusView.swift */,
 				6D6132472BE3517000B879AB /* EmotionGraphIntroView.swift */,
+				6D18EB4C2BF6B5CB00ED0962 /* EmotionStatusViewModel.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				6D787E4E2BE299D70064267B /* StateManager.swift in Sources */,
 				6D0304052BC7861F008114A0 /* InitialViewModel.swift in Sources */,
 				6DA6CED82BC90E38003B30E0 /* EmotionViewModel.swift in Sources */,
+				6D18EB4D2BF6B5CB00ED0962 /* EmotionStatusViewModel.swift in Sources */,
 				6DD04D9C2BF26B8D009DB012 /* DiaryIntroView.swift in Sources */,
 				6D2D8D842BE8562100AF01E8 /* Service.swift in Sources */,
 				6D8610AF2BF5833E00A4D26A /* DiaryResponseView.swift in Sources */,

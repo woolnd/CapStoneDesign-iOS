@@ -75,47 +75,33 @@ struct CalendarDetailView: View {
                         .ignoresSafeArea()
                     
                     VStack{
+                        
                         HStack{
-                            Button(action: {
-                                self.presentationMode.wrappedValue.dismiss()
-                            }, label: {
-                                
-                                Image(systemName: "chevron.left")
-                                    .resizable()// 화살표 Image
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 20, height: 20)
-                                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 0))
-                                
-                            })
+                            
+                            Rectangle()
+                                .frame(width: geo.size.width * 0.13, height: geo.size.width * 0.18)
+                                .foregroundColor(.clear)
                             
                             Spacer()
                             
-                            Text("MoodMingle")
-                                .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                                .padding(EdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 0))
+                            
                             
                             Spacer()
                             
-                            Button(action: {
-                                isPresented = true
-                            }, label: {
-                                Image("introduce")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 70,height: 70)
-                            })
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                            Rectangle()
+                                .frame(width: geo.size.width * 0.13, height: geo.size.width * 0.18)
+                                .foregroundColor(.clear)
                         }
                         
                         ZStack{
                             Image("input_background")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .padding(EdgeInsets(top: -20, leading: 0, bottom: 0, trailing: 10))
+                                .padding(EdgeInsets(top: -20, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             HStack{
                                 VStack{
-                                    
+                                
                                     HStack{
                                         Text("날짜: \(formattedDate)")
                                             .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
@@ -156,7 +142,7 @@ struct CalendarDetailView: View {
                                         Image("\(viewModel.diary.emotion)")
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
-                                            .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.52)
+                                            .frame(width: geo.size.width * 0.4, height: geo.size.width * 0.52)
                                             .clipped()
                                             .cornerRadius(20)
                                             .padding()
@@ -168,7 +154,7 @@ struct CalendarDetailView: View {
                                             }
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
-                                            .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.52)
+                                            .frame(width: geo.size.width * 0.4, height: geo.size.width * 0.52)
                                             .clipped()
                                             .cornerRadius(20)
                                             .padding()
@@ -212,7 +198,7 @@ struct CalendarDetailView: View {
                                     .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
                             }
                             .frame(width: geo.size.width * 0.6)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.3, trailing: 0))
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.3, trailing: geo.size.width * 0.04))
                             
                             
                             ScrollView(.vertical){
@@ -220,7 +206,7 @@ struct CalendarDetailView: View {
                                     .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                             }
                             .frame(width: geo.size.width * 0.9, height: geo.size.height * 0.3)
-                            .padding(EdgeInsets(top: geo.size.height * 0.35, leading: 0, bottom: 0, trailing: 0))
+                            .padding(EdgeInsets(top: geo.size.height * 0.35, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             VStack{
                                 Spacer()
@@ -234,16 +220,54 @@ struct CalendarDetailView: View {
                                         .frame(width: geo.size.width * 0.9)
                                 })
                                 
-                            }
+                            }.padding(EdgeInsets(top: geo.size.width * 0.35, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                         }
                         
                     }
+                    
+                    VStack{
+                    
+                        HStack{
+                            
+                            Button(action: {
+                                self.presentationMode.wrappedValue.dismiss()
+                            }, label: {
+                                
+                                Image(systemName: "chevron.left")
+                                    .resizable()// 화살표 Image
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: geo.size.width * 0.04)
+                            })
+                            .padding(EdgeInsets(top: 0, leading: geo.size.width * 0.05, bottom: 0, trailing: 0))
+                            .zIndex(1)
+                            
+                            Spacer()
+                            
+                            Text("MoodMingle")
+                                .font(.custom("KyoboHandwriting2021sjy", size: geo.size.width * 0.05))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: -geo.size.width * 0.1))
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                isPresented = true
+                            }, label: {
+                                Image("introduce")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: geo.size.width * 0.18, height: geo.size.width * 0.18)
+                            })
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.05))
+                        }
+                        Spacer()
+                    }
                 }
+                .accentColor(Color.black)
             }
-            .accentColor(Color.black)
+            .toolbar(.hidden)
+            .navigationBarBackButtonHidden(true)
         }
-        .toolbar(.hidden)
-        .navigationBarBackButtonHidden(true)
+        
         .sheet(isPresented: $isPresented, content: {
             DiaryIntroView()
         })

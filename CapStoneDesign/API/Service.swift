@@ -174,7 +174,7 @@ class Service{
         }
     }
     
-    func EmotionRequest(dto: DiaryRequest, completion: @escaping (Result<Int, Error>) -> Void) {
+    func EmotionRequest(dto: DiaryRequest, completion: @escaping (Result<GraphResponse, Error>) -> Void) {
         
         let URL = "http://52.78.41.105:8080/api/v1/diary/monthly-emotion"
         
@@ -187,14 +187,11 @@ class Service{
         .validate(statusCode: 200..<300)
         .responseDecodable(of: GraphResponse.self) { response in
             switch response.result {
-            case .success:
-                guard let statusCode = response.response?.statusCode else { return }
-                guard response.value != nil else { return }
-                print("\(response.result)")
-                completion(.success(statusCode))
-            case .failure(let err):
-                print(err)
-                completion(.failure(err))
+            case .success(let emotionResponses):
+                completion(.success(emotionResponses))
+            case .failure(let error):
+                print(error)
+                completion(.failure(error))
             }
         }
     }

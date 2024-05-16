@@ -21,6 +21,10 @@ struct EmotionalStatusView: View {
     @State var currentDate: Date = Date()
     @State var maxValue: Int = 0 // 최고값
     
+    let service = Service()
+    @ObservedObject var viewModel: EmotionStatusViewModel
+    
+    
     var layout: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -51,16 +55,22 @@ struct EmotionalStatusView: View {
                                 Image("introduce")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 70, height: 70)
+                                    .frame(width: geo.size.width * 0.18)
                             })
+                            .padding(EdgeInsets(top: 0, leading: geo.size.width * 0.05, bottom: 0, trailing: 0))
+                            
                             Spacer()
                             
                             Text("MoodMingle")
-                                .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                                .padding(EdgeInsets(top: 0, leading: -70, bottom: 0, trailing: 0))
+                                .font(.custom("KyoboHandwriting2021sjy", size: geo.size.width * 0.05))
                             Spacer()
+                            
+                            Rectangle()
+                                .frame(width: geo.size.width * 0.18, height: geo.size.width * 0.18)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.05))
+                                .foregroundColor(.clear)
+                            
                         }
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
                         .sheet(isPresented: $isPresented, content: {
                             EmotionGraphIntroView()
                         })
@@ -69,6 +79,7 @@ struct EmotionalStatusView: View {
                             
                             Button(action: {
                                 self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: self.currentDate)!
+                                loadEmotionData()
                             }, label: {
                                 Image("arrow_left")
                             })
@@ -80,12 +91,13 @@ struct EmotionalStatusView: View {
                             
                             Button(action: {
                                 self.currentDate = Calendar.current.date(byAdding: .month, value: +1, to: self.currentDate)!
+                                loadEmotionData()
                             }, label: {
                                 Image("arrow_right")
                             })
                         }
+                        .padding(EdgeInsets(top: -geo.size.width * 0.01, leading: 0, bottom: 0, trailing: 0))
                         
-                    
                         Chart(vm, id: \.date) { element in
                             SectorMark(angle: .value("emotions", element.value) ,innerRadius: .ratio(0.618),
                                        angularInset: 1.5)
@@ -97,13 +109,16 @@ struct EmotionalStatusView: View {
                             GeometryReader{ geometry in
                                 let frame = geometry[chartProxy.plotAreaFrame]
                                 VStack{
-                                    
+                                    let allValues = vm.map { $0.value }
                                     let maxValueGraph = vm.max(by: { $0.value < $1.value }) // 최고값 찾기
+                                    
+                                    let isAllValuesEqual = allValues.allSatisfy { $0 == allValues.first }
+                                    let isMaxValueOne = allValues.filter { $0 == 1 }.count > 1
                                     
                                     Text("주된 감정")
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
                                         .foregroundStyle(.secondary)
-                                    Text("\(maxValueGraph?.date ?? "")")
+                                    Text(isAllValuesEqual || isMaxValueOne ? "동일" : "\(maxValueGraph?.date ?? "")")
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.07))
                                 }
                                 .position(x: frame.midX, y: frame.midY)
@@ -132,18 +147,49 @@ struct EmotionalStatusView: View {
                             .frame(height: geo.size.height * 0.1)
                             .foregroundColor(.clear)
                     }
+                    
                 }
             }
             .toolbar(.hidden)
             .navigationBarBackButtonHidden(true)
             .onAppear {
-                // Transform GraphResponse data to Case2 format
+                loadEmotionData()
+            }
+        }
+        
+    }
+    private func loadEmotionData() {
+        service.EmotionRequest(dto: DiaryRequest(dto: MonthDto(memberId: 1, date: "\(formattedApi(date: currentDate))"))) { result in
+            switch result {
+            case .success(let response):
+                let emotionModel = EmotionStatusViewModel.Emotions(
+                    fear: response.fear,
+                    moved: response.moved,
+                    lethargy: response.lethargy,
+                    flutter: response.flutter,
+                    peace: response.peace,
+                    pleasure: response.pleasure,
+                    confidence: response.confidence,
+                    worry: response.worry,
+                    anger: response.anger,
+                    sadness: response.sadness)
+                
+                print("\(response)")
+                viewModel.updateEmotion(with: emotionModel)
                 self.vm = transformGraphResponseToGraph()
                 self.maxValue = self.vm.map { $0.value }.max() ?? 0 // 최고값 찾기
+                
+            case .failure(let error):
+                print("Error: \(error)")
             }
         }
     }
     
+    private func formattedApi(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM"
+        return formatter.string(from: date)
+    }
     
     struct Graph {
         let date: String
@@ -152,7 +198,7 @@ struct EmotionalStatusView: View {
     }
     
     func transformGraphResponseToGraph() -> [Graph] {
-        let graphResponse = GraphResponse(fear: 3, moved: 7, lethargy: 1, flutter: 8, peace: 9, pleasure: 10, confidence: 6, worry: 2, anger: 4, sadness: 5)
+        let graphResponse = viewModel.emotion
         
         
         return [
@@ -192,5 +238,5 @@ struct EmotionalStatusView: View {
 
 
 #Preview {
-    EmotionalStatusView()
+    EmotionalStatusView(viewModel: EmotionStatusViewModel(emotion: EmotionStatusViewModel.mock))
 }

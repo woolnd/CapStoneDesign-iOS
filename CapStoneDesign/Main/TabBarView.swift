@@ -25,7 +25,7 @@ struct TabBarView: View {
             } else{
                 TabView(selection: $selection){
                     
-                    EmotionalStatusView()
+                    EmotionalStatusView(viewModel: EmotionStatusViewModel(emotion: EmotionStatusViewModel.mock))
                         .tabItem {
                             Image(selection == 0 ? "emotion_tab" : "emotion_blank_tab")
                             Text("감정추이")

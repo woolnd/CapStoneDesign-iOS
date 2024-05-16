@@ -23,11 +23,11 @@ struct CalendarDateView: View {
                             Image("today")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 25)
+                                .frame(width: 30)
                         }else{
                             Rectangle()
                                 .foregroundColor(.clear)
-                                .frame(width: 25)
+                                .frame(width: 30)
                         }
                     }
                     Spacer()
@@ -99,5 +99,5 @@ struct CalendarDateView: View {
 }
 
 #Preview {
-    CalendarDateView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock), date: 1, currentDate: .constant(Date()))
+    CalendarDateView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock), date: 17, currentDate: .constant(Date()))
 }
