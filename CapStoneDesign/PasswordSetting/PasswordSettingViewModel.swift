@@ -45,7 +45,7 @@ class PasswordSettingViewModel : ObservableObject {
                         let prefixedPassword = value.prefix(4)
                         self?.passwordFieldArray = Array(prefixedPassword)
                     }
-                    print("\(self?.passwordFieldArray)")
+                    print("\(String(describing: self?.passwordFieldArray))")
                 }
             }
             .store(in: &subscription)

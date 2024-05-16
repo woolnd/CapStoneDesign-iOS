@@ -41,7 +41,7 @@ extension EmotionViewModel{
         emotion(name: "공포", imageName: "FEAR", isSelected: false),
         emotion(name: "감동", imageName: "MOVED", isSelected: false),
         emotion(name: "걱정", imageName: "WORRY", isSelected: false),
-        emotion(name: "자신감", imageName: "COFIDENCE", isSelected: false),
+        emotion(name: "자신감", imageName: "CONFIDENCE", isSelected: false),
         emotion(name: "무기력", imageName: "LETHARGY", isSelected: false)
     ]
     

@@ -46,16 +46,16 @@ struct PasswordSettingView: View {
                 
                 HStack(spacing: 10){
                     Group {
-                        Image(passwordSettingViewModel.passwordFieldArray.count >= 1 ? "flutter" : "peace")
+                        Image(passwordSettingViewModel.passwordFieldArray.count >= 1 ? "FLUTTER" : "PEACE")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                        Image(passwordSettingViewModel.passwordFieldArray.count >= 2 ? "flutter" : "peace")
+                        Image(passwordSettingViewModel.passwordFieldArray.count >= 2 ? "FLUTTER" : "PEACE")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                        Image(passwordSettingViewModel.passwordFieldArray.count >= 3 ? "flutter" : "peace")
+                        Image(passwordSettingViewModel.passwordFieldArray.count >= 3 ? "FLUTTER" : "PEACE")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                        Image(passwordSettingViewModel.passwordFieldArray.count >= 4 ? "flutter" : "peace")
+                        Image(passwordSettingViewModel.passwordFieldArray.count >= 4 ? "FLUTTER" : "PEACE")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     }

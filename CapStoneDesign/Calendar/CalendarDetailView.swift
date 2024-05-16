@@ -18,6 +18,7 @@ struct CalendarDetailView: View {
     @State var date: Int
     @Binding var currentDate: Date
     @State private var isShowingFullImage = false
+    @State private var isShowingResponse = false
     
     let service = Service()
     @ObservedObject var viewModel: DiaryViewModel
@@ -32,7 +33,7 @@ struct CalendarDetailView: View {
             return "설렘"
         case "MOVED":
             return "감동"
-        case "COFIDENCE":
+        case "CONFIDENCE":
             return "자신감"
         case "SADNESS":
             return "우울"
@@ -151,17 +152,28 @@ struct CalendarDetailView: View {
                             
                             HStack{
                                 VStack{
-                                    let url = URL(string: "\(viewModel.diary.imageUrl)")
-                                    KFImage(url)
-                                        .onSuccess { result in
-                                            print("\(result)")
-                                        }
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.52)
-                                        .clipped()
-                                        .cornerRadius(20)
-                                        .padding()
+                                    if viewModel.diary.imageUrl == nil {
+                                        Image("\(viewModel.diary.emotion)")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.52)
+                                            .clipped()
+                                            .cornerRadius(20)
+                                            .padding()
+                                    }else{
+                                        let url = URL(string: viewModel.diary.imageUrl ?? "")
+                                        KFImage(url)
+                                            .onSuccess { result in
+                                                print("\(result)")
+                                            }
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.52)
+                                            .clipped()
+                                            .cornerRadius(20)
+                                            .padding()
+                                    }
+                                    
                                     
                                     Button(action: {
                                         isShowingFullImage.toggle()
@@ -172,11 +184,20 @@ struct CalendarDetailView: View {
                                     .padding(EdgeInsets(top: -geo.size.width * 0.05, leading: 0, bottom: 0, trailing: 0))
                                     .sheet(isPresented: $isShowingFullImage, content: {
                                         ZStack {
-                                            KFImage(url)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .edgesIgnoringSafeArea(.all)
+                                            
+                                            if viewModel.diary.imageUrl == nil {
+                                                Image("\(viewModel.diary.emotion)")
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .edgesIgnoringSafeArea(.all)
                                                 
+                                            }else{
+                                                let url = URL(string: viewModel.diary.imageUrl ?? "")
+                                                KFImage(url)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .edgesIgnoringSafeArea(.all)
+                                            }
                                         }
                                     })
                                     
@@ -200,6 +221,20 @@ struct CalendarDetailView: View {
                             }
                             .frame(width: geo.size.width * 0.9, height: geo.size.height * 0.3)
                             .padding(EdgeInsets(top: geo.size.height * 0.35, leading: 0, bottom: 0, trailing: 0))
+                            
+                            VStack{
+                                Spacer()
+                                
+                                Button(action: {
+                                    isShowingResponse = true
+                                }, label: {
+                                    Image("response_btn")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: geo.size.width * 0.9)
+                                })
+                                
+                            }
                         }
                         
                     }
@@ -211,6 +246,9 @@ struct CalendarDetailView: View {
         .navigationBarBackButtonHidden(true)
         .sheet(isPresented: $isPresented, content: {
             DiaryIntroView()
+        })
+        .sheet(isPresented: $isShowingResponse, content: {
+            DiaryResponseView(responseType: viewModel.diary.type ?? "", content: viewModel.diary.replyContent ?? "")
         })
         .onAppear(){
             loadDetailData()
@@ -233,7 +271,6 @@ struct CalendarDetailView: View {
                     type: response.type
                 )
                 viewModel.updateDiary(with: diaryModel)
-                print("\(response)")
             case .failure(let error):
                 print("Error: \(error)")
             }
@@ -257,5 +294,5 @@ struct CalendarDetailView: View {
 }
 
 #Preview {
-    CalendarDetailView(memberId: 1, diaryId: 8, date: 1, currentDate: .constant(Date()), viewModel: DiaryViewModel(diary: DiaryViewModel.mock))
+    CalendarDetailView(memberId: 1, diaryId: 2, date: 1, currentDate: .constant(Date()), viewModel: DiaryViewModel(diary: DiaryViewModel.mock))
 }

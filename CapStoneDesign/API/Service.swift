@@ -178,18 +178,12 @@ class Service{
         
         let URL = "http://52.78.41.105:8080/api/v1/diary/monthly-emotion"
         
-        let headers: HTTPHeaders = [
-            "Content-Type": "application/json" // JSON 형식으로 전송하기 위한 헤더
-        ]
-        
         let dto : [String : Any] = ["memberId": dto.dto.memberId,
                                     "date": dto.dto.date]
         
         AF.request(URL,
                    method: .get,
-                   parameters: dto,
-                   encoding: JSONEncoding.default,
-                   headers: headers)
+                   parameters: dto)
         .validate(statusCode: 200..<300)
         .responseDecodable(of: GraphResponse.self) { response in
             switch response.result {

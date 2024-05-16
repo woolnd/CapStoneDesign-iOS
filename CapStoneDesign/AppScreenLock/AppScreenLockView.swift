@@ -51,16 +51,16 @@ struct AppScreenLockView: View {
             
                 HStack(spacing: 10){
                     Group {
-                        Image(appScreenLockModel.passwordFieldArray.count >= 1 ? "flutter" : "peace")
+                        Image(appScreenLockModel.passwordFieldArray.count >= 1 ? "FLUTTER" : "PEACE")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                        Image(appScreenLockModel.passwordFieldArray.count >= 2 ? "flutter" : "peace")
+                        Image(appScreenLockModel.passwordFieldArray.count >= 2 ? "FLUTTER" : "PEACE")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                        Image(appScreenLockModel.passwordFieldArray.count >= 3 ? "flutter" : "peace")
+                        Image(appScreenLockModel.passwordFieldArray.count >= 3 ? "FLUTTER" : "PEACE")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                        Image(appScreenLockModel.passwordFieldArray.count >= 4 ? "flutter" : "peace")
+                        Image(appScreenLockModel.passwordFieldArray.count >= 4 ? "FLUTTER" : "PEACE")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     }

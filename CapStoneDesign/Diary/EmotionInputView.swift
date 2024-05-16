@@ -39,15 +39,15 @@ struct EmotionInputView: View {
                                 Image(systemName: "chevron.left")
                                     .resizable()// 화살표 Image
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 20, height: 20)
-                                    .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                    .frame(width: geo.size.width * 0.03)
+                                    .padding(EdgeInsets(top: 0, leading: geo.size.width * 0.1, bottom: 0, trailing: 0))
                                 
                             })
                             Spacer()
                             
                             Text("MoodMingle")
-                                .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                                .padding(EdgeInsets(top: 0, leading: -50, bottom: 0, trailing: 0))
+                                .font(.custom("KyoboHandwriting2021sjy", size: geo.size.width * 0.05))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.15))
                             
                             Spacer()
                         }
@@ -55,11 +55,9 @@ struct EmotionInputView: View {
                         
                         
                         Text("감성을 선택해주세요!")
-                            .font(.custom("777Balsamtint", size: 35))
-                            .padding()
+                            .font(.custom("777Balsamtint", size: geo.size.width * 0.1))
                         
                         HStack{
-                            Spacer()
                             
                             ScrollView{
                                 LazyVGrid(columns: layout){
@@ -77,8 +75,7 @@ struct EmotionInputView: View {
                                     }
                                 }
                             }
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: 0))
-                            Spacer()
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: geo.size.width * 0.04))
                         }
                         
                         Spacer()
@@ -107,6 +104,7 @@ struct EmotionInputView: View {
                                 .frame(width: geo.size.width * 0.9)
                         }
                     }
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                     
                 }
                 .accentColor(Color.black)

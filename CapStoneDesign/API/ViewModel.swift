@@ -72,9 +72,9 @@ struct DiaryDetailReponse: Codable{
     var date: String
     var emotion: String
     var weather: String
-    var imageUrl: String
-    var replyContent: String
-    var type: String
+    var imageUrl: String?
+    var replyContent: String?
+    var type: String?
 }
 
 

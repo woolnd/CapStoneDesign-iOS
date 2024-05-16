@@ -48,7 +48,7 @@ class AppScreenLockViewModel : ObservableObject {
     /// 비밀번호가 맞으면 appScreenLockMode의 상태를 바꿔 잠금을 해제하고
     /// 비밀번호가 틀리면 비밀번호를 리셋하고 비밀번호가 흔들리는 shake애니메이션을 실행시킨다.
     func setObserver() {
-        let asswordFieldArraysubscriber = $passwordFieldArray
+        let asswordFieldArraysubscriber: () = $passwordFieldArray
             .removeDuplicates()
             .subscribe(on: DispatchQueue.main)
             .sink { value in
@@ -65,7 +65,7 @@ class AppScreenLockViewModel : ObservableObject {
                             isWrongPassword = true
                             print("RESET")
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                isWrongPassword = false
+                                self.isWrongPassword = false
                             }
                         }
                     }

@@ -43,13 +43,15 @@ struct CalendarView: View {
                                 Image("introduce")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 70, height: 70)
+                                    .frame(width: geo.size.width * 0.18)
                             })
+                            .padding(EdgeInsets(top: 0, leading: geo.size.width * 0.05, bottom: 0, trailing: 0))
+                            
                             Spacer()
                             
                             Text("MoodMingle")
-                                .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                                .padding(EdgeInsets(top: 0, leading: -70, bottom: 0, trailing: 0))
+                                .font(.custom("KyoboHandwriting2021sjy", size: geo.size.width * 0.05))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.2))
                             Spacer()
                         }
                         

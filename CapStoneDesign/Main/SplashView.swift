@@ -13,6 +13,7 @@ struct SplashView: View {
     @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
     @State var kakaoTokenCheck: Bool = false
     
+    
     @State var isActive = false
     @State var isInitial = false
     

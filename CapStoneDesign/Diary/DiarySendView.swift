@@ -10,6 +10,8 @@ import SwiftUI
 struct DiarySendView: View {
     
     @State var requestBody: DiaryDto
+    @State var currentResponse: Int
+    
     var service = Service()
     
     var body: some View {
@@ -61,13 +63,36 @@ struct DiarySendView: View {
                 }
             }
             .onAppear(){
-                service.LetterRequest(letter: requestBody) { result in
-                    switch result {
-                    case .success(let response):
-                        // 성공적으로 응답을 받았을 때 수행할 동작
-                        print("Diary response: \(response)")
-                    case .failure(let error): break
-                        // 요청이 실패했을 때 수행할 동작
+                switch currentResponse{
+                case 0:
+                    service.LetterRequest(letter: requestBody) { result in
+                        switch result {
+                        case .success(let response):
+                            // 성공적으로 응답을 받았을 때 수행할 동작
+                            print("Diary response: \(response)")
+                        case .failure(_): break
+                            // 요청이 실패했을 때 수행할 동작
+                        }
+                    }
+                case 1:
+                    service.SympathyRequest(sympathy: requestBody) { result in
+                        switch result {
+                        case .success(let response):
+                            // 성공적으로 응답을 받았을 때 수행할 동작
+                            print("Diary response: \(response)")
+                        case .failure(_): break
+                            // 요청이 실패했을 때 수행할 동작
+                        }
+                    }
+                default:
+                    service.AdviceRequest(advice: requestBody) { result in
+                        switch result {
+                        case .success(let response):
+                            // 성공적으로 응답을 받았을 때 수행할 동작
+                            print("Diary response: \(response)")
+                        case .failure(_): break
+                            // 요청이 실패했을 때 수행할 동작
+                        }
                     }
                 }
             }
@@ -78,5 +103,5 @@ struct DiarySendView: View {
 }
 
 #Preview {
-    DiarySendView(requestBody: DiaryDto(dto: Dto(memberId: 1, title: "", date: "", content: "", emotion: "", weather: ""), image: ""))
+    DiarySendView(requestBody: DiaryDto(dto: Dto(memberId: 1, title: "", date: "", content: "", emotion: "", weather: ""), image: ""), currentResponse: 0)
 }

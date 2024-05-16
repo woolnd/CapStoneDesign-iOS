@@ -32,6 +32,7 @@ struct TabBarView: View {
                                 .font(.custom("777Balsamtint", size: 18))
                                 .foregroundColor(selection == 0 ? .black : .gray)
                         }.tag(0)
+                    
                     CalendarView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock))
                         .tabItem {
                             Image(selection == 1 ? "calendar_tab" : "calendar_blank_tab")
@@ -39,7 +40,6 @@ struct TabBarView: View {
                                 .font(.custom("777Balsamtint", size: 18))
                                 .foregroundColor(selection == 1 ? .black : .gray)
                         }.tag(1)
-
                     MyPageView()
                         .tabItem {
                             Image(selection == 2 ? "mypage_tab" : "mypage_blank_tab")

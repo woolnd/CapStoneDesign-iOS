@@ -34,23 +34,22 @@ struct ResponseView: View {
                                 Image(systemName: "chevron.left")
                                     .resizable()// 화살표 Image
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 20, height: 20)
-                                    .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))
+                                    .frame(width: geo.size.width * 0.03)
+                                    .padding(EdgeInsets(top: 0, leading: geo.size.width * 0.1, bottom: 0, trailing: 0))
                                 
                             })
                             Spacer()
                             
                             Text("MoodMingle")
-                                .font(.custom("KyoboHandwriting2021sjy", size: 25))
-                                .padding(EdgeInsets(top: 0, leading: -50, bottom: 0, trailing: 0))
+                                .font(.custom("KyoboHandwriting2021sjy", size: geo.size.width * 0.05))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.15))
                             
                             Spacer()
                         }
                         .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 0))
                         
                         Text("답변 방식을 선택해 주세요!")
-                            .font(.custom("777Balsamtint", size: 35))
-                            .padding()
+                            .font(.custom("777Balsamtint", size: geo.size.width * 0.1))
                         
                         if currentEmotion == 1{
                             Image("letter")
@@ -61,6 +60,7 @@ struct ResponseView: View {
                                     selectedResponseIndex = 1
                                 }
                                 .opacity(selectedResponseIndex != nil && selectedResponseIndex != 1  ? 0.5 : 1.0)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             Image("friend")
                                 .resizable()
@@ -70,6 +70,7 @@ struct ResponseView: View {
                                     selectedResponseIndex = 2
                                 }
                                 .opacity(selectedResponseIndex != nil && selectedResponseIndex != 2  ? 0.5 : 1.0)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             Image("advice")
                                 .resizable()
@@ -79,6 +80,7 @@ struct ResponseView: View {
                                     selectedResponseIndex = 3
                                 }
                                 .opacity(selectedResponseIndex != nil && selectedResponseIndex != 3  ? 0.5 : 1.0)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                         }
                         else{
                             Image("letter")
@@ -86,6 +88,7 @@ struct ResponseView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.8)
                                 .opacity(0.5)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             Image("friend")
                                 .resizable()
@@ -95,6 +98,7 @@ struct ResponseView: View {
                                     selectedResponseIndex = 2
                                 }
                                 .opacity(selectedResponseIndex != nil && selectedResponseIndex != 2  ? 0.5 : 1.0)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             Image("advice")
                                 .resizable()
@@ -104,8 +108,9 @@ struct ResponseView: View {
                                     selectedResponseIndex = 3
                                 }
                                 .opacity(selectedResponseIndex != nil && selectedResponseIndex != 3  ? 0.5 : 1.0)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                         }
-
+                        
                         Spacer()
                     }
                     
@@ -130,6 +135,7 @@ struct ResponseView: View {
                         }
                         
                     }
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                     
                 }
                 .accentColor(Color.black)
