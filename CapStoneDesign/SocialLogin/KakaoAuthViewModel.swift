@@ -10,57 +10,43 @@ import Combine
 import KakaoSDKUser
 import KakaoSDKAuth
 
-class KakaoAuthViewModel: ObservableObject{
+class KakaoAuthViewModel: ObservableObject {
     
-//    func handleKakaoLogin(){
-//        UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
-//            if let error = error {
-//                print(error)
-//            }
-//            else {
-//                print("loginWithKakaoAccount() success.")
-//                
-//                //do something
-//                let token = oauthToken
-//                if let accessToken = token?.accessToken {
-//                    let accessTokenString = String(accessToken)
-//                    UserDefaults.standard.set(accessTokenString, forKey: "KakaoToken")
-//                }
-//            }
-//        }
-//    }
+    @Published var isLoggedIn: Bool = false
+    
+    // 로그인 처리 함수
     func handleKakaoLogin(completion: @escaping (Bool) -> Void) {
-            UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
-                if let error = error {
-                    print(error)
-                    completion(false)
+        UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
+            if let error = error {
+                print(error)
+                completion(false)
+            } else {
+                print("loginWithKakaoAccount() success.")
+                
+                // 로그인 성공 시 처리
+                if let token = oauthToken {
+                    self.saveToken(oauthToken: token)
+                    self.isLoggedIn = true
+                    completion(true)
                 } else {
-                    print("loginWithKakaoAccount() success.")
-                    
-                    // 로그인 성공 시 처리
-                    if let token = oauthToken?.accessToken {
-                        let accessTokenString = String(token)
-                        UserDefaults.standard.set(accessTokenString, forKey: "KakaoToken")
-                        completion(true)
-                    } else {
-                        completion(false)
-                    }
+                    completion(false)
                 }
             }
         }
-    
-    func handleKakaoLogout(){
-        UserApi.shared.logout {(error) in
-            if let error = error {
-                print(error)
-            }
-            else {
-                print("logout() success.")
-            }
-        }
-        
     }
     
+    // 로그아웃 처리 함수
+    func handleKakaoLogout() {
+        UserApi.shared.logout { (error) in
+            if let error = error {
+                print(error)
+            } else {
+                print("logout() success.")
+                self.clearToken()
+                self.isLoggedIn = false
+            }
+        }
+    }
     
     func handleTokenCheck(completion: @escaping (Bool) -> Void) {
         // 사용자 액세스 토큰 정보 조회
@@ -82,5 +68,33 @@ class KakaoAuthViewModel: ObservableObject{
                 }
             }
         }
+    }
+    
+    func refreshToken(completion: @escaping (Bool) -> Void) {
+        AuthApi.shared.refreshToken { (idToken, error) in
+            if let error = error {
+                print(error)
+                completion(false) // 에러가 발생한 경우 false를 반환
+            } else {
+                if let id_token = idToken {
+//print("\(id_token)")
+                    self.saveToken(oauthToken: id_token)
+                    completion(true)
+                } else {
+                    // access_token이 nil이면 실패로 간주하여 false를 반환
+                    completion(false)
+                }
+            }
+        }
+    }
+    
+    // 토큰 저장 함수
+    private func saveToken(oauthToken: OAuthToken) {
+        UserDefaults.standard.set(oauthToken.idToken, forKey: "KakaoIdToken")
+    }
+    
+    // 토큰 삭제 함수
+    private func clearToken() {
+        UserDefaults.standard.removeObject(forKey: "KakaoIdToken")
     }
 }

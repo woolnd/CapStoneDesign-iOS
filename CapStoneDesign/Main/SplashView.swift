@@ -105,16 +105,6 @@ struct SplashView: View {
                                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
                                 .opacity(buttonOpacity)
                         }
-//                        NavigationLink {
-//                            
-//                        } label: {
-//                            Image("kakao_login")
-//                                .resizable()
-//                                .frame(width : UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.height * 0.06)
-//                                .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
-//                                .opacity(buttonOpacity)
-//                        }
-                        
                     }
                     .onReceive(aftertimer){_ in
                         withAnimation{
@@ -128,6 +118,7 @@ struct SplashView: View {
             }
             .accentColor(.black)
             .onAppear(){
+                print("id_token: \(UserDefaults.standard.string(forKey: "KakaoIdToken")!)")
                 performTokenCheck()
             }
         }

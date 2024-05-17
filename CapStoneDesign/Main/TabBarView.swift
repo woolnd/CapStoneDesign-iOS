@@ -15,6 +15,8 @@ struct TabBarView: View {
     
     let service = Service()
     
+    @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
+    
     var body: some View {
         
         NavigationStack{
@@ -56,7 +58,14 @@ struct TabBarView: View {
         .navigationBarBackButtonHidden(true)
         .onAppear{
             appScreenLockModel.checkIsUserSetScreenLockPassword()
-                
+            kakaoAuthVM.refreshToken { success in
+                if success {
+                    print("NEW토큰 발급 성공")
+                    print("new id_token: \(UserDefaults.standard.string(forKey: "KakaoIdToken")!)")
+                } else {
+                    print("실패")
+                }
+            }
         }
     }
 }

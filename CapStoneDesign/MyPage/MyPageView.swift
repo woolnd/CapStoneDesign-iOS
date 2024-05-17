@@ -87,8 +87,8 @@ struct MyPageView: View {
 
                             Toggle("", isOn: $stateManager.isPasswordSetting)
                                 .tint(.orange)
-                                .onChange(of: stateManager.isPasswordSetting) { newValue in
-                                    if newValue {
+                                .onChange(of: stateManager.isPasswordSetting) { 
+                                    if stateManager.isPasswordSetting {
                                         
                                         let AppScreenLockPassword = getUD(key: APP_SCREEN_LOCK_PASSWORD)
                                         if AppScreenLockPassword as! [Int] == [] {
@@ -169,18 +169,18 @@ struct MyPageView: View {
                     }
                     .offset(x: -40)
                     //푸시알림 테스트 코드
-                    //                HStack{
-                    //                    Spacer()
-                    //
-                    //                    Button(action: {
-                    //                        manager.scheduleNotification(trigger: .time)
-                    //                    }, label: {
-                    //                        Image("mypage_btn")
-                    //                            .resizable()
-                    //                            .aspectRatio(contentMode: .fit)
-                    //                            .frame(width: 100)
-                    //                    })
-                    //                }
+                                    HStack{
+                                        Spacer()
+                    
+                                        Button(action: {
+                                            manager.scheduleNotification(trigger: .time)
+                                        }, label: {
+                                            Image("mypage_btn")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(width: 100)
+                                        })
+                                    }
                 }
             }
             .toolbar(.hidden)

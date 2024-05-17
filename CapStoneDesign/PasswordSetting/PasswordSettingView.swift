@@ -119,8 +119,8 @@ struct PasswordSettingView: View {
             .onAppear {
                 passwordSettingViewModel.setObserver()
             }
-            .onChange(of: passwordSettingViewModel.isPasswordRegisterFinish) { newValue in
-                if newValue {
+            .onChange(of: passwordSettingViewModel.isPasswordRegisterFinish) {
+                if passwordSettingViewModel.isPasswordRegisterFinish {
                     stateManager.isPasswordSettingView.toggle()
                 }
             }

@@ -213,7 +213,7 @@ struct DiaryInputView: View {
                                                             withAnimation {
                                                                 sv.scrollTo(Field.content, anchor: .bottom)
                                                             }
-                                                        }.onChange(of: content) { _ in
+                                                        }.onChange(of: content) {
                                                             withAnimation {
                                                                 scroll.scrollTo("ContentTextField", anchor: .bottom)
                                                             }
@@ -277,10 +277,10 @@ struct DiaryInputView: View {
                     }
                     .toolbar(.hidden)
                     .navigationBarBackButtonHidden(true)
-                    .onChange(of: content) { newValue in
-                        characterCount = newValue.count
+                    .onChange(of: content) {
+                        characterCount = content.count
                         if characterCount > maxContentLength {
-                            content = String(newValue.prefix(maxContentLength))
+                            content = String(content.prefix(maxContentLength))
                         }
                     }
                     .sheet(isPresented: $isPresented, content: {
