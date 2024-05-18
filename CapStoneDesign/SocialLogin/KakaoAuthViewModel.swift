@@ -59,8 +59,6 @@ class KakaoAuthViewModel: ObservableObject {
                 
                 // 처리할 작업이 있으면 이곳에서 처리
                 if let access_token = accessTokenInfo {
-                    print("\(access_token)")
-                    // 작업이 성공적으로 완료되었으므로 true를 반환
                     completion(true)
                 } else {
                     // access_token이 nil이면 실패로 간주하여 false를 반환
@@ -77,7 +75,7 @@ class KakaoAuthViewModel: ObservableObject {
                 completion(false) // 에러가 발생한 경우 false를 반환
             } else {
                 if let id_token = idToken {
-//print("\(id_token)")
+                    print("\(id_token)")
                     self.saveToken(oauthToken: id_token)
                     completion(true)
                 } else {

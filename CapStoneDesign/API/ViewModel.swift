@@ -103,3 +103,40 @@ struct GraphResponse: Codable{
         case sadness = "SADNESS"
     }
 }
+
+
+struct JoinResponse: Codable{
+    var accessToken: String
+    var refreshToken: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case accessToken = "accessToken"
+        case refreshToken = "refreshToken"
+    }
+    
+}
+
+struct LoginResponse: Codable{
+    var accessToken: String
+    var refreshToken: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case accessToken = "accessToken"
+        case refreshToken = "refreshToken"
+    }
+    
+}
+
+
+struct InfoResponse: Codable{
+    var name: String
+    var email: String
+    var imageUrl: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case email = "email"
+        case imageUrl = "imageUrl"
+    }
+    
+}

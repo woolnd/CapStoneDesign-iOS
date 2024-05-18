@@ -14,9 +14,7 @@ struct MyPageView: View {
     @State private var isPasswordSettingViewActive = false
     fileprivate var APP_SCREEN_LOCK_PASSWORD = "AppScreenLockPassWord"
     
-    let manager = NotificationManager.instance
-    
-    
+    @State private var showingAlert = false
     
     var body: some View {
         GeometryReader{ geo in
@@ -74,12 +72,17 @@ struct MyPageView: View {
                             Spacer()
                             
                             Button(action: {
-                                manager.requestAuthorization()
+                                self.showingAlert.toggle()
+                                
                             }, label: {
                                 Image("mypage_btn")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             })
+                            .alert(isPresented: $showingAlert) {
+                                        Alert(title: Text("알림 기능"), message: Text("추후 업데이트 예정"),
+                                              dismissButton: .default(Text("닫기")))
+                            }
                         }
                         
                         HStack{
@@ -168,19 +171,6 @@ struct MyPageView: View {
                             .opacity(0)
                     }
                     .offset(x: -40)
-                    //푸시알림 테스트 코드
-                                    HStack{
-                                        Spacer()
-                    
-                                        Button(action: {
-                                            manager.scheduleNotification(trigger: .time)
-                                        }, label: {
-                                            Image("mypage_btn")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 100)
-                                        })
-                                    }
                 }
             }
             .toolbar(.hidden)

@@ -100,7 +100,7 @@ struct CalendarView: View {
                                     ForEach(week, id: \.self){ week in
                                         Text("\(week)")
                                             .font(.custom("KyoboHandwriting2021sjy",size: 18))
-                                            .foregroundColor(week == "SUN" || week == "SAT" ? Color("Orange") : Color("LightGray"))
+                                            .foregroundColor(week == "SUN" || week == "SAT" ? Color("Week_Orange") : Color("Week_LightGray"))
                                     }
                                 }
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))

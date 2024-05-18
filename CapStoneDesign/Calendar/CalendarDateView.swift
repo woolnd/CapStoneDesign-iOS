@@ -18,7 +18,7 @@ struct CalendarDateView: View {
                     ZStack{
                         Text("\(date)")
                             .font(.custom("777Balsamtint", size: 15))
-                            .foregroundColor(isToday(date) ? Color("Orange"): Color("LightGray"))
+                            .foregroundColor(isToday(date) ? Color("Week_Orange"): Color("Week_LightGray"))
                         if(isToday(date)){
                             Image("today")
                                 .resizable()

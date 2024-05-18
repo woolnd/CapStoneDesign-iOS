@@ -146,7 +146,6 @@ class Service{
             case .success(let diaryResponses):
                 completion(.success(diaryResponses))
             case .failure(let error):
-                print(error)
                 completion(.failure(error))
             }
         }
@@ -168,7 +167,6 @@ class Service{
             case .success(let diaryResponses):
                 completion(.success(diaryResponses))
             case .failure(let error):
-                print(error)
                 completion(.failure(error))
             }
         }
@@ -190,7 +188,94 @@ class Service{
             case .success(let emotionResponses):
                 completion(.success(emotionResponses))
             case .failure(let error):
-                print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func JoinRequest(completion: @escaping (Result<JoinResponse, Error>) -> Void) {
+        
+        let URL = "http://52.78.41.105:8080/api/v1/member/join"
+        
+        var token = UserDefaults.standard.string(forKey: "KakaoIdToken")!
+        let headers: HTTPHeaders = [.authorization(bearerToken: token)]
+        
+        AF.request(URL,
+                   method: .post,
+                   headers: headers)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: JoinResponse.self) { response in
+            switch response.result {
+            case .success(let result):
+                completion(.success(result))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func LoginRequest(completion: @escaping (Result<LoginResponse, Error>) -> Void) {
+        
+        let URL = "http://52.78.41.105:8080/api/v1/member/login"
+        
+        let token = UserDefaults.standard.string(forKey: "KakaoIdToken")!
+        let headers: HTTPHeaders = [.authorization(bearerToken: token)]
+        
+        AF.request(URL,
+                   method: .post,
+                   headers: headers)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: LoginResponse.self) { response in
+            switch response.result {
+            case .success(let result):
+                UserDefaults.standard.set(result.accessToken, forKey: "AccessToken")
+                print("토큰이야: \(result.accessToken)")
+                UserDefaults.standard.set(result.refreshToken, forKey: "refreshToken")
+                completion(.success(result))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func LogoutRequest(completion: @escaping (Result<String, Error>) -> Void) {
+        
+        let URL = "http://52.78.41.105:8080/api/v1/member/logout"
+        
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let headers: HTTPHeaders = [.authorization(bearerToken: token)]
+        
+        AF.request(URL,
+                   method: .post,
+                   headers: headers)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: String.self) { response in
+            switch response.result {
+            case .success(let result):
+                completion(.success(result))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func InfoRequest(completion: @escaping (Result<InfoResponse, Error>) -> Void) {
+        
+        let URL = "http://52.78.41.105:8080/api/v1/member"
+        
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let token1 = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQsImlhdCI6MTcxNjA1NzA0OSwiZXhwIjoxNzE3MjU3MDQ5fQ.EItkOGWUzEJvGBnXGk0OK6xq5pB9Soje-ikNQNJOJGE"
+        let headers: HTTPHeaders = [.authorization(bearerToken: token)]
+        
+        AF.request(URL,
+                   method: .get,
+                   headers: headers)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: InfoResponse.self) { response in
+            switch response.result {
+            case .success(let result):
+                completion(.success(result))
+            case .failure(let error):
                 completion(.failure(error))
             }
         }

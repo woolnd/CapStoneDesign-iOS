@@ -26,6 +26,8 @@ struct SplashView: View {
     let logotimer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     let aftertimer = Timer.publish(every: 2.5, on: .main, in: .common).autoconnect()
     
+    let service = Service()
+    
     var body: some View {
         
         NavigationStack{
@@ -94,6 +96,24 @@ struct SplashView: View {
                             kakaoAuthVM.handleKakaoLogin { success in
                                 if success {
                                     isInitial = true
+                                    service.JoinRequest { result in
+                                        switch result {
+                                        case .success(_):
+                                            print("회원가입 성공")
+                                            service.LoginRequest { result in
+                                                switch result {
+                                                case .success(_):
+                                                    print("로그인 성공")
+                                                case .failure(let error):
+                                                    print("1여기니")
+                                                    print("Error: \(error)")
+                                                }
+                                            }
+                                        case .failure(let error):
+                                            print("2여기니")
+                                            print("Error: \(error)")
+                                        }
+                                    }
                                 } else {
                                    isInitial = false
                                 }
@@ -118,7 +138,6 @@ struct SplashView: View {
             }
             .accentColor(.black)
             .onAppear(){
-                print("id_token: \(UserDefaults.standard.string(forKey: "KakaoIdToken")!)")
                 performTokenCheck()
             }
         }
@@ -127,20 +146,7 @@ struct SplashView: View {
         })
     }
     
-    // Function to perform token check
     func performTokenCheck() {
-        //            if UserDefaults.standard.string(forKey: "AppleToken") != nil {
-        //                // IdentityToken이 UserDefaults에 저장되어 있음
-        //                appleTokenCheck = true
-        //
-        //                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-        //                    changedView()
-        //                }
-        //            } else {
-        //                // IdentityToken이 UserDefaults에 저장되어 있지 않음
-        //                appleTokenCheck = false
-        //            }
-        //
         //            if UserDefaults.standard.string(forKey: "KakaoToken") != nil {
         //                // IdentityToken이 UserDefaults에 저장되어 있음
         //                kakaoTokenCheck = true
@@ -152,10 +158,29 @@ struct SplashView: View {
         //                // IdentityToken이 UserDefaults에 저장되어 있지 않음
         //                kakaoTokenCheck = false
         //            }
+        
         kakaoAuthVM.handleTokenCheck { success in
             if success {
                 // 토큰 체크 성공 시 수행할 동작
                 kakaoTokenCheck = true
+                
+                kakaoAuthVM.refreshToken { success in
+                    if success {
+                        print("NEW토큰 발급 성공")
+                        service.LoginRequest { result in
+                            switch result {
+                            case .success(_):
+                                print("로그인 성공")
+                            case .failure(let error):
+                                print("여기 에러니")
+                                print("Error: \(error)")
+                            }
+                        }
+                    } else {
+                        print("3여기니")
+                        print("실패")
+                    }
+                }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     changedView()
@@ -163,19 +188,11 @@ struct SplashView: View {
             } else {
                 // 토큰 체크 실패 시 수행할 동작
                 kakaoTokenCheck = false
+                
             }
         }
     }
-    
-//    func loginSuccess() -> some View{
-//        kakaoAuthVM.handleKakaoLogin { success in
-//            if success {
-//               return InitialView()
-//            } else {
-//               return SplashView(text: "MoodMingle")
-//            }
-//        }
-//    }
+
     
     func changedView(){
         self.isActive.toggle()
