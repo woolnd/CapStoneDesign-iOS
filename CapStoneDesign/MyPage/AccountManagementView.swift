@@ -61,6 +61,7 @@ struct AccountManagementView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.99)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.05))
                             
                             VStack{
                                 
@@ -70,16 +71,17 @@ struct AccountManagementView: View {
                                     Image("initial_last_logo")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: geo.size.width * 0.5)
+                                        .frame(width: geo.size.width * 0.3)
                                         .cornerRadius(geo.size.width * 0.25)
                                 }else{
                                     let url = URL(string: imageUrl ?? "")
                                     KFImage(url)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: geo.size.width * 0.5)
+                                        .frame(width: geo.size.width * 0.3)
                                         .cornerRadius(geo.size.width * 0.25)
                                 }
+                                
                                 
                                 
                                 VStack{
@@ -89,7 +91,7 @@ struct AccountManagementView: View {
                                     Text("이메일: \(email)")
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                                 }
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.2, trailing: 0))
+                                .padding(EdgeInsets(top: geo.size.width * 0.2, leading: 0, bottom: geo.size.width * 0.2, trailing: 0))
                                 
                     
                                 
@@ -119,6 +121,15 @@ struct AccountManagementView: View {
                         email = success.email
                         imageUrl = success.imageUrl
                     case .failure(let error):
+                        service.RefreshRequest { result in
+                            switch result {
+                            case .success(let success):
+                                print("\(success)")
+                            case .failure(let error):
+                                print("1여기니")
+                                print("Error: \(error)")
+                            }
+                        }
                         print("1여기니")
                         print("Error: \(error)")
                     }

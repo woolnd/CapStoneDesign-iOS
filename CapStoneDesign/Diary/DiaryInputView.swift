@@ -266,7 +266,7 @@ struct DiaryInputView: View {
                                     
                                     
                                 }
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: keyboardStatus == .show ? 260 : 0, trailing: 0))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: keyboardStatus == .show ? 150 : 0, trailing: 0))
                                 .id("ContentTextField")
                                 
                                 
@@ -325,11 +325,11 @@ struct DiaryInputView: View {
     func requestDiary() -> DiaryDto{
         switch selectedWeatherIndex{
         case 0:
-            return DiaryDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "SUNNY"), image: imageData ?? "")
+            return DiaryDto(dto: Dto(title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "SUNNY"), image: imageData ?? "")
         case 1:
-            return DiaryDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "CLOUDY"), image: imageData ?? "")
+            return DiaryDto(dto: Dto(title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "CLOUDY"), image: imageData ?? "")
         default:
-            return DiaryDto(dto: Dto(memberId: 1, title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "RAINY"), image: imageData ?? "")
+            return DiaryDto(dto: Dto(title: title, date: formatReqDate(dateString: currentDate), content: content, emotion: vm.emotions[currentEmotion].imageName, weather: "RAINY"), image: imageData ?? "")
         }
     }
     

@@ -60,9 +60,9 @@ struct ResponseView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.8)
                                 .onTapGesture {
-                                    selectedResponseIndex = 1
+                                    selectedResponseIndex = 0
                                 }
-                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 1  ? 0.5 : 1.0)
+                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 0  ? 0.5 : 1.0)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             Image("friend")
@@ -70,9 +70,9 @@ struct ResponseView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.8)
                                 .onTapGesture {
-                                    selectedResponseIndex = 2
+                                    selectedResponseIndex = 1
                                 }
-                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 2  ? 0.5 : 1.0)
+                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 1  ? 0.5 : 1.0)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             Image("advice")
@@ -80,9 +80,9 @@ struct ResponseView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.8)
                                 .onTapGesture {
-                                    selectedResponseIndex = 3
+                                    selectedResponseIndex = 2
                                 }
-                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 3  ? 0.5 : 1.0)
+                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 2  ? 0.5 : 1.0)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                         }
                         else{
@@ -98,9 +98,9 @@ struct ResponseView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.8)
                                 .onTapGesture {
-                                    selectedResponseIndex = 2
+                                    selectedResponseIndex = 1
                                 }
-                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 2  ? 0.5 : 1.0)
+                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 1  ? 0.5 : 1.0)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             Image("advice")
@@ -108,9 +108,9 @@ struct ResponseView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.8)
                                 .onTapGesture {
-                                    selectedResponseIndex = 3
+                                    selectedResponseIndex = 2
                                 }
-                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 3  ? 0.5 : 1.0)
+                                .opacity(selectedResponseIndex != nil && selectedResponseIndex != 2  ? 0.5 : 1.0)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                         }
                         

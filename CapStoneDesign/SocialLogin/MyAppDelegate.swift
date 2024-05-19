@@ -38,22 +38,22 @@ class MyAppDelegate: UIResponder, UIApplicationDelegate{
         return sceneConfiguration
     }
     
-    let service = Service()
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        // 앱이 종료될 때 로그아웃 요청
-        logout()
-    }
-    
-    func logout() {
-        service.LogoutRequest { result in
-            switch result {
-            case .success:
-                print("Logout successful")
-            case .failure(let error):
-                print("Logout failed: \(error)")
-            }
-        }
-    }
+//    let service = Service()
+//    
+//    func applicationWillTerminate(_ application: UIApplication) {
+//        // 앱이 종료될 때 로그아웃 요청
+//        logout()
+//    }
+//    
+//    func logout() {
+//        service.LogoutRequest { result in
+//            switch result {
+//            case .success:
+//                print("Logout successful")
+//            case .failure(let error):
+//                print("Logout failed: \(error)")
+//            }
+//        }
+//    }
 }
 

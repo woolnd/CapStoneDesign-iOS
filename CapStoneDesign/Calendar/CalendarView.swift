@@ -12,8 +12,10 @@ struct CalendarView: View {
     @State var isPresented: Bool = false
     @ObservedObject var viewModel: CalendarViewModel
     @State var currentDate: Date = Date()
+    @State var current: Date = Date()
     @State var selectionDate = 0
     let service = Service()
+    @State var showAlert : Bool = false
     
     let week: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     
@@ -57,7 +59,7 @@ struct CalendarView: View {
                                 .frame(width: geo.size.width * 0.18, height: geo.size.width * 0.18)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.05))
                                 .foregroundColor(.clear)
-                                
+                            
                         }
                         
                         Spacer()
@@ -103,17 +105,30 @@ struct CalendarView: View {
                                             .foregroundColor(week == "SUN" || week == "SAT" ? Color("Week_Orange") : Color("Week_LightGray"))
                                     }
                                 }
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
                                 
                                 LazyVGrid(columns: layout){
                                     ForEach(daysInMonth(date: currentDate), id: \.self) { day in
-                                        NavigationLink(destination: destinationView(for: day)) {
+                                        let select = formattedFuture(date: day)
+                                        let current = isToday()
+                                        
+                                        if select <= current{
+                                            NavigationLink(destination: destinationView(for: day)) {
+                                                CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
+                                                    .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
+                                            }
+                                            .onTapGesture {
+                                                loadDiaryData()
+                                            }
+                                        }else{
                                             CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
-                                                .frame(height: geo.size.height * 0.075)
+                                                .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
+                                                .onTapGesture {
+                                                    showAlert.toggle()
+                                                }
                                         }
-                                        .onTapGesture {
-                                            loadDiaryData()
-                                        }
+                                        
+                                        
                                     }
                                 }
                                 Spacer()
@@ -133,13 +148,18 @@ struct CalendarView: View {
             .sheet(isPresented: $isPresented, content: {
                 CalendarIntroView()
             })
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("경고"), message: Text("미래 일기는 작성 불가"),
+                      dismissButton: .default(Text("닫기")))
+            }
         }
         .onAppear(){
             loadDiaryData()
         }
     }
+    
     private func loadDiaryData() {
-        service.DiaryRequest(dto: DiaryRequest(dto: MonthDto(memberId: 1, date: "\(formattedApi(date: currentDate))"))) { result in
+        service.DiaryRequest(dtos: DiaryRequest(dto: MonthDto(date: "\(formattedApi(date: currentDate))"))) { result in
             switch result {
             case .success(let response):
                 let diaryModels = response.map { CalendarViewModel.CalendarModel(diaryId: $0.diaryId, date: $0.date, emotion: $0.emotion) }
@@ -150,9 +170,29 @@ struct CalendarView: View {
         }
     }
     
+    private func formattedFuture(date: Int) -> String {
+        
+        let calendar = Calendar.current
+        let currentMonth = calendar.component(.month, from: currentDate)
+        let currentYear = calendar.component(.year, from: currentDate)
+        
+        return  "\(currentYear)-\(currentMonth)-\(date)"
+        
+    }
+    
+    private func isToday() -> String {
+        let calendar = Calendar.current
+        let currentDay = calendar.component(.day, from: current)
+        let currentMonth = calendar.component(.month, from: current)
+        let currentYear = calendar.component(.year, from: current)
+        
+        return "\(currentYear)-\(currentMonth)-\(currentDay)"
+    }
+    
     private func destinationView(for day: Int) -> AnyView {
+        
         if let diaryModel = diaryForDay(day) {
-            return AnyView(CalendarDetailView(memberId: 1, diaryId: diaryModel.diaryId, date: day, currentDate: $currentDate, viewModel: DiaryViewModel(diary: DiaryViewModel.mock)))
+            return AnyView(CalendarDetailView(diaryId: diaryModel.diaryId, date: day, currentDate: $currentDate, viewModel: DiaryViewModel(diary: DiaryViewModel.mock)))
         } else {
             return AnyView(EmotionInputView(date: day, currentDate: $currentDate))
         }
@@ -162,6 +202,7 @@ struct CalendarView: View {
         let dateString = "\(formattedyear(date: currentDate))-\(formattedMonth(date: currentDate))-\(String(format: "%02d", day))"
         return viewModel.diary.first { $0.date == dateString }
     }
+    
 }
 
 extension CalendarView{
@@ -217,7 +258,6 @@ extension CalendarView{
         
         return days
     }
-    
 }
 
 #Preview {

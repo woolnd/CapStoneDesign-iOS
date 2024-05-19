@@ -13,10 +13,11 @@ class Service{
     
     func LetterRequest(letter: DiaryDto, completion: @escaping (Result<Int, Error>) -> Void) {
         let URL = "http://52.78.41.105:8080/api/v1/diary/letter"
-        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
+//        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let header: HTTPHeaders = [.authorization(bearerToken: token)]
         
-        let dto : [String : Any] = ["memberId": letter.dto.memberId,
-                                    "title": letter.dto.title,
+        let dto : [String : Any] = ["title": letter.dto.title,
                                     "date": letter.dto.date,
                                     "content": letter.dto.content,
                                     "emotion": letter.dto.emotion,
@@ -41,18 +42,34 @@ class Service{
                 guard let statusCode = response.response?.statusCode else { return }
                 guard response.value != nil else { return }
                 completion(.success(statusCode))
-            case .failure(let err):
-                completion(.failure(err))
+            case .failure(let error):
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            let letterDto = CapStoneDesign.DiaryDto(dto: Dto(title: letter.dto.title, date: letter.dto.date, content: letter.dto.content, emotion: letter.dto.emotion, weather: letter.dto.weather), image: letter.image)
+                            self.AdviceRequest(advice: letterDto, completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }
     
     func SympathyRequest(sympathy: DiaryDto, completion: @escaping (Result<Int, Error>) -> Void) {
         let URL = "http://52.78.41.105:8080/api/v1/diary/sympathy"
-        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
         
-        let dto : [String : Any] = ["memberId": sympathy.dto.memberId,
-                                    "title": sympathy.dto.title,
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let header: HTTPHeaders = [.authorization(bearerToken: token)]
+//        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
+        
+        let dto : [String : Any] = ["title": sympathy.dto.title,
                                     "date": sympathy.dto.date,
                                     "content": sympathy.dto.content,
                                     "emotion": sympathy.dto.emotion,
@@ -77,18 +94,34 @@ class Service{
                 guard let statusCode = response.response?.statusCode else { return }
                 guard response.value != nil else { return }
                 completion(.success(statusCode))
-            case .failure(let err):
-                completion(.failure(err))
+            case .failure(let error):
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            let sympathyDto = CapStoneDesign.DiaryDto(dto: Dto(title: sympathy.dto.title, date: sympathy.dto.date, content: sympathy.dto.content, emotion: sympathy.dto.emotion, weather: sympathy.dto.weather), image: sympathy.image)
+                            self.AdviceRequest(advice: sympathyDto, completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }
     
     func AdviceRequest(advice: DiaryDto, completion: @escaping (Result<Int, Error>) -> Void) {
         let URL = "http://52.78.41.105:8080/api/v1/diary/advice"
-        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
         
-        let dto : [String : Any] = ["memberId": advice.dto.memberId,
-                                    "title": advice.dto.title,
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let header: HTTPHeaders = [.authorization(bearerToken: token)]
+//        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
+        
+        let dto : [String : Any] = ["title": advice.dto.title,
                                     "date": advice.dto.date,
                                     "content": advice.dto.content,
                                     "emotion": advice.dto.emotion,
@@ -113,8 +146,23 @@ class Service{
                 guard let statusCode = response.response?.statusCode else { return }
                 guard response.value != nil else { return }
                 completion(.success(statusCode))
-            case .failure(let err):
-                completion(.failure(err))
+            case .failure(let error):
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            let adviceDto = CapStoneDesign.DiaryDto(dto: Dto(title: advice.dto.title, date: advice.dto.date, content: advice.dto.content, emotion: advice.dto.emotion, weather: advice.dto.weather), image: advice.image)
+                            self.AdviceRequest(advice: adviceDto, completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
+
             }
         }
     }
@@ -130,65 +178,117 @@ class Service{
     }
     
     
-    func DiaryRequest(dto: DiaryRequest, completion: @escaping (Result<[DiaryResponse], Error>) -> Void) {
+    func DiaryRequest(dtos: DiaryRequest, completion: @escaping (Result<[DiaryResponse], Error>) -> Void) {
         
         let URL = "http://52.78.41.105:8080/api/v1/diary"
         
-        let dto : [String : Any] = ["memberId": dto.dto.memberId,
-                                    "date": dto.dto.date]
+        let dto : [String : Any] = ["date": dtos.dto.date]
+        
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let header: HTTPHeaders = [.authorization(bearerToken: token)]
         
         AF.request(URL,
                    method: .get,
-                   parameters: dto)
+                   parameters: dto,
+                   headers: header)
         .validate(statusCode: 200..<300)
         .responseDecodable(of: [DiaryResponse].self) { response in
             switch response.result {
             case .success(let diaryResponses):
                 completion(.success(diaryResponses))
             case .failure(let error):
-                completion(.failure(error))
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            let diaryRequest = CapStoneDesign.DiaryRequest(dto: MonthDto(date: dtos.dto.date))
+                            self.DiaryRequest(dtos: diaryRequest, completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }
     
-    func DiaryDetailRequest(dto: DiaryDetailRequest, completion: @escaping (Result<DiaryDetailReponse, Error>) -> Void) {
+    func DiaryDetailRequest(dtos: DiaryDetailRequest, completion: @escaping (Result<DiaryDetailReponse, Error>) -> Void) {
         
         let URL = "http://52.78.41.105:8080/api/v1/diary/detail"
         
-        let dto : [String : Any] = ["memberId": dto.dto.memberId,
-                                    "diaryId": dto.dto.diaryId]
+        let dto : [String : Any] = ["diaryId": dtos.dto.diaryId]
+        
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let header: HTTPHeaders = [.authorization(bearerToken: token)]
         
         AF.request(URL,
                    method: .get,
-                   parameters: dto)
+                   parameters: dto,
+                   headers: header)
         .validate(statusCode: 200..<300)
         .responseDecodable(of: DiaryDetailReponse.self) { response in
             switch response.result {
             case .success(let diaryResponses):
                 completion(.success(diaryResponses))
             case .failure(let error):
-                completion(.failure(error))
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            let diaryDetailRequest = CapStoneDesign.DiaryDetailRequest(dto: Diary(diaryId: dtos.dto.diaryId))
+                            self.DiaryDetailRequest(dtos: diaryDetailRequest, completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }
     
-    func EmotionRequest(dto: DiaryRequest, completion: @escaping (Result<GraphResponse, Error>) -> Void) {
+    func EmotionRequest(dtos: DiaryRequest, completion: @escaping (Result<GraphResponse, Error>) -> Void) {
         
         let URL = "http://52.78.41.105:8080/api/v1/diary/monthly-emotion"
         
-        let dto : [String : Any] = ["memberId": dto.dto.memberId,
-                                    "date": dto.dto.date]
+        let dto : [String : Any] = ["date": dtos.dto.date]
+        
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let header: HTTPHeaders = [.authorization(bearerToken: token)]
         
         AF.request(URL,
                    method: .get,
-                   parameters: dto)
+                   parameters: dto,
+                   headers: header)
         .validate(statusCode: 200..<300)
         .responseDecodable(of: GraphResponse.self) { response in
             switch response.result {
             case .success(let emotionResponses):
                 completion(.success(emotionResponses))
             case .failure(let error):
-                completion(.failure(error))
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            // Retry EmotionRequest after refreshing the token
+                            let emotionRequest = CapStoneDesign.DiaryRequest(dto: MonthDto(date: dtos.dto.date))
+                            self.EmotionRequest(dtos: emotionRequest, completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -197,7 +297,7 @@ class Service{
         
         let URL = "http://52.78.41.105:8080/api/v1/member/join"
         
-        var token = UserDefaults.standard.string(forKey: "KakaoIdToken")!
+        let token = UserDefaults.standard.string(forKey: "KakaoIdToken")!
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
         
         AF.request(URL,
@@ -229,8 +329,7 @@ class Service{
             switch response.result {
             case .success(let result):
                 UserDefaults.standard.set(result.accessToken, forKey: "AccessToken")
-                print("토큰이야: \(result.accessToken)")
-                UserDefaults.standard.set(result.refreshToken, forKey: "refreshToken")
+                UserDefaults.standard.set(result.refreshToken, forKey: "RefreshToken")
                 completion(.success(result))
             case .failure(let error):
                 completion(.failure(error))
@@ -254,7 +353,21 @@ class Service{
             case .success(let result):
                 completion(.success(result))
             case .failure(let error):
-                completion(.failure(error))
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            // Retry InfoRequest after refreshing the token
+                            self.LogoutRequest(completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -264,7 +377,6 @@ class Service{
         let URL = "http://52.78.41.105:8080/api/v1/member"
         
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
-        let token1 = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQsImlhdCI6MTcxNjA1NzA0OSwiZXhwIjoxNzE3MjU3MDQ5fQ.EItkOGWUzEJvGBnXGk0OK6xq5pB9Soje-ikNQNJOJGE"
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
         
         AF.request(URL,
@@ -276,8 +388,56 @@ class Service{
             case .success(let result):
                 completion(.success(result))
             case .failure(let error):
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            // Retry InfoRequest after refreshing the token
+                            self.InfoRequest(completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func RefreshRequest(completion: @escaping (Result<RefreshResponse, Error>) -> Void) {
+        
+        let URL = "http://52.78.41.105:8080/api/v1/member/reissue"
+        let header: HTTPHeaders = ["Content-Type" : "application/json"]
+        let token = UserDefaults.standard.string(forKey: "RefreshToken") ?? ""
+        
+        let refreshToken : [String : String] = ["refreshToken": token]
+        
+        AF.request(URL,
+                   method: .post,
+                   parameters: refreshToken,
+                   encoder: JSONParameterEncoder.default,
+                   headers: header)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: RefreshResponse.self) { response in
+            switch response.result {
+            case .success(let result):
+                UserDefaults.standard.set(result.accessToken, forKey: "AccessToken")
+                UserDefaults.standard.set(result.refreshToken, forKey: "RefreshToken")
+                completion(.success(result))
+            case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
+}
+
+// APIError 모델 추가
+struct APIError: Decodable {
+    let status: Int
+    let error: String
+    let code: String
+    let message: String
 }

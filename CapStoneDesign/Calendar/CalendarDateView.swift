@@ -9,49 +9,51 @@ struct CalendarDateView: View {
     
     
     var body: some View {
-        VStack{
-            if(date == 0){
-                Text("")
-            }
-            else{
-                HStack{
-                    ZStack{
-                        Text("\(date)")
-                            .font(.custom("777Balsamtint", size: 15))
-                            .foregroundColor(isToday(date) ? Color("Week_Orange"): Color("Week_LightGray"))
-                        if(isToday(date)){
-                            Image("today")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30)
-                        }else{
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 30)
-                        }
-                    }
-                    Spacer()
+        GeometryReader{ geo in
+            VStack{
+                if(date == 0){
+                    Text("")
                 }
-                
-                HStack{
-                    Spacer()
-                    if isMatchingDate(date) {
-                        Image("\(emotionForDate(date)!)")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
-                        
-                    }else{
-                        Rectangle()
-                            .frame(width: 40, height: 40)
-                            .foregroundColor(.clear)
+                else{
+                    HStack{
+                        ZStack{
+                            Text("\(date)")
+                                .font(.custom("777Balsamtint", size: 15))
+                                .foregroundColor(isToday(date) ? Color("Week_Orange"): Color("Week_LightGray"))
+//                            if(isToday(date)){
+//                                Image("today")
+//                                    .resizable()
+//                                    .aspectRatio(contentMode: .fit)
+//                                    .frame(width: geo.size.width * 0.9)
+//                            }else{
+//                                Rectangle()
+//                                    .foregroundColor(.clear)
+//                                    .frame(width: geo.size.width * 0.9)
+//                            }
+                        }
+                        Spacer()
                     }
                     
-                    Spacer()
+                    HStack{
+                        Spacer()
+                        if isMatchingDate(date) {
+                            Image("\(emotionForDate(date)!)")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 40, height: 40)
+                            
+                        }else{
+                            Rectangle()
+                                .frame(width: 40, height: 40)
+                                .foregroundColor(.clear)
+                        }
+                        
+                        Spacer()
+                    }
+                    .offset(y: -10.0)
                 }
-                .offset(y: -10.0)
+                
             }
-            
         }
     }
     
@@ -99,5 +101,5 @@ struct CalendarDateView: View {
 }
 
 #Preview {
-    CalendarDateView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock), date: 17, currentDate: .constant(Date()))
+    CalendarDateView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock), date: 20, currentDate: .constant(Date()))
 }

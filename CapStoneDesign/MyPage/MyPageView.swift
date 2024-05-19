@@ -15,7 +15,7 @@ struct MyPageView: View {
     fileprivate var APP_SCREEN_LOCK_PASSWORD = "AppScreenLockPassWord"
     
     @State private var showingAlert = false
-    
+
     var body: some View {
         GeometryReader{ geo in
             NavigationStack{

@@ -22,20 +22,20 @@ class MySceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let service = Service()
     
-    func sceneDidEnterBackground(_ scene: UIScene) {
-        // 앱이 백그라운드로 진입할 때 로그아웃 요청
-        logout()
-    }
-    
-    func logout() {
-        service.LogoutRequest { result in
-            switch result {
-            case .success:
-                print("Logout successful")
-            case .failure(let error):
-                print("Logout failed: \(error)")
-            }
-        }
-    }
+//    func sceneDidEnterBackground(_ scene: UIScene) {
+//        // 앱이 백그라운드로 진입할 때 로그아웃 요청
+//        logout()
+//    }
+//    
+//    func logout() {
+//        service.LogoutRequest { result in
+//            switch result {
+//            case .success:
+//                print("Logout successful")
+//            case .failure(let error):
+//                print("Logout failed: \(error)")
+//            }
+//        }
+//    }
 }
 

@@ -13,7 +13,6 @@ struct CalendarDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var isPresented: Bool = false
     
-    @State var memberId: Int
     @State var diaryId: Int
     @State var date: Int
     @Binding var currentDate: Date
@@ -211,14 +210,26 @@ struct CalendarDetailView: View {
                             VStack{
                                 Spacer()
                                 
-                                Button(action: {
-                                    isShowingResponse = true
-                                }, label: {
-                                    Image("response_btn")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: geo.size.width * 0.9)
-                                })
+                                if viewModel.diary.replyContent != nil{
+                                    Button(action: {
+                                        isShowingResponse = true
+                                    }, label: {
+                                        Image("response_btn")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: geo.size.width * 0.9)
+                                    })
+                                }
+                                else{
+                                    Button(action: {
+                                        isShowingResponse = true
+                                    }, label: {
+                                        Image("response_btn_off")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: geo.size.width * 0.9)
+                                    })
+                                }
                                 
                             }.padding(EdgeInsets(top: geo.size.width * 0.35, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                         }
@@ -280,7 +291,8 @@ struct CalendarDetailView: View {
     }
     
     private func loadDetailData() {
-        service.DiaryDetailRequest(dto: DiaryDetailRequest(dto: Diary(memberId: memberId, diaryId: diaryId))) { result in
+        
+        service.DiaryDetailRequest(dtos: DiaryDetailRequest(dto: Diary(diaryId: diaryId))) { result in
             switch result {
             case .success(let response):
                 let diaryModel = DiaryViewModel.DiaryModel(
@@ -318,5 +330,5 @@ struct CalendarDetailView: View {
 }
 
 #Preview {
-    CalendarDetailView(memberId: 1, diaryId: 2, date: 1, currentDate: .constant(Date()), viewModel: DiaryViewModel(diary: DiaryViewModel.mock))
+    CalendarDetailView(diaryId: 2, date: 1, currentDate: .constant(Date()), viewModel: DiaryViewModel(diary: DiaryViewModel.mock))
 }

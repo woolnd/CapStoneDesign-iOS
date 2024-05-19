@@ -13,7 +13,6 @@ struct DiaryDto: Codable{
 }
 
 struct Dto: Codable{
-    var memberId: Int
     var title: String
     var date: String
     var content: String
@@ -21,7 +20,6 @@ struct Dto: Codable{
     var weather: String
     
     private enum CodingKeys: String, CodingKey {
-        case memberId = "memberId"
         case title = "title"
         case date = "date"
         case content = "content"
@@ -35,11 +33,9 @@ struct DiaryRequest: Codable{
 }
 
 struct MonthDto: Codable{
-    var memberId: Int
     var date: String
     
     private enum CodingKeys: String, CodingKey {
-        case memberId = "memberId"
         case date = "date"
     }
 }
@@ -56,11 +52,9 @@ struct DiaryDetailRequest: Codable{
 }
 
 struct Diary: Codable{
-    var memberId: Int
     var diaryId: Int
     
     private enum CodingKeys: String, CodingKey {
-        case memberId = "memberId"
         case diaryId = "diaryId"
     }
 }
@@ -140,3 +134,30 @@ struct InfoResponse: Codable{
     }
     
 }
+
+struct RefreshResponse: Codable{
+    var accessToken: String
+    var refreshToken: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case accessToken = "accessToken"
+        case refreshToken = "refreshToken"
+    }
+    
+}
+
+struct ErrorResponse: Codable{
+    var code: String
+    var error: String
+    var message: String
+    var status: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case code = "code"
+        case error = "error"
+        case message = "message"
+        case status = "status"
+    }
+    
+}
+

@@ -103,5 +103,5 @@ struct DiarySendView: View {
 }
 
 #Preview {
-    DiarySendView(requestBody: DiaryDto(dto: Dto(memberId: 1, title: "", date: "", content: "", emotion: "", weather: ""), image: ""), currentResponse: 0)
+    DiarySendView(requestBody: DiaryDto(dto: Dto(title: "", date: "", content: "", emotion: "", weather: ""), image: ""), currentResponse: 0)
 }

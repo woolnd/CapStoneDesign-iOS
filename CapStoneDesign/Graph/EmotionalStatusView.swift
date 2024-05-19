@@ -159,7 +159,7 @@ struct EmotionalStatusView: View {
         
     }
     private func loadEmotionData() {
-        service.EmotionRequest(dto: DiaryRequest(dto: MonthDto(memberId: 1, date: "\(formattedApi(date: currentDate))"))) { result in
+        service.EmotionRequest(dtos: DiaryRequest(dto: MonthDto(date: "\(formattedApi(date: currentDate))"))) { result in
             switch result {
             case .success(let response):
                 let emotionModel = EmotionStatusViewModel.Emotions(
