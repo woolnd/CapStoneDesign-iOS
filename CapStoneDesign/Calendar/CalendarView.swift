@@ -112,7 +112,7 @@ struct CalendarView: View {
                                         let select = formattedFuture(date: day)
                                         let current = isToday()
                                         
-                                        if select <= current{
+                                        if select ?? currentDate <= current ?? currentDate {
                                             NavigationLink(destination: destinationView(for: day)) {
                                                 CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
                                                     .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
@@ -170,23 +170,30 @@ struct CalendarView: View {
         }
     }
     
-    private func formattedFuture(date: Int) -> String {
+    private func formattedFuture(date: Int) -> Date? {
         
         let calendar = Calendar.current
         let currentMonth = calendar.component(.month, from: currentDate)
         let currentYear = calendar.component(.year, from: currentDate)
         
-        return  "\(currentYear)-\(currentMonth)-\(date)"
+        return  dateFromString("\(currentYear)-\(currentMonth)-\(date)")
         
     }
     
-    private func isToday() -> String {
+    private func isToday() -> Date? {
         let calendar = Calendar.current
         let currentDay = calendar.component(.day, from: current)
         let currentMonth = calendar.component(.month, from: current)
         let currentYear = calendar.component(.year, from: current)
         
-        return "\(currentYear)-\(currentMonth)-\(currentDay)"
+        return dateFromString("\(currentYear)-\(currentMonth)-\(currentDay)")
+    }
+    
+    
+    func dateFromString(_ dateString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-M-d"
+        return dateFormatter.date(from: dateString)
     }
     
     private func destinationView(for day: Int) -> AnyView {
