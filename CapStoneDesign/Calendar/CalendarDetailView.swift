@@ -153,7 +153,7 @@ struct CalendarDetailView: View {
                                             }
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
-                                            .frame(width: geo.size.width * 0.4, height: geo.size.width * 0.52)
+                                            .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.54)
                                             .clipped()
                                             .cornerRadius(20)
                                             .padding()
@@ -187,7 +187,7 @@ struct CalendarDetailView: View {
                                     })
                                     
                                 }
-                                .padding(EdgeInsets(top: -geo.size.width * 0.94, leading: 0, bottom: 0, trailing: 0))
+                                .padding(EdgeInsets(top: -geo.size.width * 0.96, leading: 0, bottom: 0, trailing: 0))
                                 Spacer()
                                 
                             }

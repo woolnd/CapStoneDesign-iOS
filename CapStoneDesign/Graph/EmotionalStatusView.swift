@@ -173,8 +173,6 @@ struct EmotionalStatusView: View {
                     worry: response.worry,
                     anger: response.anger,
                     sadness: response.sadness)
-                
-                print("\(response)")
                 viewModel.updateEmotion(with: emotionModel)
                 self.vm = transformGraphResponseToGraph()
                 self.maxValue = self.vm.map { $0.value }.max() ?? 0 // 최고값 찾기

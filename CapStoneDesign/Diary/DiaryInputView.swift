@@ -182,7 +182,7 @@ struct DiaryInputView: View {
                                                     ImagePicker(image: $selectedUIImage)
                                                 }
                                             }
-                                            .padding(EdgeInsets(top: -geo.size.width * 0.9, leading: geo.size.width * 0.05, bottom: 0, trailing: 0))
+                                            .padding(EdgeInsets(top: -geo.size.width * 0.9, leading: geo.size.width * 0.03, bottom: 0, trailing: 0))
                                             Spacer()
                                         }
                                         

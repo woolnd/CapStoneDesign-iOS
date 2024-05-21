@@ -105,12 +105,10 @@ struct SplashView: View {
                                                 case .success(_):
                                                     print("로그인 성공")
                                                 case .failure(let error):
-                                                    print("1여기니")
                                                     print("Error: \(error)")
                                                 }
                                             }
                                         case .failure(let error):
-                                            print("2여기니")
                                             print("Error: \(error)")
                                         }
                                     }
@@ -172,12 +170,10 @@ struct SplashView: View {
                             case .success(_):
                                 print("로그인 성공")
                             case .failure(let error):
-                                print("여기 에러니")
                                 print("Error: \(error)")
                             }
                         }
                     } else {
-                        print("3여기니")
                         print("실패")
                     }
                 }

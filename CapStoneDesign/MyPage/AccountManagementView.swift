@@ -126,11 +126,9 @@ struct AccountManagementView: View {
                             case .success(let success):
                                 print("\(success)")
                             case .failure(let error):
-                                print("1여기니")
                                 print("Error: \(error)")
                             }
                         }
-                        print("1여기니")
                         print("Error: \(error)")
                     }
                 }

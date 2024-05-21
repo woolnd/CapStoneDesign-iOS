@@ -15,7 +15,8 @@ struct MyPageView: View {
     fileprivate var APP_SCREEN_LOCK_PASSWORD = "AppScreenLockPassWord"
     
     @State private var showingAlert = false
-
+    @State private var showingTermsOfUse = false
+    
     var body: some View {
         GeometryReader{ geo in
             NavigationStack{
@@ -80,17 +81,17 @@ struct MyPageView: View {
                                     .aspectRatio(contentMode: .fit)
                             })
                             .alert(isPresented: $showingAlert) {
-                                        Alert(title: Text("알림 기능"), message: Text("추후 업데이트 예정"),
-                                              dismissButton: .default(Text("닫기")))
+                                Alert(title: Text("알림 기능"), message: Text("추후 업데이트 예정"),
+                                      dismissButton: .default(Text("닫기")))
                             }
                         }
                         
                         HStack{
                             Spacer()
-
+                            
                             Toggle("", isOn: $stateManager.isPasswordSetting)
                                 .tint(.orange)
-                                .onChange(of: stateManager.isPasswordSetting) { 
+                                .onChange(of: stateManager.isPasswordSetting) {
                                     if stateManager.isPasswordSetting {
                                         
                                         let AppScreenLockPassword = getUD(key: APP_SCREEN_LOCK_PASSWORD)
@@ -152,12 +153,15 @@ struct MyPageView: View {
                         HStack{
                             Spacer()
                             
-                            NavigationLink {
-                                TermsOfUseView()
-                            } label: {
+                            Button(action: {
+                                self.showingTermsOfUse.toggle()
+                            }) {
                                 Image("mypage_btn")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
+                            }
+                            .sheet(isPresented: $showingTermsOfUse) {
+                                WebView(url: URL(string: "https://github.com/woolnd/CapStoneDesign-iOS/blob/main/%EC%9D%B4%EC%9A%A9%EC%95%BD%EA%B4%80.md")!)
                             }
                         }
                         
