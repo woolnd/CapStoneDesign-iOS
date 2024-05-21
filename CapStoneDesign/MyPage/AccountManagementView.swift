@@ -74,7 +74,7 @@ struct AccountManagementView: View {
                                         .frame(width: geo.size.width * 0.3)
                                         .cornerRadius(geo.size.width * 0.25)
                                 }else{
-                                    let url = URL(string: imageUrl ?? "")
+                                    let url = URL(string: imageUrl)
                                     KFImage(url)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)

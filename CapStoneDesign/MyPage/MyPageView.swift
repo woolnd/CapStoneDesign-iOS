@@ -10,7 +10,7 @@ import UserNotifications
 
 struct MyPageView: View {
     
-    @EnvironmentObject var stateManager : StateManager
+    @EnvironmentObject var stateManager: StateManager
     @State private var isPasswordSettingViewActive = false
     fileprivate var APP_SCREEN_LOCK_PASSWORD = "AppScreenLockPassWord"
     
@@ -18,17 +18,16 @@ struct MyPageView: View {
     @State private var showingTermsOfUse = false
     
     var body: some View {
-        GeometryReader{ geo in
-            NavigationStack{
-                ZStack{
+        GeometryReader { geo in
+            NavigationStack {
+                ZStack {
                     Image("initial_background")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .ignoresSafeArea()
                     
-                    VStack{
-                        HStack{
-                            
+                    VStack {
+                        HStack {
                             Rectangle()
                                 .frame(width: geo.size.width * 0.13, height: geo.size.width * 0.18)
                                 .foregroundColor(.clear)
@@ -56,7 +55,7 @@ struct MyPageView: View {
                         
                     }
                     
-                    VStack(spacing: 35){
+                    VStack(spacing: 35) {
                         
                         Rectangle()
                             .opacity(0)
@@ -66,10 +65,9 @@ struct MyPageView: View {
                         Rectangle()
                             .opacity(0)
                         
-                        
                         Spacer()
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             
                             Button(action: {
@@ -86,34 +84,21 @@ struct MyPageView: View {
                             }
                         }
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             
                             Toggle("", isOn: $stateManager.isPasswordSetting)
                                 .tint(.orange)
                                 .onChange(of: stateManager.isPasswordSetting) {
-                                    if stateManager.isPasswordSetting {
-                                        
-                                        let AppScreenLockPassword = getUD(key: APP_SCREEN_LOCK_PASSWORD)
-                                        if AppScreenLockPassword as! [Int] == [] {
-                                            stateManager.isPasswordSettingView = true
-                                        } else {
-                                            // User Set Password
-                                            stateManager.isPasswordSettingView = false
-                                        }
-                                        
-                                    } else {
-                                        removeUD(key: APP_SCREEN_LOCK_PASSWORD)
-                                    }
+                                    handlePasswordSettingChange(stateManager.isPasswordSetting)
                                 }
-                                .sheet(isPresented: $stateManager.isPasswordSettingView, content: {
+                                .sheet(isPresented: $stateManager.isPasswordSettingView) {
                                     PasswordSettingView()
-                                })
-                            
+                                }
                         }
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             
                             NavigationLink {
@@ -123,10 +108,9 @@ struct MyPageView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                             }
-                            
                         }
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             
                             NavigationLink {
@@ -138,7 +122,7 @@ struct MyPageView: View {
                             }
                         }
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             
                             NavigationLink {
@@ -150,7 +134,7 @@ struct MyPageView: View {
                             }
                         }
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             
                             Button(action: {
@@ -170,7 +154,6 @@ struct MyPageView: View {
                         Rectangle()
                             .opacity(0)
                         
-                        
                         Rectangle()
                             .opacity(0)
                     }
@@ -179,15 +162,27 @@ struct MyPageView: View {
             }
             .toolbar(.hidden)
             .navigationBarBackButtonHidden(true)
-            .onAppear(){
+            .onAppear {
                 stateManager.checkIsUserSetPassword()
             }
         }
-        
+    }
+    
+    private func handlePasswordSettingChange(_ isPasswordSetting: Bool) {
+        if isPasswordSetting {
+            let appScreenLockPassword = getUD(key: APP_SCREEN_LOCK_PASSWORD)
+            if appScreenLockPassword as? [Int] == [] {
+                stateManager.isPasswordSettingView = true
+            } else {
+                // User Set Password
+                stateManager.isPasswordSettingView = false
+            }
+        } else {
+            removeUD(key: APP_SCREEN_LOCK_PASSWORD)
+        }
     }
 }
 
 #Preview {
     MyPageView().environmentObject(StateManager())
 }
-

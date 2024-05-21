@@ -11,6 +11,7 @@ import KakaoSDKAuth
 
 @main
 struct CapStoneDesignApp: App {
+    
     @UIApplicationDelegateAdaptor var appDelegate: MyAppDelegate
     @StateObject var stateManager = StateManager()
     var body: some Scene {

@@ -78,8 +78,11 @@ struct EmotionalStatusView: View {
                         HStack{
                             
                             Button(action: {
-                                self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: self.currentDate)!
-                                loadEmotionData()
+                                let newDate = Calendar.current.date(byAdding: .month, value: -1, to: self.currentDate)!
+                                if newDate >= Calendar.current.date(from: DateComponents(year: 2024, month: 5))! {
+                                    self.currentDate = newDate
+                                    loadEmotionData()
+                                }
                             }, label: {
                                 Image("arrow_left")
                             })

@@ -18,7 +18,7 @@ struct CalendarView: View {
     @State var showAlert : Bool = false
     
     let week: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-    
+
     let layout: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible()),

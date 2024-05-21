@@ -12,7 +12,7 @@ import UIKit
 class Service{
     
     func LetterRequest(letter: DiaryDto, completion: @escaping (Result<Int, Error>) -> Void) {
-        let URL = "http://52.78.41.105:8080/api/v1/diary/letter"
+        let URL = "https://moodmingle.store/api/v1/diary/letter"
 //        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let header: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -63,7 +63,7 @@ class Service{
     }
     
     func SympathyRequest(sympathy: DiaryDto, completion: @escaping (Result<Int, Error>) -> Void) {
-        let URL = "http://52.78.41.105:8080/api/v1/diary/sympathy"
+        let URL = "https://moodmingle.store/api/v1/diary/sympathy"
         
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let header: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -115,7 +115,7 @@ class Service{
     }
     
     func AdviceRequest(advice: DiaryDto, completion: @escaping (Result<Int, Error>) -> Void) {
-        let URL = "http://52.78.41.105:8080/api/v1/diary/advice"
+        let URL = "https://moodmingle.store/api/v1/diary/advice"
         
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let header: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -180,7 +180,7 @@ class Service{
     
     func DiaryRequest(dtos: DiaryRequest, completion: @escaping (Result<[DiaryResponse], Error>) -> Void) {
         
-        let URL = "http://52.78.41.105:8080/api/v1/diary"
+        let URL = "https://moodmingle.store/api/v1/diary"
         
         let dto : [String : Any] = ["date": dtos.dto.date]
         
@@ -218,7 +218,7 @@ class Service{
     
     func DiaryDetailRequest(dtos: DiaryDetailRequest, completion: @escaping (Result<DiaryDetailReponse, Error>) -> Void) {
         
-        let URL = "http://52.78.41.105:8080/api/v1/diary/detail"
+        let URL = "https://moodmingle.store/api/v1/diary/detail"
         
         let dto : [String : Any] = ["diaryId": dtos.dto.diaryId]
         
@@ -256,7 +256,7 @@ class Service{
     
     func EmotionRequest(dtos: DiaryRequest, completion: @escaping (Result<GraphResponse, Error>) -> Void) {
         
-        let URL = "http://52.78.41.105:8080/api/v1/diary/monthly-emotion"
+        let URL = "https://moodmingle.store/api/v1/diary/monthly-emotion"
         
         let dto : [String : Any] = ["date": dtos.dto.date]
         
@@ -295,7 +295,7 @@ class Service{
     
     func JoinRequest(completion: @escaping (Result<JoinResponse, Error>) -> Void) {
         
-        let URL = "http://52.78.41.105:8080/api/v1/member/join"
+        let URL = "https://moodmingle.store/api/v1/member/join"
         
         let token = UserDefaults.standard.string(forKey: "KakaoIdToken")!
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -316,7 +316,7 @@ class Service{
     
     func LoginRequest(completion: @escaping (Result<LoginResponse, Error>) -> Void) {
         
-        let URL = "http://52.78.41.105:8080/api/v1/member/login"
+        let URL = "https://moodmingle.store/api/v1/member/login"
         
         let token = UserDefaults.standard.string(forKey: "KakaoIdToken")!
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -339,7 +339,7 @@ class Service{
     
     func LogoutRequest(completion: @escaping (Result<String, Error>) -> Void) {
         
-        let URL = "http://52.78.41.105:8080/api/v1/member/logout"
+        let URL = "https://moodmingle.store/api/v1/member/logout"
         
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -374,7 +374,7 @@ class Service{
     
     func InfoRequest(completion: @escaping (Result<InfoResponse, Error>) -> Void) {
         
-        let URL = "http://52.78.41.105:8080/api/v1/member"
+        let URL = "https://moodmingle.store/api/v1/member"
         
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -409,7 +409,7 @@ class Service{
     
     func RefreshRequest(completion: @escaping (Result<RefreshResponse, Error>) -> Void) {
         
-        let URL = "http://52.78.41.105:8080/api/v1/member/reissue"
+        let URL = "https://moodmingle.store/api/v1/member/reissue"
         let header: HTTPHeaders = ["Content-Type" : "application/json"]
         let token = UserDefaults.standard.string(forKey: "RefreshToken") ?? ""
         
