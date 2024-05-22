@@ -13,7 +13,6 @@ class Service{
     
     func LetterRequest(letter: DiaryDto, completion: @escaping (Result<Int, Error>) -> Void) {
         let URL = "https://moodmingle.store/api/v1/diary/letter"
-//        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let header: HTTPHeaders = [.authorization(bearerToken: token)]
         
@@ -295,7 +294,7 @@ class Service{
     
     func KakaoJoinRequest(completion: @escaping (Result<JoinResponse, Error>) -> Void) {
         
-        let URL = "https://moodmingle.store/api/v1/member/join"
+        let URL = "https://moodmingle.store/api/v1/member/join/kakao"
         
         let token = UserDefaults.standard.string(forKey: "KakaoIdToken")!
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -316,18 +315,28 @@ class Service{
     
     func AppleJoinRequest(completion: @escaping (Result<JoinResponse, Error>) -> Void) {
         
-        let URL = "https://moodmingle.store/api/v1/member/join"
+        let user = UserDefaults.standard.string(forKey: "AppleUser")!
+        print("api호출에서 사용되는 값\(user)")
+        let url = "https://moodmingle.store/api/v1/member/login/apple"
+        
+        let dto : [String : Any] = ["user": user]
+    
         
         let token = UserDefaults.standard.string(forKey: "AppleIdToken")!
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
         
-        AF.request(URL,
+        AF.request(url,
                    method: .post,
+                   parameters: dto,
+                   encoding: URLEncoding.queryString,
                    headers: headers)
         .validate(statusCode: 200..<300)
         .responseDecodable(of: JoinResponse.self) { response in
             switch response.result {
             case .success(let result):
+                UserDefaults.standard.set(result.accessToken, forKey: "AccessToken")
+                print("\(result.accessToken)")
+                UserDefaults.standard.set(result.refreshToken, forKey: "RefreshToken")
                 completion(.success(result))
             case .failure(let error):
                 completion(.failure(error))
@@ -337,7 +346,7 @@ class Service{
     
     func KakaoLoginRequest(completion: @escaping (Result<LoginResponse, Error>) -> Void) {
         
-        let URL = "https://moodmingle.store/api/v1/member/login"
+        let URL = "https://moodmingle.store/api/v1/member/login/kakao"
         
         let token = UserDefaults.standard.string(forKey: "KakaoIdToken")!
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
@@ -353,30 +362,21 @@ class Service{
                 UserDefaults.standard.set(result.refreshToken, forKey: "RefreshToken")
                 completion(.success(result))
             case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func AppleLoginRequest(completion: @escaping (Result<LoginResponse, Error>) -> Void) {
-        
-        let URL = "https://moodmingle.store/api/v1/member/login"
-        
-        let token = UserDefaults.standard.string(forKey: "AppleIdToken")!
-        let headers: HTTPHeaders = [.authorization(bearerToken: token)]
-        
-        AF.request(URL,
-                   method: .post,
-                   headers: headers)
-        .validate(statusCode: 200..<300)
-        .responseDecodable(of: LoginResponse.self) { response in
-            switch response.result {
-            case .success(let result):
-                UserDefaults.standard.set(result.accessToken, forKey: "AccessToken")
-                UserDefaults.standard.set(result.refreshToken, forKey: "RefreshToken")
-                completion(.success(result))
-            case .failure(let error):
-                completion(.failure(error))
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "M-001" {
+                    self.KakaoJoinRequest { result in
+                        switch result {
+                        case .success:
+                            // Retry InfoRequest after refreshing the token
+                            self.KakaoLoginRequest(completion: completion)
+                        case .failure(let Error):
+                            completion(.failure(Error))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -419,13 +419,13 @@ class Service{
     //탈퇴
     func LeaveRequest(completion: @escaping (Result<String, Error>) -> Void) {
         
-        let URL = "https://moodmingle.store/api/v1/member/logout"
+        let URL = "https://moodmingle.store/api/v1/member"
         
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]
         
         AF.request(URL,
-                   method: .post,
+                   method: .delete,
                    headers: headers)
         .validate(statusCode: 200..<300)
         .responseDecodable(of: String.self) { response in
@@ -440,7 +440,7 @@ class Service{
                         switch refreshResult {
                         case .success:
                             // Retry InfoRequest after refreshing the token
-                            self.LogoutRequest(completion: completion)
+                            self.LeaveRequest(completion: completion)
                         case .failure(let refreshError):
                             completion(.failure(refreshError))
                         }

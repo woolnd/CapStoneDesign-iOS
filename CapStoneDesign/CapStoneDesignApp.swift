@@ -21,7 +21,7 @@ struct CapStoneDesignApp: App {
                 let apple = UserDefaults.standard.string(forKey: "AppleIdToken")
                 let kakao = UserDefaults.standard.string(forKey: "KakaoIdToken")
                 
-                if( apple != "" || kakao != ""){
+                if( apple != nil || kakao != nil){
                     SplashView(text: "MoodMingle").transition(.opacity).zIndex(1).environmentObject(stateManager)
                         .onOpenURL { url in
                             if (AuthApi.isKakaoTalkLoginUrl(url)) {

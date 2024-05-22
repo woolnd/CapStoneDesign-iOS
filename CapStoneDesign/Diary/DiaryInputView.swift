@@ -272,6 +272,9 @@ struct DiaryInputView: View {
                                 
                             }
                             .accentColor(Color.black)
+                            .onAppear(){
+                                print("\(currentResponse)")
+                            }
                         }
                         
                     }

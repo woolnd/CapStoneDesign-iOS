@@ -15,7 +15,7 @@ struct AccountManagementView: View {
     @State var name: String = ""
     @State var email: String = ""
     @State var imageUrl: String = ""
-
+    
     @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
     @State var isLogout: Bool = false
     @State var isLeave: Bool = false
@@ -95,92 +95,97 @@ struct AccountManagementView: View {
                                 }
                                 .padding(EdgeInsets(top: geo.size.width * 0.2, leading: 0, bottom: geo.size.width * 0.2, trailing: 0))
                                 
-                    
                                 
-                                NavigationLink {
-                                    if isLogout {
-                                        SplashView(text: "MoodMingle")
+                                
+                                
+                                Button {
+                                    service.LogoutRequest { result in
+                                        switch result{
+                                        case.success(let success):
+                                            print("\(success)")
+                                        case .failure(let error):
+                                            print("\(error)")
+                                        }
                                     }
+                                    kakaoAuthVM.handleKakaoLogout()
+                                    UserDefaults.standard.removeObject(forKey: "AppleIdToken")
+                                    UserDefaults.standard.removeObject(forKey: "KakaoIdToken")
+                                    UserDefaults.standard.removeObject(forKey: "AccessToken")
+                                    UserDefaults.standard.removeObject(forKey: "RefreshToken")
+                                    UserDefaults.standard.removeObject(forKey: "clientSecret")
+                                    UserDefaults.standard.removeObject(forKey: "code")
+                                    
+                                    isLogout = true
                                 } label: {
                                     Text("로그아웃")
-                                        .onTapGesture {
-                                            service.LogoutRequest { result in
-                                                switch result {
-                                                case .success(_):
-                                                    isLogout = true
-                                                    UserDefaults.standard.set("", forKey: "AppleIdToken")
-                                                    UserDefaults.standard.set("", forKey: "KakaoIdToken")
-                                                    UserDefaults.standard.set("", forKey: "AccessToken")
-                                                    UserDefaults.standard.set("", forKey: "RefreshToken")
-                                                    print("로그아웃 성공")
-                                                case .failure(let error):
-                                                    isLogout = false
-                                                    print("Error: \(error)")
-                                                }
-                                            }
-                                        }
-                                    
+                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.04))
                                 }
+                                .fullScreenCover(isPresented: $isLogout, content: {
+                                    SplashView(text: "MoodMingle")
+                                })
                                 
                                 
-                                NavigationLink {
-                                    if isLeave{
-                                        IntroView(text: "MoodMingle")
+                                Button {
+                                    service.LeaveRequest { result in
+                                        switch result{
+                                        case.success(let success):
+                                            print("\(success)")
+                                        case .failure(let error):
+                                            print("\(error)")
+                                        }
                                     }
+                                    kakaoAuthVM.handleKakaoLogout()
+                                    UserDefaults.standard.removeObject(forKey: "AppleIdToken")
+                                    UserDefaults.standard.removeObject(forKey: "KakaoIdToken")
+                                    UserDefaults.standard.removeObject(forKey: "AccessToken")
+                                    UserDefaults.standard.removeObject(forKey: "RefreshToken")
+                                    UserDefaults.standard.removeObject(forKey: "clientSecret")
+                                    UserDefaults.standard.removeObject(forKey: "code")
+                                    isLeave = true
                                 } label: {
-                                    Text("회원 탈퇴")
-                                        .onTapGesture {
-                                            service.LeaveRequest { result in
-                                                switch result {
-                                                case .success(_):
-                                                    UserDefaults.standard.set("", forKey: "AppleIdToken")
-                                                    UserDefaults.standard.set("", forKey: "KakaoIdToken")
-                                                    UserDefaults.standard.set("", forKey: "AccessToken")
-                                                    UserDefaults.standard.set("", forKey: "RefreshToken")
-                                                    isLeave = true
-                                                    print("로그아웃 성공")
-                                                case .failure(let error):
-                                                    isLeave = false
-                                                    print("Error: \(error)")
-                                                }
-                                            }
-                                            
-                                        }
+                                    Text("회원탈퇴")
+                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.04))
                                 }
+                                .fullScreenCover(isPresented: $isLeave, content: {
+                                    IntroView(text: "MoodMingle")
+                                })
                                 
                                 Spacer()
+                                
                             }
+                            Spacer()
                         }
-                        
-                        
                     }
-                }
-                .accentColor(Color.black)
-            }
-            .onAppear(){
-                service.InfoRequest { result in
-                    switch result {
-                    case .success(let success):
-                        name = success.name
-                        email = success.email
-                        imageUrl = success.imageUrl
-                    case .failure(let error):
-                        service.RefreshRequest { result in
-                            switch result {
-                            case .success(let success):
-                                print("\(success)")
-                            case .failure(let error):
-                                print("Error: \(error)")
-                            }
-                        }
-                        print("Error: \(error)")
-                    }
+                    
+                    
                 }
             }
-            .toolbar(.hidden)
-            .navigationBarBackButtonHidden()
+            .accentColor(Color.black)
         }
+        .onAppear(){
+            service.InfoRequest { result in
+                switch result {
+                case .success(let success):
+                    name = success.name ?? ""
+                    email = success.email ?? ""
+                    imageUrl = success.imageUrl ?? ""
+                case .failure(let error):
+                    service.RefreshRequest { result in
+                        switch result {
+                        case .success(let success):
+                            print("\(success)")
+                        case .failure(let error):
+                            print("Error: \(error)")
+                        }
+                    }
+                    print("Error: \(error)")
+                }
+            }
+        }
+        .toolbar(.hidden)
+        .navigationBarBackButtonHidden()
     }
+    
 }
 
 #Preview {

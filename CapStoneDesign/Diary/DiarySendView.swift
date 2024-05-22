@@ -65,6 +65,7 @@ struct DiarySendView: View {
             .onAppear(){
                 switch currentResponse{
                 case 0:
+                    print("0")
                     service.LetterRequest(letter: requestBody) { result in
                         switch result {
                         case .success(let response):
@@ -75,6 +76,7 @@ struct DiarySendView: View {
                         }
                     }
                 case 1:
+                    print("1")
                     service.SympathyRequest(sympathy: requestBody) { result in
                         switch result {
                         case .success(let response):
@@ -84,7 +86,8 @@ struct DiarySendView: View {
                             // 요청이 실패했을 때 수행할 동작
                         }
                     }
-                default:
+                case 2:
+                    print("2")
                     service.AdviceRequest(advice: requestBody) { result in
                         switch result {
                         case .success(let response):
@@ -94,6 +97,8 @@ struct DiarySendView: View {
                             // 요청이 실패했을 때 수행할 동작
                         }
                     }
+                default:
+                    break
                 }
             }
         }

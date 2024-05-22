@@ -123,9 +123,9 @@ struct LoginResponse: Codable{
 
 
 struct InfoResponse: Codable{
-    var name: String
-    var email: String
-    var imageUrl: String
+    var name: String?
+    var email: String?
+    var imageUrl: String?
     
     private enum CodingKeys: String, CodingKey {
         case name = "name"

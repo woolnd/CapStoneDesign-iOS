@@ -88,6 +88,7 @@ class KakaoAuthViewModel: ObservableObject {
     
     // 토큰 저장 함수
     private func saveToken(oauthToken: OAuthToken) {
+        print("\(oauthToken.idToken)")
         UserDefaults.standard.set(oauthToken.idToken, forKey: "KakaoIdToken")
     }
     

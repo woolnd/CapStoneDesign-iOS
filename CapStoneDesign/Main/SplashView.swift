@@ -95,14 +95,16 @@ struct SplashView: View {
                         Spacer()
                         SignInWithAppleButton(
                             onRequest: { request in
-                                request.requestedScopes = []
+                                request.requestedScopes = [.fullName, .email]
                             },
                             onCompletion: { result in
                                 switch result {
                                 case .success(let authResults):
+                                    isInitial = true
                                     print("Apple Login Successful")
                                     switch authResults.credential{
                                     case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                                        
                                         
                                         if  let authorizationCode = appleIDCredential.authorizationCode,
                                             let identityToken = appleIDCredential.identityToken,
@@ -110,24 +112,18 @@ struct SplashView: View {
                                             let identifyTokenString = String(data: identityToken, encoding: .utf8) {
                                             UserDefaults.standard.set(identifyTokenString, forKey: "AppleIdToken")
                                             UserDefaults.standard.set(authCodeString, forKey: "code")
-                                            print("authorizationCode: \(authorizationCode)")
-                                            print("identityToken: \(identityToken)")
-                                            print("authCodeString: \(authCodeString)")
                                             print("identifyTokenString: \(identifyTokenString)")
+                                            let fullName = appleIDCredential.fullName
+                                            let name =  (fullName?.familyName ?? "") + (fullName?.givenName ?? "")
+                                            UserDefaults.standard.set(name, forKey: "AppleUser")
+                                            print("처음 받아오는 값\(name)")
+                                    
                                         }
-                                        
                                         service.AppleJoinRequest { result in
                                             switch result {
                                             case .success(_):
                                                 print("가입 성공")
-                                                service.AppleLoginRequest { result in
-                                                    switch result {
-                                                    case .success(_):
-                                                        print("로그인 성공")
-                                                    case .failure(let error):
-                                                        print("Error: \(error)")
-                                                    }
-                                                }
+                                                
                                             case .failure(let error):
                                                 print("Error: \(error)")
                                             }
@@ -148,18 +144,10 @@ struct SplashView: View {
                             kakaoAuthVM.handleKakaoLogin { success in
                                 if success {
                                     isInitial = true
-                                    service.KakaoJoinRequest { result in
+                                    service.KakaoLoginRequest { result in
                                         switch result {
                                         case .success(_):
-                                            print("회원가입 성공")
-                                            service.KakaoLoginRequest { result in
-                                                switch result {
-                                                case .success(_):
-                                                    print("로그인 성공")
-                                                case .failure(let error):
-                                                    print("Error: \(error)")
-                                                }
-                                            }
+                                            print("로그인 성공")
                                         case .failure(let error):
                                             print("Error: \(error)")
                                         }
@@ -198,6 +186,7 @@ struct SplashView: View {
             InitialView()
         })
     }
+
     
     func performTokenCheck() {
         if UserDefaults.standard.string(forKey: "AppleIdToken") != nil {
@@ -217,35 +206,34 @@ struct SplashView: View {
             appleTokenCheck = false
         }
         
-        kakaoAuthVM.handleTokenCheck { success in
-            if success {
-                // 토큰 체크 성공 시 수행할 동작
-                kakaoTokenCheck = true
-                
-                kakaoAuthVM.refreshToken { success in
-                    if success {
-                        print("NEW토큰 발급 성공")
-                        service.KakaoLoginRequest { result in
-                            switch result {
-                            case .success(_):
-                                print("로그인 성공")
-                            case .failure(let error):
-                                print("Error: \(error)")
-                            }
+        if UserDefaults.standard.string(forKey: "KakaoIdToken") != nil {
+            // IdentityToken이 UserDefaults에 저장되어 있음
+            kakaoTokenCheck = true
+            
+            // 토큰 재발급 요청
+            kakaoAuthVM.refreshToken { success in
+                if success {
+                    print("NEW토큰 발급 성공")
+                    service.KakaoLoginRequest { result in
+                        switch result {
+                        case .success(_):
+                            print("로그인 성공")
+                        case .failure(let error):
+                            print("Error: \(error)")
                         }
-                    } else {
-                        print("실패")
                     }
+                } else {
+                    print("실패")
                 }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    changedView()
-                }
-            } else {
-                // 토큰 체크 실패 시 수행할 동작
-                kakaoTokenCheck = false
-                
             }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                changedView()
+            }
+            
+        } else {
+            // IdentityToken이 UserDefaults에 저장되어 있지 않음
+            kakaoTokenCheck = false
         }
     }
     
