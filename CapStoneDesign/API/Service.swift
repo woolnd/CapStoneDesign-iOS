@@ -293,7 +293,7 @@ class Service{
         }
     }
     
-    func JoinRequest(completion: @escaping (Result<JoinResponse, Error>) -> Void) {
+    func KakaoJoinRequest(completion: @escaping (Result<JoinResponse, Error>) -> Void) {
         
         let URL = "https://moodmingle.store/api/v1/member/join"
         
@@ -314,7 +314,28 @@ class Service{
         }
     }
     
-    func LoginRequest(completion: @escaping (Result<LoginResponse, Error>) -> Void) {
+    func AppleJoinRequest(completion: @escaping (Result<JoinResponse, Error>) -> Void) {
+        
+        let URL = "https://moodmingle.store/api/v1/member/join"
+        
+        let token = UserDefaults.standard.string(forKey: "AppleIdToken")!
+        let headers: HTTPHeaders = [.authorization(bearerToken: token)]
+        
+        AF.request(URL,
+                   method: .post,
+                   headers: headers)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: JoinResponse.self) { response in
+            switch response.result {
+            case .success(let result):
+                completion(.success(result))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func KakaoLoginRequest(completion: @escaping (Result<LoginResponse, Error>) -> Void) {
         
         let URL = "https://moodmingle.store/api/v1/member/login"
         
@@ -337,7 +358,66 @@ class Service{
         }
     }
     
+    func AppleLoginRequest(completion: @escaping (Result<LoginResponse, Error>) -> Void) {
+        
+        let URL = "https://moodmingle.store/api/v1/member/login"
+        
+        let token = UserDefaults.standard.string(forKey: "AppleIdToken")!
+        let headers: HTTPHeaders = [.authorization(bearerToken: token)]
+        
+        AF.request(URL,
+                   method: .post,
+                   headers: headers)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: LoginResponse.self) { response in
+            switch response.result {
+            case .success(let result):
+                UserDefaults.standard.set(result.accessToken, forKey: "AccessToken")
+                UserDefaults.standard.set(result.refreshToken, forKey: "RefreshToken")
+                completion(.success(result))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func LogoutRequest(completion: @escaping (Result<String, Error>) -> Void) {
+        
+        let URL = "https://moodmingle.store/api/v1/member/logout"
+        
+        let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
+        let headers: HTTPHeaders = [.authorization(bearerToken: token)]
+        
+        AF.request(URL,
+                   method: .post,
+                   headers: headers)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: String.self) { response in
+            switch response.result {
+            case .success(let result):
+                completion(.success(result))
+            case .failure(let error):
+                if let data = response.data,
+                   let apiError = try? JSONDecoder().decode(APIError.self, from: data),
+                   apiError.code == "AUTH-001" {
+                    self.RefreshRequest { refreshResult in
+                        switch refreshResult {
+                        case .success:
+                            // Retry InfoRequest after refreshing the token
+                            self.LogoutRequest(completion: completion)
+                        case .failure(let refreshError):
+                            completion(.failure(refreshError))
+                        }
+                    }
+                } else {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    //탈퇴
+    func LeaveRequest(completion: @escaping (Result<String, Error>) -> Void) {
         
         let URL = "https://moodmingle.store/api/v1/member/logout"
         

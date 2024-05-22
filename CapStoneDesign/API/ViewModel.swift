@@ -161,3 +161,18 @@ struct ErrorResponse: Codable{
     
 }
 
+struct AppleTokenResponse: Codable {
+    let access_token: String
+    let token_type: String
+    let expires_in: Int
+    let refresh_token: String
+    let id_token: String
+    
+    private enum CodingKeys: String, CodingKey {
+        case access_token = "access_token"
+        case token_type = "token_type"
+        case expires_in = "expires_in"
+        case refresh_token = "refresh_token"
+        case id_token = "id_token"
+    }
+}

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ImagePicker: UIViewControllerRepresentable {
     
@@ -19,6 +20,22 @@ struct ImagePicker: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> some UIViewController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
+        
+        PHPhotoLibrary.requestAuthorization { status in
+                    switch status {
+                    case .authorized:
+                        print("Access granted by user")
+                    case .denied, .restricted:
+                        print("Access denied or restricted")
+                    case .notDetermined:
+                        print("Access not determined yet")
+                    case .limited:
+                        print("Access limited")
+                    @unknown default:
+                        fatalError("Unknown authorization status")
+                    }
+                }
+        
         return picker
     }
     

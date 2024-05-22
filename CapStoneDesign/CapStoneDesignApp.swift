@@ -18,12 +18,25 @@ struct CapStoneDesignApp: App {
         WindowGroup {
             ZStack{
                 
-                SplashView(text: "MoodMingle").transition(.opacity).zIndex(1).environmentObject(stateManager)
-                    .onOpenURL { url in
-                        if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                            _ = AuthController.handleOpenUrl(url: url)
+                let apple = UserDefaults.standard.string(forKey: "AppleIdToken")
+                let kakao = UserDefaults.standard.string(forKey: "KakaoIdToken")
+                
+                if( apple != "" || kakao != ""){
+                    SplashView(text: "MoodMingle").transition(.opacity).zIndex(1).environmentObject(stateManager)
+                        .onOpenURL { url in
+                            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                                _ = AuthController.handleOpenUrl(url: url)
+                            }
                         }
-                    }
+                }
+                else{
+                    IntroView(text: "MoodMingle").transition(.opacity).zIndex(1).environmentObject(stateManager)
+                        .onOpenURL { url in
+                            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                                _ = AuthController.handleOpenUrl(url: url)
+                            }
+                        }
+                }
             }
         }
     }

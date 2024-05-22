@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct InitialView: View {
     @State private var currentPage = 0
     @ObservedObject var viewModel = InitialViewModel(contents: InitialViewModel.mock)

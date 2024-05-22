@@ -17,6 +17,8 @@ struct AccountManagementView: View {
     @State var imageUrl: String = ""
 
     @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
+    @State var isLogout: Bool = false
+    @State var isLeave: Bool = false
     
     var body: some View {
         GeometryReader{ geo in
@@ -95,15 +97,57 @@ struct AccountManagementView: View {
                                 
                     
                                 
-                                Button(action: {
-                                    kakaoAuthVM.handleKakaoLogout()
-                                }, label: {
-                                    Image("kakao_logout")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: geo.size.width * 0.8)
+                                NavigationLink {
+                                    if isLogout {
+                                        SplashView(text: "MoodMingle")
+                                    }
+                                } label: {
+                                    Text("로그아웃")
+                                        .onTapGesture {
+                                            service.LogoutRequest { result in
+                                                switch result {
+                                                case .success(_):
+                                                    isLogout = true
+                                                    UserDefaults.standard.set("", forKey: "AppleIdToken")
+                                                    UserDefaults.standard.set("", forKey: "KakaoIdToken")
+                                                    UserDefaults.standard.set("", forKey: "AccessToken")
+                                                    UserDefaults.standard.set("", forKey: "RefreshToken")
+                                                    print("로그아웃 성공")
+                                                case .failure(let error):
+                                                    isLogout = false
+                                                    print("Error: \(error)")
+                                                }
+                                            }
+                                        }
                                     
-                                })
+                                }
+                                
+                                
+                                NavigationLink {
+                                    if isLeave{
+                                        IntroView(text: "MoodMingle")
+                                    }
+                                } label: {
+                                    Text("회원 탈퇴")
+                                        .onTapGesture {
+                                            service.LeaveRequest { result in
+                                                switch result {
+                                                case .success(_):
+                                                    UserDefaults.standard.set("", forKey: "AppleIdToken")
+                                                    UserDefaults.standard.set("", forKey: "KakaoIdToken")
+                                                    UserDefaults.standard.set("", forKey: "AccessToken")
+                                                    UserDefaults.standard.set("", forKey: "RefreshToken")
+                                                    isLeave = true
+                                                    print("로그아웃 성공")
+                                                case .failure(let error):
+                                                    isLeave = false
+                                                    print("Error: \(error)")
+                                                }
+                                            }
+                                            
+                                        }
+                                }
+                                
                                 Spacer()
                             }
                         }

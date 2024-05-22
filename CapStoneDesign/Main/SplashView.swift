@@ -12,6 +12,7 @@ struct SplashView: View {
     
     @StateObject var kakaoAuthVM: KakaoAuthViewModel = KakaoAuthViewModel()
     @State var kakaoTokenCheck: Bool = false
+    @State var appleTokenCheck: Bool = false
     
     
     @State var isActive = false
@@ -32,12 +33,13 @@ struct SplashView: View {
         
         NavigationStack{
             ZStack{
+                
                 Image("initial_background")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
                 
-                if(kakaoTokenCheck){
+                if(kakaoTokenCheck || appleTokenCheck){
                     ZStack{
                         Image("logo")
                             .resizable()
@@ -91,16 +93,66 @@ struct SplashView: View {
                     VStack {
                         
                         Spacer()
-                        
+                        SignInWithAppleButton(
+                            onRequest: { request in
+                                request.requestedScopes = []
+                            },
+                            onCompletion: { result in
+                                switch result {
+                                case .success(let authResults):
+                                    print("Apple Login Successful")
+                                    switch authResults.credential{
+                                    case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                                        
+                                        if  let authorizationCode = appleIDCredential.authorizationCode,
+                                            let identityToken = appleIDCredential.identityToken,
+                                            let authCodeString = String(data: authorizationCode, encoding: .utf8),
+                                            let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+                                            UserDefaults.standard.set(identifyTokenString, forKey: "AppleIdToken")
+                                            UserDefaults.standard.set(authCodeString, forKey: "code")
+                                            print("authorizationCode: \(authorizationCode)")
+                                            print("identityToken: \(identityToken)")
+                                            print("authCodeString: \(authCodeString)")
+                                            print("identifyTokenString: \(identifyTokenString)")
+                                        }
+                                        
+                                        service.AppleJoinRequest { result in
+                                            switch result {
+                                            case .success(_):
+                                                print("가입 성공")
+                                                service.AppleLoginRequest { result in
+                                                    switch result {
+                                                    case .success(_):
+                                                        print("로그인 성공")
+                                                    case .failure(let error):
+                                                        print("Error: \(error)")
+                                                    }
+                                                }
+                                            case .failure(let error):
+                                                print("Error: \(error)")
+                                            }
+                                        }
+                                    default:
+                                        break
+                                    }
+                                case .failure(let error):
+                                    print(error.localizedDescription)
+                                    print("error")
+                                }
+                            }
+                        )
+                        .frame(width : UIScreen.main.bounds.width * 0.9, height:50)
+                        .cornerRadius(5)
+                        .opacity(buttonOpacity)
                         Button {
                             kakaoAuthVM.handleKakaoLogin { success in
                                 if success {
                                     isInitial = true
-                                    service.JoinRequest { result in
+                                    service.KakaoJoinRequest { result in
                                         switch result {
                                         case .success(_):
                                             print("회원가입 성공")
-                                            service.LoginRequest { result in
+                                            service.KakaoLoginRequest { result in
                                                 switch result {
                                                 case .success(_):
                                                     print("로그인 성공")
@@ -113,7 +165,7 @@ struct SplashView: View {
                                         }
                                     }
                                 } else {
-                                   isInitial = false
+                                    isInitial = false
                                 }
                             }
                         } label: {
@@ -123,6 +175,7 @@ struct SplashView: View {
                                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 50, trailing: 15))
                                 .opacity(buttonOpacity)
                         }
+                        
                     }
                     .onReceive(aftertimer){_ in
                         withAnimation{
@@ -139,23 +192,30 @@ struct SplashView: View {
                 performTokenCheck()
             }
         }
+        .toolbar(.hidden)
+        .navigationBarBackButtonHidden(true)
         .fullScreenCover(isPresented: $isInitial, content: {
             InitialView()
         })
     }
     
     func performTokenCheck() {
-        //            if UserDefaults.standard.string(forKey: "KakaoToken") != nil {
-        //                // IdentityToken이 UserDefaults에 저장되어 있음
-        //                kakaoTokenCheck = true
-        //
-        //                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-        //                    changedView()
-        //                }
-        //            } else {
-        //                // IdentityToken이 UserDefaults에 저장되어 있지 않음
-        //                kakaoTokenCheck = false
-        //            }
+        if UserDefaults.standard.string(forKey: "AppleIdToken") != nil {
+            // IdentityToken이 UserDefaults에 저장되어 있음
+            appleTokenCheck = true
+            
+            // 토큰 재발급 요청
+            AppleAuthManager.shared.getAppleTokens { result in
+                print("\(result)")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    changedView()
+                }
+            }
+            
+        } else {
+            // IdentityToken이 UserDefaults에 저장되어 있지 않음
+            appleTokenCheck = false
+        }
         
         kakaoAuthVM.handleTokenCheck { success in
             if success {
@@ -165,7 +225,7 @@ struct SplashView: View {
                 kakaoAuthVM.refreshToken { success in
                     if success {
                         print("NEW토큰 발급 성공")
-                        service.LoginRequest { result in
+                        service.KakaoLoginRequest { result in
                             switch result {
                             case .success(_):
                                 print("로그인 성공")
@@ -188,7 +248,7 @@ struct SplashView: View {
             }
         }
     }
-
+    
     
     func changedView(){
         self.isActive.toggle()

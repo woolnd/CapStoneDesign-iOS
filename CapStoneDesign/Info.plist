@@ -35,5 +35,7 @@
 		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>작성한 일기와 함께 하루를 사진으로 기록하기 위해 갤러리 접근 권한이 필요합니다</string>
 </dict>
 </plist>
