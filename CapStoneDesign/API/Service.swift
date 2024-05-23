@@ -22,11 +22,14 @@ class Service{
                                     "emotion": letter.dto.emotion,
                                     "weather": letter.dto.weather]
         
+        
         let image = base64ToImage(letter.image)
         
-        guard let imageData = image?.jpegData(compressionQuality: 1) else {
-            print("Failed to convert image to JPEG data")
-            return
+        let imageData: Data
+        if let image = image, let jpegData = image.jpegData(compressionQuality: 1) {
+            imageData = jpegData
+        } else {
+            imageData = Data() // 빈 데이터
         }
         
         AF.upload(multipartFormData: { multipartFormData in
@@ -66,7 +69,7 @@ class Service{
         
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let header: HTTPHeaders = [.authorization(bearerToken: token)]
-//        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
+        //        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
         
         let dto : [String : Any] = ["title": sympathy.dto.title,
                                     "date": sympathy.dto.date,
@@ -76,9 +79,12 @@ class Service{
         
         let image = base64ToImage(sympathy.image)
         
-        guard let imageData = image?.jpegData(compressionQuality: 1) else {
-            print("Failed to convert image to JPEG data")
-            return
+        
+        let imageData: Data
+        if let image = image, let jpegData = image.jpegData(compressionQuality: 1) {
+            imageData = jpegData
+        } else {
+            imageData = Data() // 빈 데이터
         }
         
         AF.upload(multipartFormData: { multipartFormData in
@@ -118,7 +124,7 @@ class Service{
         
         let token = UserDefaults.standard.string(forKey: "AccessToken") ?? ""
         let header: HTTPHeaders = [.authorization(bearerToken: token)]
-//        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
+        //        let header: HTTPHeaders = ["Content-Type" : "multipart/form-data"]
         
         let dto : [String : Any] = ["title": advice.dto.title,
                                     "date": advice.dto.date,
@@ -128,9 +134,12 @@ class Service{
         
         let image = base64ToImage(advice.image)
         
-        guard let imageData = image?.jpegData(compressionQuality: 1) else {
-            print("Failed to convert image to JPEG data")
-            return
+        
+        let imageData: Data
+        if let image = image, let jpegData = image.jpegData(compressionQuality: 1) {
+            imageData = jpegData
+        } else {
+            imageData = Data() // 빈 데이터
         }
         
         AF.upload(multipartFormData: { multipartFormData in
@@ -161,7 +170,7 @@ class Service{
                 } else {
                     completion(.failure(error))
                 }
-
+                
             }
         }
     }
@@ -320,7 +329,7 @@ class Service{
         let url = "https://moodmingle.store/api/v1/member/login/apple"
         
         let dto : [String : Any] = ["user": user]
-    
+        
         
         let token = UserDefaults.standard.string(forKey: "AppleIdToken")!
         let headers: HTTPHeaders = [.authorization(bearerToken: token)]

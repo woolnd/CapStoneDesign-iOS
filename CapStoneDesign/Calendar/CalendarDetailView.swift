@@ -307,7 +307,6 @@ struct CalendarDetailView: View {
                     type: response.type
                 )
                 viewModel.updateDiary(with: diaryModel)
-                print("\(diaryModel.type)")
             case .failure(let error):
                 print("Error: \(error)")
             }
