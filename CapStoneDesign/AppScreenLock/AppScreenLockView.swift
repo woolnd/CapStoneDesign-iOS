@@ -48,7 +48,7 @@ struct AppScreenLockView: View {
                     Spacer()
                 }
                 
-            
+                
                 HStack(spacing: 10){
                     Group {
                         Image(appScreenLockModel.passwordFieldArray.count >= 1 ? "FLUTTER" : "PEACE")
@@ -67,8 +67,8 @@ struct AppScreenLockView: View {
                     
                 }.padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30))
                 
-                .offset(x: appScreenLockModel.isWrongPassword ? -10 : 0)
-                .animation(appScreenLockModel.isWrongPassword ?  Animation.default.repeatCount(3).speed(6) : .none)
+                    .offset(x: appScreenLockModel.isWrongPassword ? -10 : 0)
+                    .animation(appScreenLockModel.isWrongPassword ?  Animation.default.repeatCount(3).speed(6) : .none)
                 
                 
                 Text("비밀번호를 잊어버렸어요")
@@ -76,11 +76,8 @@ struct AppScreenLockView: View {
                     .underline()
                     .foregroundColor(Color.gray)
                     .contentShape(Rectangle())
-                    .onTapGesture(perform: {
-                        stateManager.isForgetPasswordState.toggle()
-                    })
-                    .sheet(isPresented: $stateManager.isForgetPasswordState) {
-                        //비밀번호 초기화 화면
+                    .onTapGesture {
+                        appScreenLockModel.clearPassword()
                     }
                 
                 

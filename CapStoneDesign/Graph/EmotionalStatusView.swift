@@ -111,17 +111,19 @@ struct EmotionalStatusView: View {
                         .chartBackground { chartProxy in
                             GeometryReader{ geometry in
                                 let frame = geometry[chartProxy.plotAreaFrame]
-                                VStack{
+                                VStack {
                                     let allValues = vm.map { $0.value }
                                     let maxValueGraph = vm.max(by: { $0.value < $1.value }) // 최고값 찾기
                                     
                                     let isAllValuesEqual = allValues.allSatisfy { $0 == allValues.first }
-                                    let isMaxValueOne = allValues.filter { $0 == 1 }.count > 1
+                                    let maxValueCount = allValues.filter { $0 == maxValue }.count
+                                    
+                                    let areAllValuesZero = allValues.allSatisfy { $0 == 0 }
                                     
                                     Text("주된 감정")
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
                                         .foregroundStyle(.secondary)
-                                    Text(isAllValuesEqual || isMaxValueOne ? "동일" : "\(maxValueGraph?.date ?? "")")
+                                    Text(areAllValuesZero ? "주된 감정이 없음" : (isAllValuesEqual || maxValueCount > 1 ? "동일" : "\(maxValueGraph?.date ?? "")"))
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.07))
                                 }
                                 .position(x: frame.midX, y: frame.midY)

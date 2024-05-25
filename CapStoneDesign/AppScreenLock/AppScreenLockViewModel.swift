@@ -43,6 +43,13 @@ class AppScreenLockViewModel : ObservableObject {
         print("\(passwordFieldArray)")
     }
     
+    // 비밀번호 초기화 메서드
+    func clearPassword() {
+        UserDefaults.standard.set([], forKey: APP_SCREEN_LOCK_PASSWORD)
+        passwordFieldArray = []
+        appScreenLockMode = .NoScreenLock
+    }
+    
     /// Mark: - setObserver
     /// feature : 유저가 4자리를 입력하면 비밀번호가 맞는지 여부를 체크한다.
     /// 비밀번호가 맞으면 appScreenLockMode의 상태를 바꿔 잠금을 해제하고

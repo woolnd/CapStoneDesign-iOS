@@ -18,7 +18,7 @@ struct CalendarView: View {
     @State var showAlert : Bool = false
     
     let week: [String] = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-
+    
     let layout: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -120,19 +120,12 @@ struct CalendarView: View {
                                                 CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
                                                     .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
                                             }
-                                            .onTapGesture {
-                                                loadDiaryData()
-                                            }
                                         }else{
                                             CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
                                                 .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
                                                 .onTapGesture {
                                                     showAlert.toggle()
                                                 }
-                                                .onAppear(){
-                                                    loadDiaryData()
-                                                }
-                                            
                                         }
                                         
                                         
@@ -160,8 +153,8 @@ struct CalendarView: View {
                       dismissButton: .default(Text("닫기")))
             }
         }
-        .onAppear(){
-            loadDiaryData()
+        .onAppear {
+            viewModel.loadDiaryData(for: currentDate)
         }
     }
     
@@ -275,5 +268,5 @@ extension CalendarView{
 }
 
 #Preview {
-    CalendarView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock))
+    CalendarView(viewModel: CalendarViewModel())
 }

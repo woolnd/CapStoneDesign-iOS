@@ -35,7 +35,7 @@ struct TabBarView: View {
                                 .foregroundColor(selection == 0 ? .black : .gray)
                         }.tag(0)
                     
-                    CalendarView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock))
+                    CalendarView(viewModel: CalendarViewModel())
                         .tabItem {
                             Image(selection == 1 ? "calendar_tab" : "calendar_blank_tab")
                             Text("일기")

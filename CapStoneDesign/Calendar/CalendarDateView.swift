@@ -101,5 +101,5 @@ struct CalendarDateView: View {
 }
 
 #Preview {
-    CalendarDateView(viewModel: CalendarViewModel(diary: CalendarViewModel.mock), date: 20, currentDate: .constant(Date()))
+    CalendarDateView(viewModel: CalendarViewModel(), date: 20, currentDate: .constant(Date()))
 }
