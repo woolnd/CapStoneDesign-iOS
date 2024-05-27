@@ -95,7 +95,7 @@ struct CalendarView: View {
                                 Image("calendar_background")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: geo.size.width * 1)
+                                    .frame(width: geo.size.width * 0.99)
                                 
                                 Spacer()
                             }
@@ -121,11 +121,18 @@ struct CalendarView: View {
                                                     .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
                                             }
                                         }else{
-                                            CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
-                                                .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
-                                                .onTapGesture {
-                                                    showAlert.toggle()
-                                                }
+//                                            CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
+//                                                .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
+//                                                .onTapGesture {
+//                                                    showAlert.toggle()
+//                                                }
+                                            Button(action: {
+                                                showAlert.toggle()
+                                            }, label: {
+                                                CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
+                                                    .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
+                                            })
+                                            
                                         }
                                         
                                         

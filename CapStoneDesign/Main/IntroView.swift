@@ -66,6 +66,7 @@ struct IntroView: View {
                                 .opacity(0.5)
                         }
                     }
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.1, trailing: 0))
 
                 }
             }

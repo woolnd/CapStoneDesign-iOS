@@ -58,7 +58,7 @@ struct EmotionInputView: View {
                         
                         
                         Text("감성을 선택해주세요!")
-                            .font(.custom("777Balsamtint", size: geo.size.width * 0.1))
+                            .font(.custom("777Balsamtint", size: geo.size.width * 0.08))
                         
                         HStack{
                             
@@ -78,7 +78,7 @@ struct EmotionInputView: View {
                                     }
                                 }
                             }
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 70, trailing: geo.size.width * 0.04))
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.25, trailing: geo.size.width * 0.04))
                         }
                         
                         Spacer()
@@ -107,7 +107,7 @@ struct EmotionInputView: View {
                                 .frame(width: geo.size.width * 0.9)
                         }
                     }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.1, trailing: geo.size.width * 0.04))
                     
                 }
                 .accentColor(Color.black)

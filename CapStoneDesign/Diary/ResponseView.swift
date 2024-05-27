@@ -52,7 +52,7 @@ struct ResponseView: View {
                         }
                         
                         Text("답변 방식을 선택해 주세요!")
-                            .font(.custom("777Balsamtint", size: geo.size.width * 0.1))
+                            .font(.custom("777Balsamtint", size: geo.size.width * 0.08))
                         
                         if currentEmotion == 1{
                             Image("letter")
@@ -138,7 +138,7 @@ struct ResponseView: View {
                         }
                         
                     }
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.1, trailing: geo.size.width * 0.04))
                     
                 }
                 .accentColor(Color.black)

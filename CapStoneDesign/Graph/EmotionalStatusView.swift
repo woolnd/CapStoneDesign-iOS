@@ -107,7 +107,7 @@ struct EmotionalStatusView: View {
                             .cornerRadius(5)
                             .foregroundStyle(element.color)
                         }
-                        .frame(width: geo.size.width * 0.8)
+                        .frame(width: geo.size.width * 0.7)
                         .chartBackground { chartProxy in
                             GeometryReader{ geometry in
                                 let frame = geometry[chartProxy.plotAreaFrame]
@@ -123,8 +123,8 @@ struct EmotionalStatusView: View {
                                     Text("주된 감정")
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
                                         .foregroundStyle(.secondary)
-                                    Text(areAllValuesZero ? "주된 감정이 없음" : (isAllValuesEqual || maxValueCount > 1 ? "동일" : "\(maxValueGraph?.date ?? "")"))
-                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.07))
+                                    Text(areAllValuesZero ? "감정이 없음" : (isAllValuesEqual || maxValueCount > 1 ? "없음" : "\(maxValueGraph?.date ?? "")"))
+                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
                                 }
                                 .position(x: frame.midX, y: frame.midY)
                             }
@@ -136,20 +136,20 @@ struct EmotionalStatusView: View {
                                 ForEach(vm.indices, id: \.self){ emotion in
                                     Circle()
                                         .foregroundColor(vm[emotion].color)
-                                        .frame(width: geo.size.width * 0.06)
+                                        .frame(width: geo.size.width * 0.05)
                                     Text("\(vm[emotion].date)")
-                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
+                                        .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                                         .frame(width: geo.size.width * 0.3)
                                 }
                             }
                             .padding(.trailing, 10)
                         }
-                        .frame(width: geo.size.width * 0.8)
+                        .frame(width: geo.size.width * 0.7)
                         
                         Spacer()
                         
                         Rectangle()
-                            .frame(height: geo.size.height * 0.1)
+                            .frame(height: geo.size.height * 0.2)
                             .foregroundColor(.clear)
                     }
                     

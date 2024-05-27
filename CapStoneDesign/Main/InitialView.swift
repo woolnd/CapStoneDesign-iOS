@@ -68,7 +68,7 @@ struct InitialView: View {
                                             Image("initial_btn")
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fit)
-                                                .frame(width: geo.size.width * 0.8)
+                                                .frame(width: geo.size.width * 0.9)
                                         }
 
                                     }

@@ -122,6 +122,7 @@ struct SplashView: View {
                                         service.AppleJoinRequest { result in
                                             switch result {
                                             case .success(_):
+                                                print("\(result)")
                                                 print("가입 성공")
                                                 
                                             case .failure(let error):

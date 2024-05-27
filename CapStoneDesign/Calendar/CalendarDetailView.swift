@@ -96,6 +96,7 @@ struct CalendarDetailView: View {
                             Image("input_background")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
+                                .frame(width: geo.size.width * 0.95)
                                 .padding(EdgeInsets(top: -20, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             HStack{
@@ -141,10 +142,10 @@ struct CalendarDetailView: View {
                                         Image("\(viewModel.diary.emotion)")
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
-                                            .frame(width: geo.size.width * 0.4, height: geo.size.width * 0.52)
+                                            .frame(width: geo.size.width * 0.4, height: geo.size.width * 0.5)
                                             .clipped()
                                             .cornerRadius(20)
-                                            .padding()
+                                            .padding(EdgeInsets(top: geo.size.width * 0.1, leading: geo.size.width * 0.06, bottom: 0, trailing: 0))
                                     }else{
                                         let url = URL(string: viewModel.diary.imageUrl ?? "")
                                         KFImage(url)
@@ -153,10 +154,10 @@ struct CalendarDetailView: View {
                                             }
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
-                                            .frame(width: geo.size.width * 0.42, height: geo.size.width * 0.54)
+                                            .frame(width: geo.size.width * 0.4, height: geo.size.width * 0.5)
                                             .clipped()
                                             .cornerRadius(20)
-                                            .padding()
+                                            .padding(EdgeInsets(top: geo.size.width * 0.1, leading: geo.size.width * 0.06, bottom: 0, trailing: 0))
                                     }
                                     
                                     
@@ -166,7 +167,7 @@ struct CalendarDetailView: View {
                                         Text("전체 사진보기")
                                             .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                                     })
-                                    .padding(EdgeInsets(top: -geo.size.width * 0.05, leading: 0, bottom: 0, trailing: 0))
+                                    .padding(EdgeInsets(top: -geo.size.width * 0.01, leading: geo.size.width * 0.05, bottom: 0, trailing: 0))
                                     .sheet(isPresented: $isShowingFullImage, content: {
                                         ZStack {
                                             
@@ -231,7 +232,7 @@ struct CalendarDetailView: View {
                                     })
                                 }
                                 
-                            }.padding(EdgeInsets(top: geo.size.width * 0.35, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
+                            }.padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.1, trailing: geo.size.width * 0.04))
                         }
                         
                     }

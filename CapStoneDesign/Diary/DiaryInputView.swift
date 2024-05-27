@@ -238,13 +238,13 @@ struct DiaryInputView: View {
                                                     Image("diary_btn_on")
                                                         .resizable()
                                                         .aspectRatio(contentMode: .fit)
-                                                        .frame(width: geo.size.width * 0.9)
+                                                        .frame(width: geo.size.width * 0.8)
                                                 }
                                             }else{
                                                 Image("diary_btn_off")
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(width: geo.size.width * 0.9)
+                                                    .frame(width: geo.size.width * 0.8)
                                             }
                                         }
                                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))

@@ -16,6 +16,7 @@ struct PreviewView: View {
     
     var body: some View {
         GeometryReader{ geo in
+            
             NavigationStack{
                 ZStack{
                     Image("initial_background")
@@ -88,10 +89,12 @@ struct PreviewView: View {
                                 .font(.custom("777Balsamtint", size: 20))
                                 .opacity(0.5)
                         }
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.15, trailing: 0))
                     }
                 }
             }
             .accentColor(.black)
+
         }
         .toolbar(.hidden)
         .navigationBarBackButtonHidden(true)

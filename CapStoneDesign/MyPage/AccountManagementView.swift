@@ -21,24 +21,21 @@ struct AccountManagementView: View {
     @State var isLeave: Bool = false
     
     var body: some View {
-        GeometryReader{ geo in
-            NavigationStack{
-                ZStack{
+        GeometryReader { geo in
+            NavigationStack {
+                ZStack {
                     Image("initial_background")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .ignoresSafeArea()
                     
-                    
-                    VStack{
-                        HStack{
-                            
+                    VStack {
+                        HStack {
                             Button(action: {
                                 self.presentationMode.wrappedValue.dismiss()
                             }, label: {
-                                
                                 Image(systemName: "chevron.left")
-                                    .resizable()// 화살표 Image
+                                    .resizable() // 화살표 Image
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: geo.size.width * 0.04)
                             })
@@ -58,24 +55,23 @@ struct AccountManagementView: View {
                         
                         Spacer()
                         
-                        ZStack{
+                        ZStack {
                             Image("account_back")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: geo.size.width * 0.99)
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: geo.size.width * 0.05))
                             
-                            VStack{
-                                
+                            VStack {
                                 Spacer()
                                 
-                                if imageUrl == ""{
+                                if imageUrl.isEmpty {
                                     Image("initial_last_logo")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: geo.size.width * 0.3)
                                         .cornerRadius(geo.size.width * 0.25)
-                                }else{
+                                } else {
                                     let url = URL(string: imageUrl)
                                     KFImage(url)
                                         .resizable()
@@ -84,9 +80,7 @@ struct AccountManagementView: View {
                                         .cornerRadius(geo.size.width * 0.25)
                                 }
                                 
-                                
-                                
-                                VStack{
+                                VStack {
                                     Text("이름: \(name)")
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.07))
                                         .padding()
@@ -95,13 +89,18 @@ struct AccountManagementView: View {
                                 }
                                 .padding(EdgeInsets(top: geo.size.width * 0.2, leading: 0, bottom: geo.size.width * 0.2, trailing: 0))
                                 
+                                NavigationLink(destination: SplashView(text: "MoodMingle"), isActive: $isLogout) {
+                                    EmptyView()
+                                }
                                 
-                                
+                                NavigationLink(destination: IntroView(text: "MoodMingle"), isActive: $isLeave) {
+                                    EmptyView()
+                                }
                                 
                                 Button {
                                     service.LogoutRequest { result in
-                                        switch result{
-                                        case.success(let success):
+                                        switch result {
+                                        case .success(let success):
                                             print("\(success)")
                                         case .failure(let error):
                                             print("\(error)")
@@ -120,15 +119,11 @@ struct AccountManagementView: View {
                                     Text("로그아웃")
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.04))
                                 }
-                                .fullScreenCover(isPresented: $isLogout, content: {
-                                    SplashView(text: "MoodMingle")
-                                })
-                                
                                 
                                 Button {
                                     service.LeaveRequest { result in
-                                        switch result{
-                                        case.success(let success):
+                                        switch result {
+                                        case .success(let success):
                                             print("\(success)")
                                         case .failure(let error):
                                             print("\(error)")
@@ -146,23 +141,17 @@ struct AccountManagementView: View {
                                     Text("회원탈퇴")
                                         .font(.custom("777Balsamtint", size: geo.size.width * 0.04))
                                 }
-                                .fullScreenCover(isPresented: $isLeave, content: {
-                                    IntroView(text: "MoodMingle")
-                                })
                                 
                                 Spacer()
-                                
                             }
                             Spacer()
                         }
                     }
-                    
-                    
                 }
             }
             .accentColor(Color.black)
         }
-        .onAppear(){
+        .onAppear {
             service.InfoRequest { result in
                 switch result {
                 case .success(let success):
@@ -185,7 +174,6 @@ struct AccountManagementView: View {
         .toolbar(.hidden)
         .navigationBarBackButtonHidden()
     }
-    
 }
 
 #Preview {
