@@ -95,7 +95,6 @@ struct CalendarView: View {
                                 Image("calendar_background")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: geo.size.width * 0.99)
                                 
                                 Spacer()
                             }

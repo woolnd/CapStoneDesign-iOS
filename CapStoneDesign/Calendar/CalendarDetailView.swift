@@ -134,7 +134,7 @@ struct CalendarDetailView: View {
                                 }
                                 
                             }
-                            .offset(CGSize(width: geo.size.width * 0.22, height: geo.size.height * 0.025))
+                            .offset(CGSize(width: geo.size.width * 0.22, height: geo.size.height * 0.04))
                             
                             HStack{
                                 VStack{
@@ -167,7 +167,7 @@ struct CalendarDetailView: View {
                                         Text("전체 사진보기")
                                             .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                                     })
-                                    .padding(EdgeInsets(top: -geo.size.width * 0.01, leading: geo.size.width * 0.05, bottom: 0, trailing: 0))
+                                    .padding(EdgeInsets(top: -geo.size.width * 0.01, leading: geo.size.width * 0.03, bottom: 0, trailing: 0))
                                     .sheet(isPresented: $isShowingFullImage, content: {
                                         ZStack {
                                             
@@ -198,14 +198,14 @@ struct CalendarDetailView: View {
                                     .font(.custom("777Balsamtint", size: geo.size.width * 0.06))
                             }
                             .frame(width: geo.size.width * 0.6)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.3, trailing: geo.size.width * 0.04))
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: geo.size.width * 0.29, trailing: 0))
                             
                             
                             ScrollView(.vertical){
                                 Text("\(viewModel.diary.content)")
                                     .font(.custom("777Balsamtint", size: geo.size.width * 0.05))
                             }
-                            .frame(width: geo.size.width * 0.9, height: geo.size.height * 0.3)
+                            .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.3)
                             .padding(EdgeInsets(top: geo.size.height * 0.35, leading: 0, bottom: 0, trailing: geo.size.width * 0.04))
                             
                             VStack{
