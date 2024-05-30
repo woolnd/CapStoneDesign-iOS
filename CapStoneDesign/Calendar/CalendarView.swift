@@ -69,8 +69,9 @@ struct CalendarView: View {
                             Button(action: {
                                 let newDate = Calendar.current.date(byAdding: .month, value: -1, to: self.currentDate)!
                                 if newDate >= Calendar.current.date(from: DateComponents(year: 2024, month: 5))! {
+                                    
                                     self.currentDate = newDate
-                                    loadDiaryData()
+                                    viewModel.loadDiaryData(for: currentDate)
                                 }
                             }, label: {
                                 Image("arrow_left")
@@ -84,7 +85,7 @@ struct CalendarView: View {
                             
                             Button(action: {
                                 self.currentDate = Calendar.current.date(byAdding: .month, value: +1, to: self.currentDate)!
-                                loadDiaryData()
+                                viewModel.loadDiaryData(for: currentDate)
                             }, label: {
                                 Image("arrow_right")
                             })
@@ -109,32 +110,32 @@ struct CalendarView: View {
                                 }
                                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
                                 
+                                
                                 LazyVGrid(columns: layout){
-                                    ForEach(daysInMonth(date: currentDate), id: \.self) { day in
-                                        let select = formattedFuture(date: day)
-                                        let current = isToday()
+                                    ForEach(daysInMonth(date: currentDate), id: \.1) { day in
                                         
-                                        if select ?? currentDate <= current ?? currentDate {
-                                            NavigationLink(destination: destinationView(for: day)) {
-                                                CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
-                                                    .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
-                                            }
-                                        }else{
-//                                            CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
-//                                                .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
-//                                                .onTapGesture {
-//                                                    showAlert.toggle()
-//                                                }
-                                            Button(action: {
-                                                showAlert.toggle()
-                                            }, label: {
-                                                CalendarDateView(viewModel: viewModel, date: day, currentDate: $currentDate)
-                                                    .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
-                                            })
+                                    
+                                        if day.0 != 0 {
+                                            let select = formattedFuture(date: day.0)
+                                            let current = isToday()
                                             
+                                            if select ?? currentDate <= current ?? currentDate {
+                                                NavigationLink(destination: destinationView(for: day.0)) {
+                                                    CalendarDateView(viewModel: viewModel, date: day.0, currentDate: $currentDate)
+                                                        .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
+                                                }
+                                            } else {
+                                                Button(action: {
+                                                    showAlert.toggle()
+                                                }, label: {
+                                                    CalendarDateView(viewModel: viewModel, date: day.0, currentDate: $currentDate)
+                                                        .frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
+                                                })
+                                            }
+                                        } else {
+                                            // day가 0인 경우 빈 뷰를 추가합니다.
+                                            Color.clear.frame(width: geo.size.width * 0.12, height: geo.size.height * 0.078)
                                         }
-                                        
-                                        
                                     }
                                 }
                                 Spacer()
@@ -161,18 +162,6 @@ struct CalendarView: View {
         }
         .onAppear {
             viewModel.loadDiaryData(for: currentDate)
-        }
-    }
-    
-    private func loadDiaryData() {
-        service.DiaryRequest(dtos: DiaryRequest(dto: MonthDto(date: "\(formattedApi(date: currentDate))"))) { result in
-            switch result {
-            case .success(let response):
-                let diaryModels = response.map { CalendarViewModel.CalendarModel(diaryId: $0.diaryId, date: $0.date, emotion: $0.emotion) }
-                viewModel.updateDiary(with: diaryModels)
-            case .failure(let error):
-                print("Error: \(error)")
-            }
         }
     }
     
@@ -203,7 +192,7 @@ struct CalendarView: View {
     }
     
     private func destinationView(for day: Int) -> AnyView {
-        
+        print("\(day)")
         if let diaryModel = diaryForDay(day) {
             return AnyView(CalendarDetailView(diaryId: diaryModel.diaryId, date: day, currentDate: $currentDate, viewModel: DiaryViewModel(diary: DiaryViewModel.mock)))
         } else {
@@ -257,18 +246,18 @@ extension CalendarView{
     }
     
     
-    private func daysInMonth(date: Date) -> [Int] {
+    private func daysInMonth(date: Date) -> [(Int, Int)] {
         let calendar = Calendar.current
         let monthRange = calendar.range(of: .day, in: .month, for: date)!
         let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
         var firstWeekdayOfMonth = calendar.component(.weekday, from: firstDayOfMonth)
         
         firstWeekdayOfMonth -= 1
-        var days: [Int] = Array(1...monthRange.count)
+        var days: [(Int, Int)] = Array(1...monthRange.count).map { ($0, UUID().hashValue) }
         for _ in 0..<(firstWeekdayOfMonth % 7) {
-            days.insert(0, at: 0)
+            days.insert((0, UUID().hashValue), at: 0)
         }
-        
+        print("\(days)")
         return days
     }
 }

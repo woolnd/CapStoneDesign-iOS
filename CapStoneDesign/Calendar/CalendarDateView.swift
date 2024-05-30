@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct CalendarDateView: View {
@@ -7,29 +6,17 @@ struct CalendarDateView: View {
     @State var date: Int
     @Binding var currentDate: Date
     
-    
     var body: some View {
         GeometryReader{ geo in
             VStack{
                 if(date == 0){
                     Text("")
-                }
-                else{
+                } else {
                     HStack{
                         ZStack{
                             Text("\(date)")
                                 .font(.custom("777Balsamtint", size: 15))
-                                .foregroundColor(isToday(date) ? Color("Week_Orange"): Color("Week_LightGray"))
-//                            if(isToday(date)){
-//                                Image("today")
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fit)
-//                                    .frame(width: geo.size.width * 0.9)
-//                            }else{
-//                                Rectangle()
-//                                    .foregroundColor(.clear)
-//                                    .frame(width: geo.size.width * 0.9)
-//                            }
+                                .foregroundColor(isToday(date) ? Color("Week_Orange") : Color("Week_LightGray"))
                         }
                         Spacer()
                     }
@@ -41,18 +28,15 @@ struct CalendarDateView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 40, height: 40)
-                            
-                        }else{
+                        } else {
                             Rectangle()
                                 .frame(width: 40, height: 40)
                                 .foregroundColor(.clear)
                         }
-                        
                         Spacer()
                     }
                     .offset(y: -10.0)
                 }
-                
             }
         }
     }
@@ -89,17 +73,19 @@ struct CalendarDateView: View {
     }
     
     private func isToday(_ date: Int) -> Bool {
-            let calendar = Calendar.current
-            let currentDay = calendar.component(.day, from: currentDate)
-            let currentMonth = calendar.component(.month, from: currentDate)
-            let currentYear = calendar.component(.year, from: currentDate)
-            
-            return currentYear == calendar.component(.year, from: Date()) &&
-                   currentMonth == calendar.component(.month, from: Date()) &&
-                   currentDay == date
-        }
+        let calendar = Calendar.current
+        let today = Date()
+        let currentDay = calendar.component(.day, from: today)
+        let currentMonth = calendar.component(.month, from: today)
+        let currentYear = calendar.component(.year, from: today)
+        
+        return currentYear == calendar.component(.year, from: currentDate) &&
+               currentMonth == calendar.component(.month, from: currentDate) &&
+               currentDay == date
+    }
 }
 
 #Preview {
     CalendarDateView(viewModel: CalendarViewModel(), date: 20, currentDate: .constant(Date()))
 }
+
