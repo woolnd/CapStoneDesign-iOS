@@ -55,7 +55,7 @@
 다운로드 수 : 144회(2024.06.06. 기준)
 앱 만족도 : 96.5%
 
-## MoodMingle 결과물
+## 프로젝트 결과물
 <img src="https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/202451c9-e79b-4561-a306-73ab3516b54c.png" width="200" height="400"/>
 <img src="https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/2a8f199a-c5fe-4ccd-b830-cbad86abf21e.png" width="200" height="400"/>
 <img src="https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/65a7335b-de6e-4f96-9d6f-21681037865e.png" width="200" height="400"/>
