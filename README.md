@@ -18,11 +18,11 @@
 모두가 편리하게 사용할 수 있는 서비스를 제공하고자, 모든 권한을 열어주는 777의 정신을 담았습니다.
 
 ### 팀원
-
+| AI Developer | AI Developer | iOS Developer | Server Developer |
 | --- | --- | --- | --- |
 | 이경민 | 나민혁 | 엄재웅 | 이진 |
 | 울산대학교 IT융합전공 | 울산대학교 IT융합전공 | 울산대학교 IT융합전공 | 울산대학교 IT융합전공 |
-| AI Developer | AI Developer | iOS Developer | Server Developer |
+
 
 ## 프로젝트 환경
 
@@ -56,3 +56,13 @@
 앱 만족도 : 96.5%
 
 ## MoodMingle 결과물
+![001](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/202451c9-e79b-4561-a306-73ab3516b54c)
+![002](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/2a8f199a-c5fe-4ccd-b830-cbad86abf21e)
+![003](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/65a7335b-de6e-4f96-9d6f-21681037865e)
+![004](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/b0ee97db-da6c-4fad-abdc-805c88b22c43)
+![005](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/59aff309-374e-4801-ab1a-05c598e258c1)
+![006](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/d1e0a5a5-4ecd-4754-8885-f97217a94ee2)
+![007](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/a99e9761-38a6-430a-b084-5c50d8804f88)
+![008](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/d59fe12d-02c7-4724-812f-8b450777b6f6)
+![009](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/f14f1f6c-b784-459c-8e7c-6cd04195f2b7)
+![010](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/c01e734d-f17e-415c-81f4-e424475692ca)
