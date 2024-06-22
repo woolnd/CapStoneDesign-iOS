@@ -19,10 +19,10 @@
 
 ### 팀원
 
-| AI Developer | AI Developer | iOS Developer | Server Developer |
 | --- | --- | --- | --- |
 | 이경민 | 나민혁 | 엄재웅 | 이진 |
 | 울산대학교 IT융합전공 | 울산대학교 IT융합전공 | 울산대학교 IT융합전공 | 울산대학교 IT융합전공 |
+| AI Developer | AI Developer | iOS Developer | Server Developer |
 
 ## 프로젝트 환경
 
@@ -56,23 +56,3 @@
 앱 만족도 : 96.5%
 
 ## MoodMingle 결과물
-
-![001.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/fa0b1c96-719a-4041-bf34-14a0257105ad/001.png)
-
-![004.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/6f5662d0-55e5-4f2a-81df-08558370d2bf/004.png)
-
-![007.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/0d93590d-29de-497a-bd73-b3d33817ced5/007.png)
-
-![010.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/5b8203d2-1e55-4f44-857b-be222f3687e0/010.png)
-
-![002.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/f782ed8a-ba44-4ea1-828d-47f32bc2b865/002.png)
-
-![005.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/b23e9014-7467-44fd-81f4-21a700234a0c/005.png)
-
-![008.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/e571793d-913e-4bde-929e-1cba29fa3d5b/008.png)
-
-![003.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/fb856713-4b89-4868-9b59-c409099515bf/003.png)
-
-![006.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/c37ab153-09eb-4cb7-b9ac-304b9da74f42/006.png)
-
-![009.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/0d542169-ad04-4fc2-80e5-ab43a23dd535/7bd824d3-4e59-4d2b-ac2d-59a2b4bbf450/009.png)
