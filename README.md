@@ -56,6 +56,7 @@
 앱 만족도 : 96.5%
 
 ## MoodMingle 결과물
+<img src="https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/202451c9-e79b-4561-a306-73ab3516b54c.png" width="200" height="400"/>
 ![001](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/202451c9-e79b-4561-a306-73ab3516b54c)
 ![002](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/2a8f199a-c5fe-4ccd-b830-cbad86abf21e)
 ![003](https://github.com/woolnd/CapStoneDesign-iOS/assets/98391474/65a7335b-de6e-4f96-9d6f-21681037865e)
